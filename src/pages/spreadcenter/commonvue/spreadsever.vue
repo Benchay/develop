@@ -151,6 +151,7 @@ export default {
                    label:'类目',
                },
            ],
+           valueSeach:'',
            differvalue:'',
            differlist:[
                {
