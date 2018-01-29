@@ -35,7 +35,7 @@ components: {
    data(){
        return{
            valueSeach:'',
-           activeNames: ['3']
+           activeNames: ['1','2','3']
        }
    },
     methods: {
