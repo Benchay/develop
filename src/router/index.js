@@ -9,7 +9,13 @@ import task from '@/pages/task/task'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  base: process.env.NODE_ENV === 'production' ? '/doc/mbs' : '/',
   routes: [
+	{
+      path: '/index.html',
+      redirect: '/'
+    },
     {
       path: '/',
       name: 'home',
