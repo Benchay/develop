@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss" type="text/css">
 #content {
-  padding: 20px 80px;
+  padding: 20px 100px;
   position: relative;
   .bg{
     width: 100%;

@@ -13,7 +13,7 @@
         <v-trade></v-trade>
         </el-collapse-item>
         <el-collapse-item title="推广设置" name="2">
-        <v-flowspreadsever></v-flowspreadsever>
+        <v-spreadsetup></v-spreadsetup>
         </el-collapse-item>
         </el-collapse>
       </div>
@@ -22,12 +22,12 @@
 </template>
 <script>
 import trade from '../commonvue/trade'
-import flowspreadsever from '../commonvue/flowspreadsever'
+import spreadsetup from '../commonvue/spreadsetup'
 import spreadfoot from '../commonvue/spreadfoot'
 export default {
 components: { 
     'v-trade': trade,
-    'v-flowspreadsever': flowspreadsever,
+    'v-spreadsetup': spreadsetup,
     'v-spreadfoot': spreadfoot,
     },
    data(){
@@ -71,32 +71,6 @@ components: {
     }
     .booksystem{
         margin-top: 20px;
-        .el-collapse-item:last-child{
-            .el-collapse-item__content{
-                padding: 0;
-            }
-            .el-collapse-item__header{
-                text-indent: 0px;
-                text-align: center;
-                position: relative;
-                background-color: #f5f5f5;
-                color: #666666;
-                box-sizing: border-box;
-                border: 1px solid #cccccc;
-                &:after{
-                    content: '（可选择执行任务的资源）';
-                    color: #999999;
-                    position: absolute;
-                    right: 35%;
-                    top: 0;
-                }
-                .el-collapse-item__arrow{
-                    position: absolute;
-                    right: 46%;
-                    top: 0;
-                }
-            }
-        }
         .el-collapse-item__header{
             // height: 40px;
             background-color: #205081;
