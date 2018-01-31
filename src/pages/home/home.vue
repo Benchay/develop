@@ -1,5 +1,5 @@
 <template>
-  <div id="content">
+  <div class="homeContent">
     <div class="first">
       <div class="slideShow">
         <el-carousel>
@@ -89,7 +89,7 @@ export default {
 
 <style lang="scss">
 @import '../../style/mixin';
-    #content{
+    .homeContent{
     .top1{
         height: 25px;
         line-height: 25px;

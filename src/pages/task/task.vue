@@ -1,5 +1,5 @@
 <template>
-  <div class="spreadproduct">
+  <div class="task">
       <div class="top">
         <el-row :gutter="20">
             <el-col :span="16">
@@ -139,7 +139,10 @@ export default {
 }
 </script>
 <style lang="scss">
-.spreadproduct{
+.task{
+    background-color: #ffffff;
+    padding: 35px 20px;
+    border: 1px solid #cccccc;
    min-height: 400px;
     overflow: hidden;
       .top{

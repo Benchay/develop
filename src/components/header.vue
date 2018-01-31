@@ -100,6 +100,7 @@ export default {
 @import "../style/mixin.scss";
 .hello{
     .top{
+    background-color: #ffffff;
     height: 40px;
     line-height: 40px;
     padding: 0 60px;

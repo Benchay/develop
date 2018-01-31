@@ -216,6 +216,9 @@ export default {
 <style lang="scss">
 @import '../../../style/mixin';
  .productlist{
+    padding: 35px 20px 0;
+    border: 1px solid #cccccc;
+    border-top: none;
      min-height: 300px;
      overflow: hidden;
      .top{

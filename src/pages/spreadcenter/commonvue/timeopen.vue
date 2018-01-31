@@ -301,6 +301,10 @@ export default {
 </script>
 <style lang="scss">
 .timeopen{
+     .el-tabs__item{
+        margin-right: 10px;
+        border: 1px solid #cccccc;
+    }
     .el-tabs__nav-wrap{
         display: inline-block;
         padding-left: 70px;

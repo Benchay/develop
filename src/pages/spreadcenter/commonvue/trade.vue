@@ -10,7 +10,7 @@
             <div class="priceWrap">
                 <div class="left">
                     <span>价格: $39</span>
-                    <span>ASIN:B4435D4646D4654</span>
+                    <span class="right">ASIN:B4435D4646D4654</span>
                 </div>
                 <div class="right">
                     hahaha
@@ -82,6 +82,14 @@ export default {
         .priceWrap{
             overflow: hidden;
             padding-top: 10px;
+            .left{
+                width: 350px;;
+                span{
+                    &:first-child{
+                      color: #ee811e;  
+                    }
+                }
+            }
         }
         .size{
             overflow: hidden;

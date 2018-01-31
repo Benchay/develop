@@ -1,5 +1,5 @@
 <template>
-  <div class="product">
+  <div class="spreadcenter">
     <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
         <el-tab-pane label="销量推广" name="first"><v-sellspread></v-sellspread></el-tab-pane>
         <el-tab-pane label="流量推广" name="second"><v-bindshop></v-bindshop></el-tab-pane>

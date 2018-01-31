@@ -23,7 +23,7 @@
                 </div>
             </el-col>
             <el-col :span="8">
-                <div class="grid-content bg-purple" style="float: right;">
+                <div class="grid-content bg-purple" style="float: right; margin-right: 10px;">
                     <el-input v-model="valueSeach" placeholder="请输入内容" style="width: 240px;"></el-input>
                     <el-button plain>搜  索</el-button>
                 </div>
@@ -216,6 +216,10 @@ export default {
 <style lang="scss">
 @import '../../../style/mixin';
  .productlist{
+    background-color: #ffffff;
+    padding-top: 35px;
+    border: 1px solid #cccccc;
+    border-top: none;
      min-height: 300px;
      overflow: hidden;
      .top{

@@ -153,6 +153,10 @@ export default {
 <style lang="scss">
 @import '../../../style/mixin';
 .bindshop{
+    background-color: #ffffff;
+    padding: 35px 20px;
+    border: 1px solid #cccccc;
+    border-top: none;
      min-height: 300px;
      overflow: hidden;
      .top{
