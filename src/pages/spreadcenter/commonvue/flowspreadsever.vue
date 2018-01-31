@@ -1,18 +1,29 @@
 <template>
-    <div class="spareadsever">
+    <div class="flowspreadsever">
         <div class="tableWrap">
             <div class="tabHeader">
                 <div class="entry">
                     <p>入口</p>
                 </div>
-                <div class="sellNum">
-                    <p>刷销量<span>($20.00/个)</span></p>
+                <div class="ordinaryClick">
+                    <p>普通点击</p>
+                    <p>($0.2/个)</p>
                 </div>
-                <div class="orderNum">
-                    <p>每单购买数</p>
+                <div class="ordinaryBuy">
+                    <p>普通加购</p>
+                    <p>($0.2/个)</p>
                 </div>
-                <div class="parameter">
-                    <p>参数定制</p>
+                <div class="ordinaryCollection">
+                    <p>普通收藏</p>
+                    <p>($0.2/个)</p>
+                </div>
+                <div class="vote">
+                    <p>投票</p>
+                    <p>($2/个)</p>
+                </div>
+                <div class="comment">
+                    <p>回复评论</p>
+                    <p>($2/个)</p>
                 </div>
             </div>
             <div class="tabBody">
@@ -22,18 +33,20 @@
                         <el-input v-model="input" placeholder="请输入内容"></el-input>
                         <span class="insafter">X</span>
                     </div>
-                    <div class="sellinputNum">
+                    <div class="clickinputNum">
                          <el-input-number v-model="num1"  @change="handleChange" :min="1" label="描述文字"></el-input-number>
                     </div>
-                    <div class="orderinputNum">
+                    <div class="buyinputNum">
                          <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
                     </div>
-                    <div class="parameterSelect">
-                        <el-radio-group v-model="radio2">
-                            <el-radio :label="3">Prime</el-radio>
-                            <el-radio :label="6">15%评价</el-radio>
-                            <el-radio :label="9">30%评价</el-radio>
-                        </el-radio-group>
+                    <div class="collectioninputNum">
+                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="voteinputNum">
+                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="commentinputNum">
+                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
                     </div>
                 </div>
             </div>
@@ -82,7 +95,7 @@ export default {
     }
 }
 
-.spareadsever{
+.flowspreadsever{
     padding-bottom: 38px;
     .tableWrap{
         overflow: hidden;
@@ -91,7 +104,7 @@ export default {
             display: flex;
             margin-bottom: 10px;
             div{
-                flex: 3;
+                flex: 1;
                 height: 38px;
                 text-align: center;
                 background-color: #f5f5f5;
@@ -100,20 +113,20 @@ export default {
                 border: 1px solid #cccccc;
                 overflow: hidden;
                 &.entry{
-                    flex: 5;
-                }
-                &.parameter{
-                    flex: 4;
+                    flex: 3;
+                     p{
+                        height: 38px;  
+                        line-height: 38px;
+                        }
                 }
                 &:last-child{
                 margin-right: 0px;  
                 }
                 p{
-                  height: 38px;  
-                  line-height: 38px;
-                  span{
+                  height: 19px;  
+                  line-height: 19px;
+                  &:nth-child(2){
                       color: #ee811e;
-                      margin-left: 6px;
                   }
                 }
             }
@@ -124,15 +137,18 @@ export default {
                  padding: 0 30px;
                  margin-bottom: 20px;
                 &>div{
-                  flex: 3; 
+                  flex: 1; 
                   height: 40px;
-                  margin-right: 20px;   
+                  margin-right: 22px;   
                     &:last-child{
                 margin-right: 0px;  
                 }
+                .el-input-number{
+                    width: 100%;
+                }
                 }
                 .entrySearch{
-                    flex: 5;
+                    flex: 3;
                     display: flex;
                     .insbefore{
                         width: 75px;
@@ -154,43 +170,6 @@ export default {
                     .el-input__inner{
                         flex: 1;
                         border-radius: 0;
-                    }
-                }
-                .parameterSelect{
-                    flex: 4;
-                }
-                .sellinputNum,.orderinputNum{
-                    .el-input-number{
-                        width: 100%;
-                    }
-                }
-                .parameterSelect{
-                    line-height: 40px;
-                    overflow: hidden;
-                    max-width: 329px;
-                    .el-radio-group{
-                        padding-left: 20px;
-                        white-space: nowrap;
-                        .el-radio__inner{
-                            border-radius: 0;
-                            &:after{
-                                width: 0;
-                                height: 0;
-                                // border-radius: 0;
-                                border-bottom: 5px solid #ffffff;
-                                border-right: 5px solid #ffffff;
-                            }
-                        }
-                        .el-radio__inner:hover{
-                            border-color: #205081;
-                        }
-                        .el-radio__input.is-checked .el-radio__inner{
-                            border-color: #205081;
-                            background-color: #205081;
-                        }
-                        .el-radio__input.is-checked+.el-radio__label{
-                            color: #205081;
-                        }
                     }
                 }
             }

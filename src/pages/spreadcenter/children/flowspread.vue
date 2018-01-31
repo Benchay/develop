@@ -1,5 +1,5 @@
 <template>
-  <div class="sellspread">
+  <div class="flowspread">
       <div class="title">
         <el-row :gutter="20">
             <el-col :span="10">
@@ -13,7 +13,7 @@
         <v-trade></v-trade>
         </el-collapse-item>
         <el-collapse-item title="设置推广服务" name="2">
-        <v-spreadsever></v-spreadsever>
+        <v-flowspreadsever></v-flowspreadsever>
         </el-collapse-item>
         <el-collapse-item title="时间发布设置" name="3">
         <v-timeopen></v-timeopen>            
@@ -23,19 +23,19 @@
         </el-collapse-item>
         </el-collapse>
       </div>
-      <v-spreadfoot></v-spreadfoot>
+        <v-spreadfoot></v-spreadfoot>
   </div>
 </template>
 <script>
 import trade from '../commonvue/trade'
-import spreadsever from '../commonvue/spreadsever'
+import flowspreadsever from '../commonvue/flowspreadsever'
 import timeopen from '../commonvue/timeopen'
 import highoption from '../commonvue/highoption'
 import spreadfoot from '../commonvue/spreadfoot'
 export default {
 components: { 
     'v-trade': trade,
-    'v-spreadsever': spreadsever,
+    'v-flowspreadsever': flowspreadsever,
     'v-timeopen': timeopen,
     'v-highoption': highoption,
     'v-spreadfoot': spreadfoot,
@@ -54,7 +54,7 @@ components: {
 }
 </script>
 <style lang="scss">
-.sellspread{
+.flowspread{
     background-color: #ffffff;
     padding: 35px 20px 120px;
     border: 1px solid #cccccc;
@@ -121,6 +121,41 @@ components: {
             border-top: none;
             margin-bottom: 15px; 
             padding: 20px;
+        }
+    }
+    .sellspreadFoot{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 30px 0;
+        box-sizing: border-box;
+        background-color: #fafafa;
+        display: flex;
+        width: 100%;
+        height: 100px;
+        border: 1px solid #cccccc;
+        border-left: none; 
+        border-right: none;
+        .pgrounp{
+            flex: 1;
+            padding-left: 20px;
+            p{
+                margin-bottom: 10px;
+                font-size: 14px;
+                &>span{
+                    margin-right: 15px;
+                }
+            }
+            .orange{
+                color: #ee811e;
+            }
+            .col21{
+                color: #205081;
+            }
+        }
+        .btngrounp{
+            width: 158px;
+            
         }
     }
 }

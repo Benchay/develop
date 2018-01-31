@@ -10,7 +10,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: process.env.NODE_ENV === 'production' ? '/doc/mbs' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/mbs' : '/',
   routes: [
 	{
       path: '/index.html',
