@@ -23,17 +23,43 @@
           <div class="mealwrap">
             <div class="mealItem">
                 <p class="title">试用套餐</p>
-                <div>
+                <div class="detail">
                     <p>测评天数 : 5天</p>
                     <p>周期 : 7天</p>
                     <p>费用 : $0</p>
                 </div>
             </div>
-            <div class="mealItem"></div>
-            <div class="mealItem"></div>
-            <div class="mealItem"></div>
+            <div class="mealItem mealA">
+                <p class="title">套餐A</p>
+                <div class="detail">
+                    <p>测评天数 : 50天</p>
+                    <p>周期 : 7天</p>
+                    <p>费用 : $100</p>
+                </div>
+            </div>
+            <div class="mealItem mealB">
+                <p class="title">套餐B</p>
+                <div class="detail">
+                    <p>测评天数 : 5天</p>
+                    <p>周期 : 7天</p>
+                    <p>费用 : $200</p>
+                </div>
+            </div>
+            <div class="mealItem mealC">
+                <p class="title">套餐C</p>
+                <div class="detail">
+                    <p>测评天数 : 500天</p>
+                    <p>周期 : 7天</p>
+                    <p>费用 : $300</p>
+                </div>
+            </div>
           </div>
-          <div class="setmeal"></div>
+          <div class="setmeal">
+               <el-button style="background: #205081; color: #ffffff;">+自定义套餐</el-button>
+               <span class="Notes">
+                    (自定义周期和数量下单，定价为$8/单；优惠可选择上方的套餐进行下单)
+               </span>
+          </div>
       </div>
   </div>
 </template>
@@ -56,7 +82,7 @@ export default {
 <style lang="scss">
 @import '../../../style/mixin';
 .spreadsetup{
-    padding: 0 10px;
+    padding: 0 30px;
     .tablewrap{
         margin-bottom: 20px;
         .el-tabs__item{
@@ -135,13 +161,14 @@ export default {
             top: 8px;
         }
         .mealwrap{
-            height: 200px;
-            display: flex;
+            overflow: hidden;
             .mealItem{
-                flex: 1;
+                float: left;
+                width: 220px;
+                height: 180px;
                 box-sizing: border-box;
                 border: 1px solid #cccccc;
-                margin-right: 80px;
+                margin-right: 76px;
                 &:last-child{
                     margin-right: 0;
                 }
@@ -149,6 +176,40 @@ export default {
                     @include size(100%,38px);
                     background-color: #ececec;
                 }
+                .detail{
+                   p{
+                       padding-left: 22%;
+                       margin-bottom: 15px;
+                       &:first-child{
+                           margin-top: 20px;
+                       }
+                   } 
+                }
+                &.mealA{
+                    .title{
+                        background-color: #fa9a35;
+                        color: #ffffff;
+                        }
+                }
+                &.mealB{
+                    .title{
+                        background-color: #10c55b;
+                        color: #ffffff;
+                        }
+                }
+                &.mealC{
+                    .title{
+                        background-color: #4ea1f8;
+                        color: #ffffff;
+                        }
+                }
+            }
+        }
+        .setmeal{
+            margin-top: 20px;
+            .Notes{
+                margin-left: 20px;
+                color: #cccccc;
             }
         }
     }

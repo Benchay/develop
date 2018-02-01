@@ -1,5 +1,5 @@
 <template>
-  <div class="evaluationspread">
+  <div class="relativespread">
       <div class="title">
         <el-row :gutter="20">
             <el-col :span="10">
@@ -12,8 +12,11 @@
         <el-collapse-item title="商品名称" name="1">
         <v-trade></v-trade>
         </el-collapse-item>
-        <el-collapse-item title="推广设置" name="2">
-        <v-spreadsetup></v-spreadsetup>
+        <el-collapse-item title="设置推广服务" name="2">
+        <v-flowspreadsever></v-flowspreadsever>
+        </el-collapse-item>
+        <el-collapse-item title="时间发布设置" name="3">
+        <v-timeopen></v-timeopen>            
         </el-collapse-item>
         </el-collapse>
       </div>
@@ -22,12 +25,14 @@
 </template>
 <script>
 import trade from '../commonvue/trade'
-import spreadsetup from '../commonvue/spreadsetup'
+import flowspreadsever from '../commonvue/flowspreadsever'
+import timeopen from '../commonvue/timeopen'
 import spreadfoot from '../commonvue/spreadfoot'
 export default {
 components: { 
     'v-trade': trade,
-    'v-spreadsetup': spreadsetup,
+    'v-flowspreadsever': flowspreadsever,
+    'v-timeopen': timeopen,
     'v-spreadfoot': spreadfoot,
     },
    data(){
@@ -44,7 +49,7 @@ components: {
 }
 </script>
 <style lang="scss">
-.evaluationspread{
+.relativespread{
     background-color: #ffffff;
     padding: 35px 20px 120px;
     border: 1px solid #cccccc;

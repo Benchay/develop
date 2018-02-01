@@ -123,40 +123,5 @@ components: {
             padding: 20px;
         }
     }
-    .sellspreadFoot{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        padding: 30px 0;
-        box-sizing: border-box;
-        background-color: #fafafa;
-        display: flex;
-        width: 100%;
-        height: 100px;
-        border: 1px solid #cccccc;
-        border-left: none; 
-        border-right: none;
-        .pgrounp{
-            flex: 1;
-            padding-left: 20px;
-            p{
-                margin-bottom: 10px;
-                font-size: 14px;
-                &>span{
-                    margin-right: 15px;
-                }
-            }
-            .orange{
-                color: #ee811e;
-            }
-            .col21{
-                color: #205081;
-            }
-        }
-        .btngrounp{
-            width: 158px;
-            
-        }
-    }
 }
 </style>

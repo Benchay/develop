@@ -1,5 +1,5 @@
 <template>
-  <div class="evaluationspread">
+  <div class="dealactivity">
       <div class="title">
         <el-row :gutter="20">
             <el-col :span="10">
@@ -12,22 +12,27 @@
         <el-collapse-item title="商品名称" name="1">
         <v-trade></v-trade>
         </el-collapse-item>
-        <el-collapse-item title="推广设置" name="2">
-        <v-spreadsetup></v-spreadsetup>
+        <el-collapse-item title="设置推广服务" name="2">
+        <v-dealspreadsever></v-dealspreadsever>
+        </el-collapse-item>
+        <el-collapse-item title="时间发布设置" name="3">
+        <v-timeopen></v-timeopen>            
         </el-collapse-item>
         </el-collapse>
       </div>
-        <v-spreadfoot></v-spreadfoot>
+      <v-spreadfoot></v-spreadfoot>
   </div>
 </template>
 <script>
 import trade from '../commonvue/trade'
-import spreadsetup from '../commonvue/spreadsetup'
+import dealspreadsever from '../commonvue/dealspreadsever'
+import timeopen from '../commonvue/timeopen'
 import spreadfoot from '../commonvue/spreadfoot'
 export default {
 components: { 
     'v-trade': trade,
-    'v-spreadsetup': spreadsetup,
+    'v-dealspreadsever': dealspreadsever,
+    'v-timeopen': timeopen,
     'v-spreadfoot': spreadfoot,
     },
    data(){
@@ -44,7 +49,7 @@ components: {
 }
 </script>
 <style lang="scss">
-.evaluationspread{
+.dealactivity{
     background-color: #ffffff;
     padding: 35px 20px 120px;
     border: 1px solid #cccccc;
