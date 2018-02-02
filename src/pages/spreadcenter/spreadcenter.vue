@@ -8,7 +8,7 @@
         <el-tab-pane label="排名优化" name="fiveth"><v-ranking></v-ranking></el-tab-pane>
         <el-tab-pane label="Deal活动" name="sixth"><v-dealactivity></v-dealactivity></el-tab-pane>
         <el-tab-pane label="关联推广" name="seventh"><v-relativespread></v-relativespread></el-tab-pane>
-        <el-tab-pane label="全部推广" name="nineth"><v-flowspread></v-flowspread></el-tab-pane>
+        <el-tab-pane label="全部推广" name="nineth"><v-allspread></v-allspread></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -20,6 +20,7 @@ import period from './children/period'
 import ranking from './children/ranking'
 import dealactivity from './children/dealactivity'
 import relativespread from './children/relativespread'
+import allspread from './children/allspread'
 export default {
     components: { 
       'v-sellspread': sellspread,
@@ -29,10 +30,11 @@ export default {
       'v-ranking': ranking,
       'v-dealactivity': dealactivity,
       'v-relativespread': relativespread,
+      'v-allspread': allspread,
       },
     data() {
       return {
-        activeName2: 'seventh'
+        activeName2: 'nineth'
       };
     },
     methods: {

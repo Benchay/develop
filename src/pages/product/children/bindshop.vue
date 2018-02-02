@@ -170,14 +170,10 @@ export default {
                 background-color: #FFF;
                 color: #205081; 
                 font-weight: 600;
-                box-shadow: -1px 0 0 0 #FFF;
                 border-color: #ffffff;
             }
             .el-radio-button__inner{
                 border: 1px solid #fff;
-            }
-            .el-radio-button__inner:hover{
-                color: #205081; 
             }
          }
      }

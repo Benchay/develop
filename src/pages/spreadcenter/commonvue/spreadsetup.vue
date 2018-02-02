@@ -112,6 +112,15 @@ export default {
         .el-tabs__item.is-active{
             color: #205081;
             border: 1px solid #205081;
+               &:before{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 26px;
+                height: 26px;
+                background: url(./pitch_up.png) center center no-repeat;
+            }
         }
         .el-tabs__active-bar{
             background-color: #ffffff;

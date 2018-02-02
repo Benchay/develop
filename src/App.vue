@@ -56,7 +56,6 @@ export default {
   border-left: 1px solid #cccccc;
   border-bottom-color: #ffffff;
   transform: translateY(2px);
-  color: #205081;
 }
     .el-tabs--card>.el-tabs__header .el-tabs__item{
       border-left: 1px solid #fafafa;
@@ -74,11 +73,11 @@ export default {
 .el-tabs.el-tabs--card.el-tabs--top>.el-tabs__header.is-top{
     margin-bottom: 0;
 }
-.el-tabs__item:hover{
-    color: #205081;
-}
 .el-tabs--card>.el-tabs__header .el-tabs__item{
     border-bottom-color: #cccccc;
+}
+.el-radio-button:focus:not(.is-focus):not(:active){
+  box-shadow: none;
 }
 }
 </style>

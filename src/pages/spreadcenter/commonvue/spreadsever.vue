@@ -18,7 +18,67 @@
             <div class="tabBody">
                 <div class="tabBodyItem">
                     <div class="entrySearch">
-                        <span class="insbefore">搜索</span>
+                        <span class="insbefore"><i><img src="./entrance_1.png" alt=""></i>搜索</span>
+                        <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        <span class="insafter">X</span>
+                    </div>
+                    <div class="sellinputNum">
+                         <el-input-number v-model="num1"  @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="orderinputNum">
+                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="parameterSelect">
+                        <el-radio-group v-model="radio2">
+                            <el-radio :label="3">Prime</el-radio>
+                            <el-radio :label="6">15%评价</el-radio>
+                            <el-radio :label="9">30%评价</el-radio>
+                        </el-radio-group>
+                    </div>
+                </div>
+                <div class="tabBodyItem">
+                    <div class="entrySearch">
+                        <span class="insbefore" style="background: #a8d2f7;"><i><img src="./entrance_2.png" alt=""></i>类目</span>
+                        <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        <span class="insafter">X</span>
+                    </div>
+                    <div class="sellinputNum">
+                         <el-input-number v-model="num1"  @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="orderinputNum">
+                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="parameterSelect">
+                        <el-radio-group v-model="radio2">
+                            <el-radio :label="3">Prime</el-radio>
+                            <el-radio :label="6">15%评价</el-radio>
+                            <el-radio :label="9">30%评价</el-radio>
+                        </el-radio-group>
+                    </div>
+                </div>
+                <div class="tabBodyItem">
+                    <div class="entrySearch">
+                        <span class="insbefore" style="background: #cec9f8;"><i><img src="./entrance_3.png" alt=""></i>广告</span>
+                        <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        <span class="insafter">X</span>
+                    </div>
+                    <div class="sellinputNum">
+                         <el-input-number v-model="num1"  @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="orderinputNum">
+                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+                    </div>
+                    <div class="parameterSelect">
+                        <el-radio-group v-model="radio2">
+                            <el-radio :label="3">Prime</el-radio>
+                            <el-radio :label="6">15%评价</el-radio>
+                            <el-radio :label="9">30%评价</el-radio>
+                        </el-radio-group>
+                    </div>
+                </div>
+                <div class="tabBodyItem">
+                    <div class="entrySearch">
+                        <span class="insbefore" style="background: #fbbb8e;"><i><img src="./entrance_4.png" alt=""></i>秒杀</span>
                         <el-input v-model="input" placeholder="请输入内容"></el-input>
                         <span class="insafter">X</span>
                     </div>
@@ -135,13 +195,19 @@ export default {
                     flex: 5;
                     display: flex;
                     .insbefore{
-                        width: 75px;
+                        width: 80px;
                         text-align: right;
                         line-height: 40px;
                         border-radius: 20px 0 0 20px;
                         background-color: #75d282;
-                        padding-right: 18px;
+                        padding-right: 15px;
                         color: #ffffff;
+                        i{
+                            display: inline-block;
+                            vertical-align: top;
+                            margin-top: 4px;
+                            margin-right: 4px;
+                        }
                     }
                     .insafter{
                         width: 40px;
@@ -174,22 +240,14 @@ export default {
                         .el-radio__inner{
                             border-radius: 0;
                             &:after{
-                                width: 0;
-                                height: 0;
-                                // border-radius: 0;
-                                border-bottom: 5px solid #ffffff;
-                                border-right: 5px solid #ffffff;
+                                width: 14px;
+                                height: 14px;
+                                background-color: #205081;
+                                background-image: url(./checked3.png);
+                                background-size:10px 10px;
+                                background-repeat:no-repeat;
+                                background-position: center;
                             }
-                        }
-                        .el-radio__inner:hover{
-                            border-color: #205081;
-                        }
-                        .el-radio__input.is-checked .el-radio__inner{
-                            border-color: #205081;
-                            background-color: #205081;
-                        }
-                        .el-radio__input.is-checked+.el-radio__label{
-                            color: #205081;
                         }
                     }
                 }

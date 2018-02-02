@@ -4,15 +4,16 @@
         <el-row :gutter="20">
             <el-col :span="16">
                 <div class="grid-content bg-purple">
-                    下单时间:
+                    <span style="font-size: 14px;">下单时间:</span>
                      <el-date-picker
+                     size="small"
                     v-model="picktime"
                     type="datetimerange"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期">
                     </el-date-picker>
-                    <el-select v-model="station" placeholder="请选择"  style="width: 240px;">
+                    <el-select v-model="station" placeholder="请选择" size="small"  style="width: 240px;">
                         <el-option
                         v-for="item in stationList"
                         :key="item.value"
@@ -24,7 +25,7 @@
             </el-col>
             <el-col :span="8">
                 <div class="grid-content bg-purple" style="float: right;">
-                    <el-input v-model="valueSeach" placeholder="请输入内容" style="width: 240px;"></el-input>
+                    <el-input v-model="valueSeach" size="small" placeholder="请输入内容" style="width: 240px;"></el-input>
                     <el-button plain>搜  索</el-button>
                 </div>
             </el-col>
@@ -46,18 +47,8 @@
             style="width: 100%">
             <el-table-column
             label="订单名称"
+            prop="ordername"
             width="200">
-            <template slot-scope="scope">
-                <div  v-if="scope.row.isShow === false">
-                <i class="jtwrap"></i><span class="ordernamewrap">{{scope.row.ordername}}</span>
-                </div>
-                <el-popover trigger="hover" placement="top" v-else>
-                    <p>{{ scope.row.tiktip }}</p>
-                     <div slot="reference" class="name-wrapper">
-                         <i class="jtwrap"><img src="./jth.png" alt=""></i><span class="ordernamewrap">{{scope.row.ordername}}</span>
-                    </div>
-                </el-popover>
-            </template>
             </el-table-column>
             <el-table-column
             label="推广类型"
@@ -161,7 +152,7 @@ export default {
 <style lang="scss">
 .spreadproduct{
     background-color: #ffffff;
-    padding: 35px 20px;
+    padding: 15px 20px 35px;
     border: 1px solid #cccccc;
     border-top: none;
     min-height: 400px;
@@ -175,16 +166,13 @@ export default {
              border: 1px solid #e6e6e6;
             .el-radio-button__orig-radio:checked+.el-radio-button__inner{
                 background-color: #FFF;
-                color: #205081; 
                 font-weight: 600;
-                box-shadow: -1px 0 0 0 #FFF;
+                color: #205081; 
+                box-shadow: none;
                 border-color: #ffffff;
             }
             .el-radio-button__inner{
                 border: 1px solid #fff;
-            }
-            .el-radio-button__inner:hover{
-                color: #205081; 
             }
          }
      }
