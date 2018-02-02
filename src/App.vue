@@ -79,5 +79,8 @@ export default {
 .el-radio-button:focus:not(.is-focus):not(:active){
   box-shadow: none;
 }
+.el-table thead tr th{
+    background-color: #edf5fc;
+}
 }
 </style>
