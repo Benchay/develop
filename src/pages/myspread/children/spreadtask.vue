@@ -4,15 +4,16 @@
         <el-row :gutter="20">
             <el-col :span="16">
                 <div class="grid-content bg-purple">
-                    推广时间:
+                    <span style="font-size: 14px;">推广时间:</span>
                      <el-date-picker
+                     size="small"
                     v-model="picktime"
                     type="datetimerange"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期">
                     </el-date-picker>
-                    <el-select v-model="station" placeholder="请选择"  style="width: 240px;">
+                    <el-select v-model="station" placeholder="请选择" size="small"  style="width: 240px;">
                         <el-option
                         v-for="item in stationList"
                         :key="item.value"
@@ -20,12 +21,13 @@
                         :value="item.value">
                         </el-option>
                     </el-select>
+                    <a href="javascript:;" class="addproduct"><i></i>创建订单</a>
                 </div>
             </el-col>
             <el-col :span="8">
                 <div class="grid-content bg-purple" style="float: right;">
-                    <el-input v-model="valueSeach" placeholder="请输入内容" style="width: 240px;"></el-input>
-                    <el-button plain>搜  索</el-button>
+                    <el-input v-model="valueSeach" placeholder="请输入内容" size="small" style="width: 240px;"></el-input>
+                    <el-button style="padding: 8px 20px;">搜  索</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -153,7 +155,7 @@ export default {
 <style lang="scss">
 .spreadtask{
     background-color: #ffffff;
-    padding: 35px 20px;
+    padding: 15px 20px 35px;
     border: 1px solid #cccccc;
     border-top: none;
    min-height: 400px;
@@ -161,8 +163,8 @@ export default {
       .top{
          white-space: nowrap;
          .stateSelect{
-             margin: 20px 0px;
-             padding: 10px 8px;
+             margin: 15px 0px;
+             padding: 5px 8px;
              font-size: 16px;
              border: 1px solid #e6e6e6;
             .el-radio-button__orig-radio:checked+.el-radio-button__inner{

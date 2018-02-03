@@ -63,13 +63,30 @@
           <p>新手入门</p><p>更多＞</p>
         </div>
         <div class="main">
-
+             <img src="./111.png" alt="">
         </div>
       </div>
     </div>
     <div class="foot">
       <div class="footTop">小功能</div>
       <div class="main">
+            <ul class="footMain">
+              <li>
+                <img src="./111.png" alt="">
+              </li>
+              <li>
+                <img src="./111.png" alt="">
+              </li>
+              <li>
+                <img src="./111.png" alt="">
+              </li>
+              <li>
+                <img src="./111.png" alt="">
+              </li>
+              <li>
+                <img src="./111.png" alt="">
+              </li>
+            </ul>
       </div>
     </div>
   </div>

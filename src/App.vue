@@ -82,5 +82,43 @@ export default {
 .el-table thead tr th{
     background-color: #edf5fc;
 }
+.addproduct{
+        display: inline-block;
+        line-height: 24px;
+        text-decoration: none;
+        margin-left: 20px;
+        color: #205081;
+        font-size: 14px;
+        i{
+          display: inline-block;
+          vertical-align: top;
+          width: 24px;    
+          height: 24px;
+          margin-right: 5px;
+          background: url(./image/add.png) center no-repeat;
+        }
+    }
+    .el-button {
+      padding: 8px 20px;
+    }
+    .el-dialog--center .el-dialog__header{
+      padding: 10px;
+      background-color: #205081;
+      .el-dialog__title{
+      color: #ffffff;
+      }
+    .el-icon-close:before{
+      width: 26px;
+      height: 26px;
+      padding: 3px;
+      font-size: 20px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      color: #205081;
+    }
+    }
+    .el-dialog--center .el-dialog__body{
+       padding: 15px 27px 30px;
+      }
 }
 </style>

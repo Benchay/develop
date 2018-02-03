@@ -4,8 +4,9 @@
         <el-row :gutter="20">
             <el-col :span="16">
                 <div class="grid-content bg-purple">
-                    时间筛选:
+                    <span style="font-size: 14px;">时间筛选:</span>
                      <el-date-picker
+                     size="small"
                     v-model="picktime"
                     type="datetimerange"
                     range-separator="至"
@@ -16,8 +17,8 @@
             </el-col>
             <el-col :span="8">
                 <div class="grid-content bg-purple" style="float: right;">
-                    <el-input v-model="valueSeach" placeholder="请输入内容" style="width: 240px;"></el-input>
-                    <el-button plain>搜  索</el-button>
+                    <el-input v-model="valueSeach" size="small" placeholder="请输入内容" style="width: 240px;"></el-input>
+                    <el-button style="padding: 8px 20px;">搜  索</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -141,15 +142,15 @@ export default {
 <style lang="scss">
 .task{
     background-color: #ffffff;
-    padding: 35px 20px;
+    padding: 15px 20px 35px;
     border: 1px solid #cccccc;
    min-height: 400px;
     overflow: hidden;
       .top{
          white-space: nowrap;
          .stateSelect{
-             margin: 20px 0px;
-             padding: 10px 8px;
+             margin: 15px 0px;
+             padding: 5px 8px;
              font-size: 16px;
              border: 1px solid #e6e6e6;
             .el-radio-button__orig-radio:checked+.el-radio-button__inner{

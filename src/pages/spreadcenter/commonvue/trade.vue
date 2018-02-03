@@ -13,7 +13,8 @@
                     <span class="right">ASIN:B4435D4646D4654</span>
                 </div>
                 <div class="right">
-                    hahaha
+                    <el-checkbox v-model="checked">跟卖</el-checkbox>
+                    <el-checkbox v-model="checked">FBA</el-checkbox>
                 </div>
             </div>
             <div class="size">
@@ -83,7 +84,7 @@ export default {
             overflow: hidden;
             padding-top: 10px;
             .left{
-                width: 350px;;
+                width: 350px;
                 span{
                     &:first-child{
                       color: #ee811e;  

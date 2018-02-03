@@ -4,7 +4,7 @@
             <el-row :gutter="20">
                 <el-col :span="16">
                     <div class="grid-content bg-purple">
-                        <el-select v-model="modelCountry" placeholder="请选择"  style="width: 240px;">
+                        <el-select size="small" v-model="modelCountry" placeholder="请选择"  style="width: 240px;">
                             <el-option
                             v-for="item in countryList"
                             :key="item.value"
@@ -12,7 +12,7 @@
                             :value="item.value">
                             </el-option>
                         </el-select>
-                        <el-select v-model="modelState" placeholder="请选择"  style="width: 240px;">
+                        <el-select size="small" v-model="modelState" placeholder="请选择"  style="width: 240px;">
                             <el-option
                             v-for="item in stateList"
                             :key="item.value"
@@ -20,12 +20,13 @@
                             :value="item.value">
                             </el-option>
                         </el-select>
+                         <a href="javascript:;" class="addproduct"><i></i>新增授权电铺</a>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple" style="float: right;">
-                        <el-input v-model="valueSeach" placeholder="请输入店铺名称" style="width: 240px;"></el-input>
-                        <el-button plain>搜  索</el-button>
+                        <el-input size="small" v-model="valueSeach" placeholder="请输入店铺名称" style="width: 240px;"></el-input>
+                        <el-button style="padding: 8px 20px;">搜  索</el-button>
                     </div>
                 </el-col>
             </el-row>
@@ -154,7 +155,7 @@ export default {
 @import '../../../style/mixin';
 .bindshop{
     background-color: #ffffff;
-    padding: 35px 20px;
+    padding: 15px 20px 35px;
     border: 1px solid #cccccc;
     border-top: none;
      min-height: 300px;
@@ -162,8 +163,8 @@ export default {
      .top{
          white-space: nowrap;
          .stateSelect{
-             margin: 20px 0px;
-             padding: 10px 8px;
+             margin: 15px 0px;
+             padding: 5px 8px;
              font-size: 16px;
              border: 1px solid #e6e6e6;
             .el-radio-button__orig-radio:checked+.el-radio-button__inner{

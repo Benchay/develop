@@ -21,12 +21,13 @@
                         :value="item.value">
                         </el-option>
                     </el-select>
+                    <a href="javascript:;" class="addproduct"><i></i>创建订单</a>
                 </div>
             </el-col>
             <el-col :span="8">
                 <div class="grid-content bg-purple" style="float: right;">
                     <el-input v-model="valueSeach" size="small" placeholder="请输入内容" style="width: 240px;"></el-input>
-                    <el-button plain>搜  索</el-button>
+                    <el-button style="padding: 8px 20px;">搜  索</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -160,8 +161,8 @@ export default {
       .top{
          white-space: nowrap;
          .stateSelect{
-             margin: 20px 0px;
-             padding: 10px 8px;
+             margin: 15px 0px;
+             padding: 5px 8px;
              font-size: 16px;
              border: 1px solid #e6e6e6;
             .el-radio-button__orig-radio:checked+.el-radio-button__inner{

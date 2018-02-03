@@ -16,7 +16,7 @@ export default {
       },
     data() {
       return {
-        activeName2: 'second'
+        activeName2: 'first'
       };
     },
     methods: {
