@@ -122,6 +122,9 @@ export default {
         }
         .el-menu--horizontal .el-menu-item{
             color:#fff;
+            width: 160px;
+            text-align: center;
+            font-size: 18px;
         }
 
         .el-menu--horizontal>.el-menu-item.is-active,.el-menu--horizontal .el-menu-item:hover{
@@ -129,17 +132,7 @@ export default {
             color:#fff;
         }
         // .el-menu--horizontal>.el-menu-item.is-active{
-        //     position: relative;
-        //     &:after{
-        //         position: absolute;
-        //         bottom: 0;
-        //         left: 0;
-        //         width: 0;
-        //         height: 0;
-        //         border-right: 50px solid transparent;
-        //         border-bottom: 50px solid #e9f3f6;
-        //         border-left: 50px solid transparent;
-        //     }
+          
         // }
         .el-badge__content .is-fixed{
             position: absolute;
@@ -148,6 +141,17 @@ export default {
         }
         .el-menu--horizontal>.el-menu-item.is-active{
             border-bottom: 2px solid #183b5e;
+            position: relative;
+            &:after{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 0;
+                border-right: 50px solid transparent;
+                border-bottom: 50px solid #e9f3f6;
+                border-left: 50px solid transparent;
+            }
         }
         .el-badge__content.is-fixed{
             z-index: 1;
