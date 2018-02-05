@@ -47,11 +47,11 @@
         <div class="mian flexDQ2">
           <div>logo</div>
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="1">首页</el-menu-item>
-            <el-menu-item index="2">我的产品</el-menu-item>
-            <el-menu-item index="3">推广中心</el-menu-item>
-            <el-menu-item index="4"><el-badge :value="200" :max="99" class="item">我的推广</el-badge></el-menu-item>
-            <el-menu-item index="5"><el-badge :value="200" :max="99" class="item">审核任务</el-badge></el-menu-item>
+            <el-menu-item index="1"><i class="homeicon"></i>首页</el-menu-item>
+            <el-menu-item index="2"><i class="producticon"></i>我的产品</el-menu-item>
+            <el-menu-item index="3"><i class="spreadscentericon"></i>推广中心</el-menu-item>
+            <el-menu-item index="4"><i class="myspreadicon"></i><span class="myspreadtitle">我的推广</span></el-menu-item>
+            <el-menu-item index="5"><i class="taskicon"></i><span>审核任务</span><span class="tasktitle">22</span></el-menu-item>
           </el-menu>
         </div>
     </div>
@@ -124,7 +124,65 @@ export default {
             color:#fff;
             width: 160px;
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
+            i{  
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+                margin-right: 10px;
+                margin-top: -2px;
+                &.homeicon{
+                    background: url(../image/nav_5.png);
+                }
+                &.producticon{
+                    background: url(../image/nav_6.png);
+                }
+                &.spreadscentericon{
+                    background: url(../image/nav_7.png);
+                }
+                &.myspreadicon{ 
+                    background: url(../image/nav_8.png);
+                    margin-top: 2px;
+                }
+                &.taskicon{
+                    background: url(../image/nav_9.png);
+                    margin-top: 2px;
+                }
+            }
+            .myspreadtitle{
+                position: relative;
+                &:after{
+                    position: absolute;
+                    top: 5px;
+                    right: -20px;
+                    content: '';
+                    width: 16px;
+                    height: 16px;
+                    background-image: url(../image/hint.png);
+                }
+            }
+            .tasktitle{
+                margin-left: 3px;
+                display: inline-block;
+                width: 17px;
+                height: 13px;
+                line-height: 13px;
+                font-size: 12px;
+                border-radius: 4px 4px 4px 0;
+                background-color: #fe6c6f;
+                position: relative;
+                 &:after{
+                    position: absolute;
+                    top: 13px;
+                    left: 0px;
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border-right: 5px solid transparent;
+                    border-bottom: 5px solid transparent;
+                    border-top: 5px solid #fe6c6f;
+                }
+            }
         }
 
         .el-menu--horizontal>.el-menu-item.is-active,.el-menu--horizontal .el-menu-item:hover{

@@ -21,10 +21,10 @@
       </div>
       <div class="selectmeal">
           <div class="mealwrap">
-            <div class="mealItem">
+            <div class="mealItem active">
                 <p class="title">试用套餐</p>
                 <div class="detail">
-                    <p>测评天数 : 5天</p>
+                    <p>测评数量 : 5个</p>
                     <p>周期 : 7天</p>
                     <p>费用 : $0</p>
                 </div>
@@ -32,33 +32,36 @@
             <div class="mealItem mealA">
                 <p class="title">套餐A</p>
                 <div class="detail">
-                    <p>测评天数 : 50天</p>
-                    <p>周期 : 7天</p>
-                    <p>费用 : $100</p>
+                    <p>测评数量 : 15个</p>
+                    <p>周期 : 15天</p>
+                    <p>费用 : $199</p>
                 </div>
             </div>
             <div class="mealItem mealB">
                 <p class="title">套餐B</p>
                 <div class="detail">
-                    <p>测评天数 : 5天</p>
-                    <p>周期 : 7天</p>
-                    <p>费用 : $200</p>
+                    <p>测评数量 : 30个</p>
+                    <p>周期 : 30天</p>
+                    <p>费用 : $299</p>
                 </div>
             </div>
             <div class="mealItem mealC">
                 <p class="title">套餐C</p>
                 <div class="detail">
-                    <p>测评天数 : 500天</p>
-                    <p>周期 : 7天</p>
-                    <p>费用 : $300</p>
+                    <p>测评数量 : 90个</p>
+                    <p>周期 : 90天</p>
+                    <p>费用 : $899</p>
                 </div>
             </div>
-          </div>
-          <div class="setmeal">
-               <el-button style="background: #205081; color: #ffffff;">+自定义套餐</el-button>
-               <span class="Notes">
-                    (自定义周期和数量下单，定价为$8/单；优惠可选择上方的套餐进行下单)
-               </span>
+            <div class="mealItem setmeal">
+                <p class="title">自定义套餐</p>
+                <div class="detail">
+                    <p>测评数量 : 90个</p>
+                    <p>周期 : 90天</p>
+                    <p>费用 : $899</p>
+                    <span>（定价为$8每单）</span>
+                </div>
+            </div>
           </div>
       </div>
   </div>
@@ -171,13 +174,14 @@ export default {
         }
         .mealwrap{
             overflow: hidden;
+            display: flex;
             .mealItem{
-                float: left;
-                width: 220px;
+                flex: 1;
                 height: 180px;
                 box-sizing: border-box;
                 border: 1px solid #cccccc;
-                margin-right: 76px;
+                margin-right: 20px;
+                position: relative;
                 &:last-child{
                     margin-right: 0;
                 }
@@ -186,7 +190,7 @@ export default {
                     background-color: #ececec;
                 }
                 .detail{
-                   p{
+                    p{
                        padding-left: 22%;
                        margin-bottom: 15px;
                        &:first-child{
@@ -212,13 +216,23 @@ export default {
                         color: #ffffff;
                         }
                 }
-            }
-        }
-        .setmeal{
-            margin-top: 20px;
-            .Notes{
-                margin-left: 20px;
-                color: #cccccc;
+                &.active{
+                    border-color: #205081;
+                    .detail{
+                        p{
+                            color: #205081;
+                        }
+                    }
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        width: 26px;
+                        height: 26px;
+                        background: url(./pitch_up.png) center center no-repeat;
+                    }
+                }
             }
         }
     }

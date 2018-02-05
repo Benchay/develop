@@ -43,7 +43,7 @@ components: {
    data(){
        return{
            valueSeach:'',
-           activeNames: ['2']
+           activeNames: ['1']
        }
    },
     methods: {
@@ -84,6 +84,11 @@ components: {
         .el-collapse-item:last-child{
             .el-collapse-item__content{
                 padding: 0;
+            }
+            .el-icon-arrow-right:before{
+                // content: '';
+                background-image: url(./fewer_a.png);
+                background-size: 14px 14px; 
             }
             .el-collapse-item__header{
                 text-indent: 0px;

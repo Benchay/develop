@@ -34,7 +34,7 @@ export default {
       },
     data() {
       return {
-        activeName2: 'nineth'
+        activeName2: 'first'
       };
     },
     methods: {
