@@ -143,14 +143,16 @@ export default {
             border-bottom: 2px solid #183b5e;
             position: relative;
             &:after{
+                content: '';
                 position: absolute;
-                bottom: 0;
-                left: 0;
+                bottom: -3px;
+                left: 50%;
+                transform: translateX(-50%);
                 width: 0;
                 height: 0;
-                border-right: 50px solid transparent;
-                border-bottom: 50px solid #e9f3f6;
-                border-left: 50px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid #e9f3f6;
+                border-left: 10px solid transparent;
             }
         }
         .el-badge__content.is-fixed{
