@@ -9,7 +9,7 @@
       </div>
       <div class="booksystem">
         <el-collapse v-model="activeNames" @change="handleChange">
-        <el-collapse-item title="商品名称" name="1">
+        <el-collapse-item title="商品信息" name="1">
         <v-trade></v-trade>
         </el-collapse-item>
         <el-collapse-item title="设置推广服务" name="2">
@@ -84,11 +84,6 @@ components: {
         .el-collapse-item:last-child{
             .el-collapse-item__content{
                 padding: 0;
-            }
-            .el-icon-arrow-right:before{
-                // content: '';
-                background-image: url(./fewer_a.png);
-                background-size: 14px 14px; 
             }
             .el-collapse-item__header{
                 text-indent: 0px;

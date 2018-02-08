@@ -2,7 +2,7 @@
   <div class="period">
        <div class="booksystem">
         <el-collapse v-model="activeNames" @change="handleChange">
-        <el-collapse-item title="商品名称" name="1">
+        <el-collapse-item title="商品信息" name="1">
         <v-trade></v-trade>
         </el-collapse-item>
         <el-collapse-item title="推广设置" name="2">
@@ -43,7 +43,7 @@ components: {
 <style lang="scss">
 .period{
     background-color: #ffffff;
-    padding: 35px 20px 120px;
+    padding: 15px 20px 120px;
     border: 1px solid #cccccc;
     border-top: none;
     position: relative;
@@ -51,7 +51,6 @@ components: {
         border-bottom: none;
     }
     .booksystem{
-        margin-top: 20px;
         .el-collapse-item__header{
             // height: 40px;
             background-color: #205081;

@@ -9,7 +9,7 @@
       </div>
       <div class="booksystem">
         <el-collapse v-model="activeNames" @change="handleChange">
-        <el-collapse-item title="商品名称" name="1">
+        <el-collapse-item title="商品信息" name="1">
         <v-trade></v-trade>
         </el-collapse-item>
         <el-collapse-item title="设置推广服务" name="2">

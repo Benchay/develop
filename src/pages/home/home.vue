@@ -12,81 +12,72 @@
         </el-carousel>
       </div>
       <div class="rightFinance">
-        <div class="top1">
-          <p>财务账户</p><p>查看明细＞</p>
-        </div>
-        <div class="main">
-          <p>账户余额：</p>
-          <p>￥6666666666666</p>
-          <p>冻结金额：￥200.00</p>
-        </div>
-        <div class="button">
-          <el-button type="success" size="small">充 值</el-button>
-          <el-button type="warning" size="small">提 现</el-button>
-        </div>
+          <div class="finaccount">
+              <div class="cardheader">
+                  <h2>财务账户</h2>
+                  <span>查看明细<i class="morewrap"><img src="./more.png" alt=""></i></span>
+              </div>
+              <div class="goldwrap">
+                <p class="firegold">账户余额：<span style="color: #f3900c;">$66666666666666666666</span></p>
+                <p class="freezegold">冻结金额：￥200.00</p>
+              </div>
+              <div class="btngroup">
+                   <router-link  :to='{path:"/finance/recharge"}'><el-button type="warning">充值</el-button></router-link>
+                  <el-button type="success">提现</el-button>
+              </div>
+          </div>
+          <div class="comaccount">
+              <div class="cardheader">
+                  <h2>金币账户</h2>
+                  <span>查看明细<i class="morewrap"><img src="./more.png" alt=""></i></span>
+              </div>
+              <div class="goldwrap">
+                <p class="firegold yonggold">佣金余额：<span style="color: #f3900c;">$66666666666666666666</span></p>
+                <p class="freezegold">冻结金额：￥200.00</p>
+              </div>
+               <div class="btngroup">
+                  <el-button type="primary">购买</el-button>
+              </div>
+          </div>
       </div>
     </div>
     <div class="side">
-      <div class="data">
-        <div class="top1">
-          <p>数据统计</p><p>更多＞</p>
-        </div>
-        <div class="main">
-          <ul>
-            <li>手机</li>
-            <li>任务机</li>
-            <li>代理IP</li>
-            <li>买家账号</li>
-          </ul>
-        </div>
+     <div class="sideitem">
+          <div class="cardheader">
+              <h2>数据统计</h2>
+              <span>更多<i class="morewrap"><img src="./more.png" alt=""></i></span>
+          </div>
+     
       </div>
-      <div class="data">
-        <div class="top1">
-          <p>收益趋势</p><p>更多＞</p>
-        </div>
-        <div class="main">
-
-        </div>
+     <div class="sideitem">
+          <div class="cardheader">
+              <h2>收益趋势</h2>
+              <span>更多<i class="morewrap"><img src="./more.png" alt=""></i></span>
+          </div>
       </div>
     </div>
-    <div id="notice">
-      <div class="notice1">
-        <div class="top1">
-          <p>公告</p><p>更多＞</p>
-        </div>
-        <div class="main">
-
-        </div>
+    <div class="aduser">
+       <div class="aduseritem">
+          <div class="cardheader">
+              <h2>收益趋势</h2>
+              <span>更多<i class="morewrap"><img src="./more.png" alt=""></i></span>
+          </div>
       </div>
-      <div class="notice2">
-        <div class="top1">
-          <p>新手入门</p><p>更多＞</p>
-        </div>
-        <div class="main">
-             <img src="./111.png" alt="">
-        </div>
+       <div class="aduseritem">
+          <div class="cardheader">
+              <h2>收益趋势</h2>
+              <span>更多<i class="morewrap"><img src="./more.png" alt=""></i></span>
+          </div>
       </div>
     </div>
     <div class="foot">
-      <div class="footTop">小功能</div>
-      <div class="main">
-            <ul class="footMain">
-              <li>
-                <img src="./111.png" alt="">
-              </li>
-              <li>
-                <img src="./111.png" alt="">
-              </li>
-              <li>
-                <img src="./111.png" alt="">
-              </li>
-              <li>
-                <img src="./111.png" alt="">
-              </li>
-              <li>
-                <img src="./111.png" alt="">
-              </li>
-            </ul>
+      <p class="foottitle">小功能</p>
+      <div class="footcontent">
+        <div><img src="./111.png" alt=""></div>
+        <div><img src="./111.png" alt=""></div>
+        <div><img src="./111.png" alt=""></div>
+        <div><img src="./111.png" alt=""></div>
+        <div><img src="./111.png" alt=""></div>
       </div>
     </div>
   </div>
@@ -119,14 +110,50 @@ export default {
         font-weight: bold;
         }
     } 
+    .cardheader{
+        width: 100%;
+        height: 40px;
+        padding: 10px 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        border-bottom: 1px dashed #e9ebea;
+        h2{
+            padding-left: 10px;
+            display: inline-block;
+            vertical-align: top;
+            border-left: 4px solid #205081;
+            width: 125px;
+            height: 20px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+        span{
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: top;
+            font-size: 14px;
+            height: 20px;
+            line-height: 20px;
+            color: #999999;
+            cursor: pointer;
+            float: right;
+            i{
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 5px;
+            }
+        }
+    }
       .first{
         margin-top: 20px;
         display: flex;
         .slideShow{
-          width:66%;
+          flex: 1;
           .el-carousel{
-            height: 270px;
             overflow: hidden;
+            .el-carousel__container{
+              height: 374px;
+            }
             img{
               width:100%;
               height:100%;
@@ -135,121 +162,115 @@ export default {
         }
         .rightFinance{
           font-size: 16px;
-          width:32%;
-          height:250px;
-          margin-left: 2%;
-          background: #fff;
-          border:1px solid #d7d7d7;
-          border-radius: 5px;
-          padding: 10px 0;
-          .main{
-            font-size: 16px;
-            margin-top: 10px;
-            border-top:1px dashed #d7d7d7;
-            padding: 0 15px;
-            p{
-              height: 40px;
-              line-height: 40px;
-              &:nth-child(2){
-                display: flex;
-                justify-content: center;
-                font-size: 30px;
-                color:orange;
-                height: 60px;
-                line-height: 60px;
-              }
+          width:355px;
+          height:374px;
+          margin-left: 20px;
+          overflow: hidden;
+          .finaccount,.comaccount{
+            width: 100%;
+            height: 180px;
+            background: #fff;
+            border: 1px solid #cccccc;
+            box-sizing: border-box;
+            border-radius: 4px;
+            margin-bottom: 14px;
+          }   
+            .goldwrap{
+                padding: 20px 15px 0;
+                color: #666666;
             }
-          }
-          .button{
-            display: flex;
-            justify-content: center;
-            margin-top: 8px;
-            button:first-child{
-              margin-right: 40px;
+            .firegold{
+                padding-left: 30px;
+                margin-bottom: 20px;
+                position: relative;
+                &:before{
+                    position: absolute;
+                    top: -6px;
+                    left: 0;
+                    width: 24px;
+                    height: 24px;
+                    content: '';
+                    background-image: url(./money.png);
+
+                }
             }
-          }
+            .firegold.yonggold{
+                &:before{
+                    background-image: url(./gold.png);
+                }
+            }
+            .freezegold{
+                padding-left: 30px;
+                margin-bottom: 20px;
+                position: relative;
+                &:before{
+                    position: absolute;
+                    top: -3px;
+                    left: 0;
+                    width: 24px;
+                    height: 24px;
+                    content: '';
+                    background-image: url(./dong.png);
+
+                }
+            }
+            .btngroup{
+                text-align: center;
+            }
         }
       }
       .side{
         display: flex;
         margin-top: 20px;
-        .data{
-          font-size: 16px;
-          width:50%;
-          height:250px;
-          background: #fff;
-          border:1px solid #d7d7d7;
-          border-radius: 5px;
-          padding: 10px 0;
-          .main {
-            font-size: 16px;
-            margin-top: 10px;
-            border-top: 1px dashed #d7d7d7;
-            padding: 0 15px;
-            ul{
-              display: flex;
-              justify-content: space-between;
-              padding: 0 4%;
-              li{
-                width:23%;
-              }
-            }
-          }
-          &:first-child{
-            margin-right: 1%;
-          }
+        .sideitem{
+          flex: 1;
+          margin-right: 16px;
+          height: 258px;
+          background: #ffffff;
           &:last-child{
-            margin-left: 1%;
+            margin-right: 0;
           }
         }
       }
-      #notice{
+      .aduser{
         display: flex;
         margin-top: 20px;
-        .notice1,.notice2{
-          font-size: 16px;
-          width:65%;
-          height:250px;
-          background: #fff;
-          border:1px solid #d7d7d7;
-          border-radius: 5px;
-          padding: 10px 0;
-          &:first-child{
-            margin-right: 1%;
-          }
+        .aduseritem{
+          flex: 2;
+          height: 228px;
+          background: #ffffff;
+          margin-right: 16px;
           &:last-child{
-            margin-left: 1%;
-          }
-          .main {
-            font-size: 16px;
-            margin-top: 10px;
-            border-top: 1px dashed #d7d7d7;
-            padding: 0 15px;
+            flex: 1;
+            margin-right: 0;
           }
         }
-        .notice2{
-          width: 35%;
-        }
-
       }
       .foot{
         margin-top: 20px;
         font-size: 16px;
-        height:250px;
+        height:260px;
         background: #fff;
         border:1px solid #d7d7d7;
-        border-radius: 5px;
-        padding: 10px 0;
-        .footTop{
-          display: flex;
-          justify-content: center;
+        border-radius: 4px;
+        .foottitle{
+          width: 100%;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
           font-weight: bold;
+          border-bottom: 1px dashed #e9ebea;
         }
-        .main {
-          font-size: 16px;
-          margin-top: 10px;
-          border-top: 1px dashed #d7d7d7;
-          padding: 0 15px;
+        .footcontent{
+          display: flex;
+          justify-content: space-around;
+          &>div{
+            flex: 1;
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
         }
       }
     }

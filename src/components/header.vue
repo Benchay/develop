@@ -15,16 +15,16 @@
             <el-col :span="8" class="flex">
               <el-dropdown>
             <span class="el-dropdown-link">
-              我是某某某用户<i class="el-icon-arrow-down el-icon--right"></i>
+              <i class="userimg"><img src="../image/user.png" width="100%" height="100%" alt=""></i>我是某某某用户<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                  <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+                  <router-link :to='{path:"/personal"}'><el-dropdown-item>个人中心</el-dropdown-item></router-link>
+                  <router-link :to='{path:"/finance"}'><el-dropdown-item>财务管理</el-dropdown-item></router-link>
                 </el-dropdown-menu>
               </el-dropdown>
               <el-dropdown>
             <span class="el-dropdown-link">
-              系统设置<i class="el-icon-arrow-down el-icon--right"></i>
+              <i class="systemimg"><img src="../image/set.png" width="100%" height="100%" alt=""></i>系统设置<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item>黄金糕</el-dropdown-item>
@@ -40,7 +40,11 @@
                   <el-dropdown-item disabled>双皮奶</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
-              <div>退出登录</div>
+              <div class="logoout">
+                 <span>
+                      <i class="outimg"><img src="../image/out.png" width="100%" height="100%" alt=""></i>退出登录
+                </span>
+              </div>
             </el-col>
           </el-row>
         </div>
@@ -109,6 +113,52 @@ export default {
     }
     .el-dropdown{
         margin-right: 30px;
+    }
+    .userimg{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        vertical-align: middle;
+        margin-right: 5px;
+        position: relative;
+        img{
+          position: absolute;
+          top: 0;
+          left: 0;  
+        }
+    }
+    .systemimg{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        overflow: hidden;
+        vertical-align: middle;
+        margin-right: 5px;
+        position: relative;
+        img{
+          position: absolute;
+          top: 0;
+          left: 0;  
+        }
+    }
+    .logoout{
+        color: #606266;
+        font-size: 14px;
+    }
+    .outimg{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        overflow: hidden;
+        vertical-align: middle;
+        margin-right: 5px;
+        position: relative;
+        img{
+          position: absolute;
+          top: 0;
+          left: 0;  
+        }
     }
     }
     .mian{

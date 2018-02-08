@@ -20,7 +20,7 @@
                             :value="item.value">
                             </el-option>
                         </el-select>
-                         <a href="javascript:;" class="addproduct"><i></i>新增授权电铺</a>
+                         <a href="javascript:;" class="addproduct" @click="centerDialogVisible = true"><i></i>新增授权电铺</a>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -46,27 +46,22 @@
             style="width: 100%">
             <el-table-column
                 prop="type"
-                label="平台类型"
+                label="电商平台"
                 width="180">
             </el-table-column>
             <el-table-column
                 prop="name"
-                label="姓名"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="country"
-                label="美国"
+                label="开站点"
                 width="180">
             </el-table-column>
             <el-table-column
                 prop="overtime"
-                label="授权过期时间"
-                width="280">
+                label="授权时间"
+                width="180">
             </el-table-column>
             <el-table-column
-                prop="recentlytime"
-                label="最近授权时间"
+                prop="state"
+                label="状态"
                 width="280">
             </el-table-column>
             <el-table-column
@@ -77,6 +72,97 @@
             </el-table-column>
             </el-table>
         </div>
+    <el-dialog
+    title="店铺授权"
+    :visible.sync="centerDialogVisible"
+    width="46%"
+    center
+    class="shopstyle">
+    <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+    <el-form-item
+        prop="modelState"
+        label="电商平台:"
+    >
+        <el-select size="small" v-model="dynamicValidateForm.modelState" placeholder="请选择">
+            <el-option
+            v-for="item in dynamicValidateForm.stateList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+            </el-option>
+        </el-select>
+    </el-form-item>
+    <el-form-item
+        prop="modelState"
+        label="开站点:"
+        :rules="[
+        {required: true, message: '开站点不能为空', trigger: 'blur'}
+        ]"
+    >
+        <el-select size="small" v-model="dynamicValidateForm.modelState" placeholder="请选择">
+            <el-option
+            v-for="item in dynamicValidateForm.stateList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+            </el-option>
+        </el-select>
+    </el-form-item>
+    <el-form-item
+        prop="name"
+        label="店铺别名:"
+        :rules="[
+        {required: true, message: '店铺不能为空', trigger: 'blur'}
+        ]"
+    >
+        <el-input v-model="dynamicValidateForm.name"></el-input>
+    </el-form-item>
+    <el-form-item
+        prop="email"
+        label="Amazon账号:"
+        :rules="[
+        { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+        { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+        ]"
+    >
+        <el-input v-model="dynamicValidateForm.email" style="margin-left: 50px;"></el-input>
+    </el-form-item>
+        <el-form-item
+        prop="MerID"
+        label="Merchant ID:"
+        :rules="[
+        {required: true, message: '卖家编号', trigger: 'blur'}
+        ]"
+    >
+        <el-input v-model="dynamicValidateForm.MerID"></el-input>
+    </el-form-item>
+    <el-form-item
+        prop="AWSID"
+        label="AWS Access Key ID:"
+        :rules="[
+        {required: true, message: 'AWS访问键编码', trigger: 'blur'}
+        ]"
+    >
+        <el-input v-model="dynamicValidateForm.AWSID"></el-input>
+    </el-form-item>
+      <el-form-item
+        prop="secKey"
+        label="Secret Key:"
+        :rules="[
+        {required: true, message: '密钥', trigger: 'blur'}
+        ]"
+    >
+        <el-input v-model="dynamicValidateForm.secKey"></el-input>
+    </el-form-item>
+    </el-form>
+    <p style="text-align: right; padding-right: 65px;">
+        <a href="javascript:;">如何获取上述信息</a>
+    </p>
+    <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">授 权</el-button>
+    </span>
+    </el-dialog>
     </div>
 </template>
 <script>
@@ -86,6 +172,29 @@ export default {
     },
     data(){
         return{
+            centerDialogVisible: false,
+            dynamicValidateForm: {
+            modelState: '',
+            stateList: [
+                {
+                    value: 'New York',
+                    label: 'New York'
+                },
+                {
+                    value: 'London',
+                    label: 'London'
+                },
+                {
+                    value: 'Sydney',
+                    label: 'Sydney'
+                }
+            ],
+            name:'',
+            email: '',
+            MerID:'',
+            AWSID:'',
+            secKey:''
+            },
             modelCountry:'',
             countryList: [
             {
@@ -180,6 +289,20 @@ export default {
      }
      .listWrap{
         border: 1px solid #e6e6e6;
+     }
+     .shopstyle{
+         .demo-dynamic{
+             .el-form-item__error{
+                 left: 50px;
+             }
+             .el-form-item__label{
+                 white-space: nowrap;
+             }
+             .el-input{
+                 margin-left: 50px;
+                 width: 80%;
+             }
+         }
      }
 }
 </style>

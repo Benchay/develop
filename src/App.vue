@@ -2,11 +2,12 @@
   <div id="pcfather">
     <div id="wrap">
     <div id="header">
-        <v-header></v-header>
+        <v-header v-if="$route.name !='signin'&&$route.name !='register'&&$route.name !='forgetPwd'"></v-header>
+        <v-signheader v-else></v-signheader>
       </div>
           <div id="main" class="clearfix">
             <div id="content">
-                <div class="bg">
+                <div class="bg" :class="{'bgsign':$route.name =='signin'||$route.name =='register'||$route.name =='forgetPwd'}">
 
                 </div>
                 <keep-alive>
@@ -15,7 +16,7 @@
             </div>
           </div>
         </div>
-        <div id="footer">
+        <div id="footer" v-if="$route.name !='signin'&&$route.name !='register'&&$route.name !='forgetPwd'">
             <v-footer></v-footer>
       </div>
   </div>
@@ -24,10 +25,15 @@
 <script>
 import header from '@/components/header'
 import footer from '@/components/footer'
+import signheader from '@/components/signheader'
 export default {
     components: { 
     'v-header' : header,
-    'v-footer' : footer
+    'v-footer' : footer,
+    'v-signheader' : signheader
+    },
+    mounted(){
+      console.log(this.$route.name)
     }
 }
 </script>
@@ -46,6 +52,9 @@ export default {
     left: 0;
     background-color: #e9f3f6;
     z-index: -1;
+  }
+  .bg.bgsign{
+    background-color: #ffffff;
   }
 //   .el-tabs__nav{
 //       background-color: #ffffff;
