@@ -8,8 +8,8 @@ import router from './router'
 import './style/reset.scss'
 import './style/element-variables.scss'
 Vue.use(ElementUI)
-import api from './api/index.js'
-Vue.use(api)
+// import api from './api/index.js'
+// Vue.use(api)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

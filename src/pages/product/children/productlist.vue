@@ -212,24 +212,24 @@ export default {
         this.inputVisible = false;
         this.inputValue = '';
       },
-      addproduct(){
-          let param = {
-              url:this.productLink,
-            title:this.productName
-        }
-          console.log(param);
-        this.$api.addProduct(param).then(res=>{
+    //   addproduct(){
+    //       let param = {
+    //           url:this.productLink,
+    //         title:this.productName
+    //     }
+    //       console.log(param);
+    //     this.$api.addProduct(param).then(res=>{
 
-        })
-       },
-       initdata(){
-           let param = {
+    //     })
+    //    },
+    //    initdata(){
+    //        let param = {
 
-           }
-            this.$api.productList(param).then(res =>{
+    //        }
+    //         this.$api.productList(param).then(res =>{
 
-            })
-       }
+    //         })
+    //    }
     }
 }
 </script>
