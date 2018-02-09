@@ -56,15 +56,15 @@
     width="46%"
     center
     class="productstyle">
-    <p><span>商品链接:</span><el-input size="small" v-model="input" placeholder="请输入商品链接" style="width: 74%; margin: 0 10px"></el-input><el-button>商品抓取</el-button></p>
+    <p><span>商品链接:</span><el-input size="small" v-model="productLink" placeholder="请输入商品链接" style="width: 74%; margin: 0 10px"></el-input><el-button>商品抓取</el-button></p>
     <div class="dialogmainwrap">
         <div class="leftwrap">
-            <p><span class="titledai">商品名称:</span><el-input size="small" v-model="input" placeholder="请输入商品名称" style="width: 80%; margin-right: 10px"></el-input></p>
-            <p><span class="titledai">商品ID:</span><el-input size="small" v-model="input" placeholder="请输入商品ID" style="width: 80%; margin-right: 10px"></el-input></p>
-            <p><span class="titledai">店铺名称:</span><el-input size="small" v-model="input" placeholder="请输入店铺名称" style="width: 80%; margin-right: 10px"></el-input></p>
-            <p><span class="titledai">店铺ID:</span><el-input size="small" v-model="input" placeholder="请输入店铺ID" style="width: 80%; margin-right: 10px"></el-input></p>
-            <p><span class="titledai">品牌名称:</span><el-input size="small" v-model="input" placeholder="请输入品牌名称" style="width: 80%; margin-right: 10px"></el-input></p>
-            <p><span class="titledai">商品价格:</span><el-input size="small" v-model="input" placeholder="请输入商品价格" style="width: 80%; margin-right: 10px"></el-input></p>
+            <p><span class="titledai">商品名称:</span><el-input size="small" v-model="productName" placeholder="请输入商品名称" style="width: 80%; margin-right: 10px"></el-input></p>
+            <p><span class="titledai">商品ID:</span><el-input size="small" v-model="productId" placeholder="请输入商品ID" style="width: 80%; margin-right: 10px"></el-input></p>
+            <p><span class="titledai">店铺名称:</span><el-input size="small" v-model="shopName" placeholder="请输入店铺名称" style="width: 80%; margin-right: 10px"></el-input></p>
+            <p><span class="titledai">店铺ID:</span><el-input size="small" v-model="shopId" placeholder="请输入店铺ID" style="width: 80%; margin-right: 10px"></el-input></p>
+            <p><span class="titledai">品牌名称:</span><el-input size="small" v-model="brandName" placeholder="请输入品牌名称" style="width: 80%; margin-right: 10px"></el-input></p>
+            <p><span class="titledai">商品价格:</span><el-input size="small" v-model="productPrice" placeholder="请输入商品价格" style="width: 80%; margin-right: 10px"></el-input></p>
         </div>
         <div class="rightwrap">
             <div class="Qimgwrap">
@@ -80,7 +80,7 @@
         <span class="titledai">颜色:</span>
         <el-tag
         :key="tag"
-        v-for="tag in dynamicTags"
+        v-for="tag in ColordynamicTags"
         closable
         :disable-transitions="false"
         @close="handleClose(tag)">
@@ -94,15 +94,16 @@
         size="small"
         @keyup.enter.native="handleInputConfirm"
         @blur="handleInputConfirm"
+        style="width: 80px;"
         >
         </el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">新增</el-button>
     </div>
-    <div class="tagwrap">
+    <!-- <div class="tagwrap">
         <span class="titledai">尺码:</span>
          <el-tag
         :key="tag"
-        v-for="tag in dynamicTags"
+        v-for="tag in SizedynamicTags"
         closable
         :disable-transitions="false"
         @close="handleClose(tag)">
@@ -110,19 +111,20 @@
         </el-tag>
         <el-input
         class="input-new-tag"
-        v-if="inputVisible"
-        v-model="inputValue"
-        ref="saveTagInput"
+        v-if="inputVisible1"
+        v-model="inputValue1"
+        ref="saveTagInput1"
         size="small"
         @keyup.enter.native="handleInputConfirm"
         @blur="handleInputConfirm"
+        style="width: 80px;"
         >
         </el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-    </div>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput1">新增</el-button>
+    </div> -->
     <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="addproduct()">确 定</el-button>
     </span>
     </el-dialog>
     </div> 
@@ -134,9 +136,20 @@ export default {
     },
     data() {
       return {
-        dynamicTags: ['标签一', '标签二', '标签三'],
+        productLink:'',
+        productName:'',
+        productId:'',
+        shopName:'',
+        shopId:'',
+        brandName:'',
+        productPrice:'',
+        checked: false,
+        ColordynamicTags: ['红', '白', '黑'],
+        SizedynamicTags: ['S', 'M', 'L'],
         inputVisible: false,
+        inputVisible1: false,
         inputValue: '',
+        inputValue1: '',
         centerDialogVisible: false,
         modelShop:'',
           shopList: [
@@ -170,133 +183,18 @@ export default {
         ],
         valueSeach:'' ,
         containItems:[
-            {
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-               img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'  
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            },{
-                img: require('./111.png'),
-                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
-                price: '$11122122',
-                wish: 'wish'
-            }
+  
         ]
       };
     },
+    created () {
+    },
+    mounted(){
+        // this.initdata();
+    },
     methods:{
         handleClose(tag) {
-        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+        this.ColordynamicTags.splice(this.ColordynamicTags.indexOf(tag), 1);
       },
 
       showInput() {
@@ -309,11 +207,29 @@ export default {
       handleInputConfirm() {
         let inputValue = this.inputValue;
         if (inputValue) {
-          this.dynamicTags.push(inputValue);
+          this.ColordynamicTags.push(inputValue);
         }
         this.inputVisible = false;
         this.inputValue = '';
-      }
+      },
+      addproduct(){
+          let param = {
+              url:this.productLink,
+            title:this.productName
+        }
+          console.log(param);
+        this.$api.addProduct(param).then(res=>{
+
+        })
+       },
+       initdata(){
+           let param = {
+
+           }
+            this.$api.productList(param).then(res =>{
+
+            })
+       }
     }
 }
 </script>

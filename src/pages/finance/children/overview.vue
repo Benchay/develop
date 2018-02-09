@@ -235,7 +235,7 @@ export default {
                     background-image: url(./yong_1.png);
                 }
             }
-            .firegold,.warninglight{
+            .firegold.warninglight{
                 &:before{
                     background-image: url(./warning_1.png);
                 }

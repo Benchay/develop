@@ -47,7 +47,14 @@
               <h2>数据统计</h2>
               <span>更多<i class="morewrap"><img src="./more.png" alt=""></i></span>
           </div>
-     
+          <div class="plate">
+              <div class="plateitem">
+
+              </div>
+              <div class="plateitem"></div>
+              <div class="plateitem"></div>
+              <div class="plateitem"></div>
+          </div>
       </div>
      <div class="sideitem">
           <div class="cardheader">
@@ -59,14 +66,27 @@
     <div class="aduser">
        <div class="aduseritem">
           <div class="cardheader">
-              <h2>收益趋势</h2>
+              <h2>公告</h2>
               <span>更多<i class="morewrap"><img src="./more.png" alt=""></i></span>
+          </div>
+          <div class="adcontent">
+              <div class="adcontentitem">
+                  <div class="adavatarimg">
+                      <img src="./111.png" alt="">
+                  </div>
+                  <p>
+                    
+                  </p>
+              </div>
           </div>
       </div>
        <div class="aduseritem">
           <div class="cardheader">
-              <h2>收益趋势</h2>
+              <h2>新手入门</h2>
               <span>更多<i class="morewrap"><img src="./more.png" alt=""></i></span>
+          </div>
+          <div class="xinshouwrap">
+              <img src="./xinshou.png" alt="">
           </div>
       </div>
     </div>
@@ -224,6 +244,8 @@ export default {
         margin-top: 20px;
         .sideitem{
           flex: 1;
+          border-radius: 4px;
+          border:1px solid #cccccc;
           margin-right: 16px;
           height: 258px;
           background: #ffffff;
@@ -238,11 +260,22 @@ export default {
         .aduseritem{
           flex: 2;
           height: 228px;
+          border-radius: 4px;
+          border:1px solid #cccccc;
           background: #ffffff;
           margin-right: 16px;
           &:last-child{
             flex: 1;
             margin-right: 0;
+            .cardheader{
+              border-bottom: none;
+            }
+          }
+          .xinshouwrap{
+            @include wh(100%, 188px);
+            img{
+            @include wh(100%, 100%);
+            }
           }
         }
       }
@@ -251,7 +284,7 @@ export default {
         font-size: 16px;
         height:260px;
         background: #fff;
-        border:1px solid #d7d7d7;
+        border:1px solid #cccccc;
         border-radius: 4px;
         .foottitle{
           width: 100%;
@@ -263,9 +296,12 @@ export default {
         }
         .footcontent{
           display: flex;
-          justify-content: space-around;
+          padding: 30px 0;
+          height: 220px;
+          box-sizing: border-box;
           &>div{
             flex: 1;
+            margin: 0 40px;
             img{
               width: 100%;
               height: 100%;

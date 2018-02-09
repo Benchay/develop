@@ -33,7 +33,7 @@ export default {
     'v-signheader' : signheader
     },
     mounted(){
-      console.log(this.$route.name)
+      // console.log(this.$route.name)
     }
 }
 </script>
