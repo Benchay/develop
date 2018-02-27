@@ -4,15 +4,18 @@
       <el-col :span="14" class="flex2" style="margin-top: 80px"><img src="./bj.png" alt=""></el-col>
       <div class="loginForm">
         <p class="loginTitle">商务系统</p>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
-          <el-form-item label="" prop="name">
-            <el-input v-model="ruleForm2.name" placeholder="请输入帐号..." auto-complete="off" prefix-icon="el-icon-user"></el-input>
+        <el-form :model="form" status-icon :rules="rules2" ref="form" class="demo-ruleForm">
+          <el-form-item label="" prop="username">
+            <el-input v-model="form.username" placeholder="请输入帐号..." auto-complete="off" prefix-icon="el-icon-user"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="checkPass">
-            <el-input type="password" v-model="ruleForm2.checkPass" placeholder="请输入密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
+          <el-form-item label="" prop="password">
+            <el-input type="password" v-model="form.password" placeholder="请输入密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="age">
-            <el-input v-model.number="ruleForm2.age" style="width:60%;float: left;"></el-input>
+          <el-form-item label="" prop="verificationCode">
+            <el-input v-model.number="form.verificationCode" style="width:60%;float: left;"></el-input>
+            <el-tooltip class="item" effect="dark" content="点击切换图片" placement="top-start">
+              <img :src="codeImgSrc" alt="${0}" style="height: 40px; width: 90px; margin-left: 10px;" @click="resetCodeImg">
+            </el-tooltip>
           </el-form-item>
           <el-form-item>
             <div class="loginPwd">
@@ -20,7 +23,7 @@
             </div>
           </el-form-item>
           <el-form-item class="loginSub">
-            <el-button type="primary" @click="">登 录</el-button>
+            <el-button type="primary" @click="onSubmit">登 录</el-button>
           </el-form-item>
           <el-form-item class="loginRegister">
             <router-link  :to='{path:"/register"}' class="findpwd">立即注册</router-link>
@@ -33,6 +36,7 @@
 </template>
 
 <script>
+import {callJsonApi} from '@/data/callApi'
   export default {
     components: {
     },
@@ -52,16 +56,20 @@
         }
       }
       return{
-        checked:false,
-        ruleForm2: {
-          name: '',
-          checkPass: '',
+        codeImgSrc: '',
+        checked:true,
+        form: {
+          username: '',
+          password: '',
+          verificationCode: '',
+          dsitributorId: 1,
+      		type: 1
         },
         rules2: {
-          name: [
+          username: [
             { validator: validatePass, trigger: 'blur' }
           ],
-          checkPass: [
+          password: [
             { validator: validatePass2, trigger: 'blur' }
           ],
         },
@@ -69,7 +77,57 @@
       }
     },
     methods: {
-
+      // 提交登录数据进行登录
+      onSubmit () {
+        if (this.form.username) {
+          if (this.form.password) {
+            if (this.form.verificationCode) {
+              let me = this
+              // 进行等路
+              callJsonApi('/pub/user/login', this.form, function (res) {
+                if (res.status >= 200 && res.status < 300) {
+                  // 登录成功
+                  if (res.data.success) {
+                    // 装在用户ID以及用户所在公司ID
+                    console.log(res.data.content)
+                    localStorage.setItem('userId', res.data.content.userId)
+                    localStorage.setItem('companyId', res.data.content.companyId)
+                    localStorage.setItem('usertype', me.form.type)
+                    localStorage.setItem('access_token', res.data.content.access_token)
+                    me.$router.push({path: '/'})
+                    // window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
+                    localStorage.setItem('username', res.data.content.username)
+                    // console.log(res)
+                  }else{
+                    switch (me.form.type) {
+                      case 1:
+                        me.$message('您当前登录的是: 推手系统 ' + res.data.errmsg)
+                      break
+                      case 2:
+                        me.$message('您当前登录的是: 推手系统 ' + res.data.errmsg)
+                        break
+                    }
+                  }
+                }
+              })
+            } else {
+              this.$message('请输入验证码')
+            }
+          } else {
+            this.$message('请输入密码')
+          }
+        } else {
+          this.$message('请输入手机号码或用户名')
+        }
+      },
+      // 更新验证码
+      resetCodeImg () {
+        this.codeImgSrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+      },
+    },
+    // 自动加载图片验证码
+    created: function () {
+      this.codeImgSrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
     }
   }
 </script>

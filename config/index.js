@@ -15,12 +15,12 @@ module.exports = {
         target: 'http://proxy.tintop.cn:26081',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/api'
+          '^/api': ''
         }
       },
-      headers: {
-        'token': 'SID=810q3nmoi5mfp8geb9bkm9jql0;'
-      }
+      // headers: {
+      //   'token': 'SID=810q3nmoi5mfp8geb9bkm9jql0;'
+      // }
     },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -30,7 +30,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
