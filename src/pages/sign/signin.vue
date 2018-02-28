@@ -23,7 +23,7 @@
             </div>
           </el-form-item>
           <el-form-item class="loginSub">
-            <el-button type="primary" @click="onSubmit">登 录</el-button>
+            <el-button type="primary" style="height: 40px;" @click="onSubmit">登 录</el-button>
           </el-form-item>
           <el-form-item class="loginRegister">
             <router-link  :to='{path:"/register"}' class="findpwd">立即注册</router-link>
