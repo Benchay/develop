@@ -3,27 +3,41 @@
     <el-col :span="24" class="register3">
       <div class="pwdForm lr">
         <p class="loginTitle">新用户注册</p>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
-          <el-form-item label="" prop="name">
-            <el-input v-model="ruleForm2.name" placeholder="请输入用户名..." auto-complete="off" prefix-icon="el-icon-user"></el-input>
+        <el-form :model="form" status-icon :rules="rules2" ref="form" class="demo-ruleForm">
+
+          <!-- <el-form-item label="" prop="name">
+            <el-input v-model="form.name" placeholder="请输入用户名..." auto-complete="off" prefix-icon="el-icon-user"></el-input>
+          </el-form-item> -->
+
+          <el-form-item label="" prop="mobile">
+            <el-input v-model="form.mobile" placeholder="请输入手机号..." auto-complete="off" prefix-icon="el-icon-phones"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="name">
-            <el-input v-model="ruleForm2.name" placeholder="请输入手机号..." auto-complete="off" prefix-icon="el-icon-phones"></el-input>
+
+          <!-- 手机验证码 -->
+          <el-form-item>
+            <el-input v-model="form.mobileCode" placeholder="请输入手机验证码">
+              <template slot="append" class="" >
+                <el-button v-if="sendMobile" type="infor" class="codeBtn" style="background-color: #205081; color:white; height: 38px;" @click="sendMobileCode">获取验证码</el-button>
+                <el-button disabled v-else type="primary" style="backgroudn-color: red; width: 110px;">{{countDown}}</el-button>
+              </template>
+            </el-input>
           </el-form-item>
-          <el-form-item label="" prop="pass">
-            <el-input type="password" v-model="ruleForm2.pass" placeholder="请输新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
+
+          <el-form-item label="" prop="password">
+            <el-input type="password" v-model="form.password" placeholder="请输新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="checkPass">
-            <el-input type="password" v-model="ruleForm2.checkPass" placeholder="请再次输入新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
+          <el-form-item label="" prop="rePassword">
+            <el-input type="password" v-model="form.rePassword" placeholder="请再次输入新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="age">
-            <el-input v-model.number="ruleForm2.age" style="width:60%;float: left;"></el-input>
+          <el-form-item label="" prop="verificationCode">
+            <el-input v-model="form.verificationCode" style="width:60%;float: left; margin-right: 10px;"></el-input>
+            <img :src="imgsrc" alt="${0}"  @click="resetImgCode" style="display:block; width: 110px; height: 40px;">
           </el-form-item>
           <el-form-item  class="protocol">
-            <el-checkbox v-model="radio"><span style="font-size: 12px">阅读并接受</span></el-checkbox><a href="http://cws.nabei.net:8106/agreement.html" target="view_window" class="protocolColor">《推手系统用户注册协议》</a>
+            <el-checkbox v-model="checked"><span style="font-size: 12px">阅读并接受</span></el-checkbox><a href="http://cws.nabei.net:8106/agreement.html" target="view_window" class="protocolColor">《推手系统用户注册协议》</a>
           </el-form-item>
           <el-form-item class="loginSub">
-            <el-button type="primary" @click="">立即注册</el-button>
+            <el-button type="primary" @click="onSubmit">立即注册</el-button>
           </el-form-item>
           <el-form-item class="pwdRegister">
             <router-link  :to='{path:"/signin"}' class="findpwd">已有账号？<span>马上登录</span></router-link>
@@ -35,23 +49,40 @@
 </template>
 
 <script>
+import {callJsonApi} from '@/data/callApi'
   export default {
     components: {
     },
     data(){
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入账户名称'));
+      var mobile = (rule, value, callback) => {
+        let me = this
+        var reg = /^1\d{10}$/
+        if (reg.test(value)) {
+          callJsonApi ('/pub/user/check_mobile', {mobile: value}, function (res) {
+            console.log(res)
+            me.form.username = me.form.mobile
+            if (res.status >= 200 && res.status < 300) {
+              if (res.data.success) {
+                me.countDown = 60
+                me.sendMobile = true
+                callback()
+              } else {
+                callback(res.data.errmsg);
+              }
+            }
+          })
         } else {
-          callback();
+          this.countDown = '获取验证码'
+          this.sendMobile = false
+          callback(new Error('手机号码有误，请重新输入'));
         }
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
+          if (this.form.rePassword !== '') {
+            this.$refs.form.validateField('rePassword');
           }
           callback();
         }
@@ -59,27 +90,36 @@
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
+        } else if (value !== this.form.password) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
         }
       }
       return{
+        imgsrc: '',
+        sendMobile: false,
+        countDown: '',
         checked:false,
-        ruleForm2: {
-          name: '',
-          pass:'',
-          checkPass: '',
+        form: {
+          password:'',
+          rePassword: '',
+          mobile:'',
+          inviteCode:'',
+          username: '',
+          mobileCode: '',         //手机验证码
+          companyName: 'H',       // 公司名
+          verificationCode: '',
+          distributorId: 1        //分销商ID
         },
         rules2: {
-          name: [
+          mobile: [
+            { validator: mobile, trigger: 'blur' }
+          ],
+          password: [
             { validator: validatePass, trigger: 'blur' }
           ],
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
+          rePassword: [
             { validator: validatePass2, trigger: 'blur' }
           ],
         },
@@ -87,7 +127,71 @@
       }
     },
     methods: {
+      // 提交注册信息
+      onSubmit () {
+        var reg = /^1\d{10}$/
+        let me = this
 
+        if (reg.test(this.form.mobile)) {
+          if (this.form.mobileCode != '') {
+            if (this.form.password != '') {
+              if (this.form.verificationCode) {
+                callJsonApi('/pub/user/register_merchant', this.form, function (res) {
+                  if (res.status >= 200 && res.status < 300) {
+                    console.log(res)
+                    if (res.data.success) {
+                      me.$message('注册成功，5秒后自动条转入登录页面')
+                      setTimeout(function () {
+                        me.$router.push({path: '/Login'})
+                      },5000)
+                    }
+                  }
+                })
+              }else{
+                this.$message('请输入验证码')
+              }
+            }else{
+              this.$message('请输入密码，确保您的账号安全')
+            }
+          }else {
+            this.$message('请输入手机验证码')
+          }
+        } else {
+          this.$message('请输入注册信息')
+        }
+      },
+
+      // 手机发送验证码
+      sendMobileCode () {
+        var reg = /^1\d{10}$/
+        if (this.sendMobile && reg.test(this.form.mobile)) {
+          // 异步发送手机验证码
+          callJsonApi('/pub/user/send_mobile_message', {mobile: this.form.mobile, distributorId: 1, type: 1}, function (res) {
+            console.log(res)
+            // 等待有所需求添加方法
+          })
+          // 禁用按钮
+          this.sendMobile = false
+          let me = this
+          // 使用定时器循环设置时间跳动
+          var time = setInterval(function () {
+            if (me.countDown-- > 0) {
+            }else {
+              clearInterval(time)
+              me.countDown = 60
+              me.sendMobile = true
+            }
+          }, 1000)
+        } else {
+          console.log('手机号有误')
+        }
+      },
+      resetImgCode () {
+        this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+      }
+    },
+    created: function () {
+      this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
     }
   }
 </script>

@@ -107,8 +107,10 @@ export default {
     },
     changeSystem (value) {
       if (value === '1') {
+        console.log(1)
         window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
       } else if (value === '2') {
+        console.log(2)
         window.location.href='http://proxy.tintop.cn:26082/pbs/index.html'
       }
     },
