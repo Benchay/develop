@@ -1,180 +1,155 @@
 <template>
-    <div class="flowspreadsever">
-        <div class="tableWrap">
-            <div class="tabHeader">
-                <div class="entry">
-                    <p>入口</p>
-                </div>
-                <div class="ordinaryClick">
-                    <p>普通点击</p>
-                    <p>($0.2/个)</p>
-                </div>
-                <div class="ordinaryBuy">
-                    <p>普通加购</p>
-                    <p>($0.2/个)</p>
-                </div>
-                <div class="ordinaryCollection">
-                    <p>普通收藏</p>
-                    <p>($0.2/个)</p>
-                </div>
-                <div class="vote">
-                    <p>投票</p>
-                    <p>($2/个)</p>
-                </div>
-                <div class="comment">
-                    <p>回复评论</p>
-                    <p>($2/个)</p>
-                </div>
-            </div>
-            <div class="tabBody">
-                <div class="tabBodyItem">
-                    <div class="entrySearch">
-                        <span class="insbefore">搜索</span>
-                        <el-input v-model="input" placeholder="请输入内容"></el-input>
-                        <span class="insafter">X</span>
-                    </div>
-                    <div class="clickinputNum">
-                         <el-input-number v-model="num1"  @change="handleChange" :min="1" label="描述文字"></el-input-number>
-                    </div>
-                    <div class="buyinputNum">
-                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
-                    </div>
-                    <div class="collectioninputNum">
-                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
-                    </div>
-                    <div class="voteinputNum">
-                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
-                    </div>
-                    <div class="commentinputNum">
-                         <el-input-number v-model="num2" @change="handleChange" :min="1" label="描述文字"></el-input-number>
-                    </div>
-                </div>
-            </div>
+  <div class="flowspreadsever">
+    <div class="tableWrap">
+      <div class="tabHeader">
+        <div class="entry">
+          <p>入口</p>
         </div>
-        <div class="addMore">
-            <el-button plain>+ 添加更多</el-button>
+        <div class="ordinaryClick" v-for="item in activityList">
+          <p>{{item.name}}</p>
+          <p>{{item.commissionChargePrice}}</p>
         </div>
+      </div>
+      <div class="tabBody">
+        <div class="tabBodyItem">
+          <div class="entrySearch">
+            <span class="insbefore">搜索</span>
+            <el-input v-model="keyword" placeholder="请输入内容"></el-input>
+            <span class="insafter">X</span>
+          </div>
+          <div class="clickinputNum" v-for="item in activityList">
+            <el-input-number v-model="num1" @change="handleChange" :min="1" label="描述文字"></el-input-number>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="addMore">
+      <el-button plain>+ 添加更多</el-button>
+    </div>
+  </div>
 </template>
 <script>
-export default {
-  data(){
-       return{
-        input:'',
-        num1:'',
-        num2:'',
+  export default {
+    data() {
+      return {
+        activityList: [
+        ],
+        keyword:'',
+        input: '',
+        num1: '',
+        num2: '',
         radio2: 3
-       }
-  },
+      }
+    },
     methods: {
-    handleChange(value) {
+      handleChange(value) {
         console.log(value);
       }
     }
-}
+  }
 </script>
 <style lang="scss">
-.el-collapse-item__content{
+  .el-collapse-item__content {
     position: relative;
-    .addMore{
-    width: 100%;
-    height: 38px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    text-align: center;
-    background-color: #f5f5f5;
-    .el-button{
+    .addMore {
+      width: 100%;
+      height: 38px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      text-align: center;
+      background-color: #f5f5f5;
+      .el-button {
         border: none;
         width: 120px;
         height: 38px;
         color: #205081;
         font-weight: 600;
         background-color: #f5f5f5;
+      }
     }
-    }
-}
+  }
 
-.flowspreadsever{
+  .flowspreadsever {
     padding-bottom: 38px;
-    .tableWrap{
-        overflow: hidden;
-        .tabHeader{
-            padding: 0 30px;
+    .tableWrap {
+      overflow: hidden;
+      .tabHeader {
+        padding: 0 30px;
+        display: flex;
+        margin-bottom: 10px;
+        div {
+          flex: 1;
+          height: 38px;
+          text-align: center;
+          background-color: #f5f5f5;
+          margin-right: 20px;
+          border-radius: 20px 20px 0 0;
+          border: 1px solid #cccccc;
+          overflow: hidden;
+          &.entry {
+            flex: 3;
+            p {
+              height: 38px;
+              line-height: 38px;
+            }
+          }
+          &:last-child {
+            margin-right: 0px;
+          }
+          p {
+            height: 19px;
+            line-height: 19px;
+            &:nth-child(2) {
+              color: #ee811e;
+            }
+          }
+        }
+      }
+      .tabBody {
+        .tabBodyItem {
+          display: flex;
+          padding: 0 30px;
+          margin-bottom: 20px;
+          & > div {
+            flex: 1;
+            height: 40px;
+            margin-right: 22px;
+            &:last-child {
+              margin-right: 0px;
+            }
+            .el-input-number {
+              width: 100%;
+            }
+          }
+          .entrySearch {
+            flex: 3;
             display: flex;
-            margin-bottom: 10px;
-            div{
-                flex: 1;
-                height: 38px;
-                text-align: center;
-                background-color: #f5f5f5;
-                margin-right: 20px;  
-                border-radius: 20px 20px 0 0;
-                border: 1px solid #cccccc;
-                overflow: hidden;
-                &.entry{
-                    flex: 3;
-                     p{
-                        height: 38px;  
-                        line-height: 38px;
-                        }
-                }
-                &:last-child{
-                margin-right: 0px;  
-                }
-                p{
-                  height: 19px;  
-                  line-height: 19px;
-                  &:nth-child(2){
-                      color: #ee811e;
-                  }
-                }
+            .insbefore {
+              width: 75px;
+              text-align: right;
+              line-height: 40px;
+              border-radius: 20px 0 0 20px;
+              background-color: #75d282;
+              padding-right: 18px;
+              color: #ffffff;
             }
-        }
-        .tabBody{
-            .tabBodyItem{
-                 display: flex;
-                 padding: 0 30px;
-                 margin-bottom: 20px;
-                &>div{
-                  flex: 1; 
-                  height: 40px;
-                  margin-right: 22px;   
-                    &:last-child{
-                margin-right: 0px;  
-                }
-                .el-input-number{
-                    width: 100%;
-                }
-                }
-                .entrySearch{
-                    flex: 3;
-                    display: flex;
-                    .insbefore{
-                        width: 75px;
-                        text-align: right;
-                        line-height: 40px;
-                        border-radius: 20px 0 0 20px;
-                        background-color: #75d282;
-                        padding-right: 18px;
-                        color: #ffffff;
-                    }
-                    .insafter{
-                        width: 40px;
-                        text-align: center;
-                        line-height: 40px;
-                        font-size: 20px;
-                        background-color: #fe6c6f;
-                        color: #ffffff;
-                    }
-                    .el-input__inner{
-                        flex: 1;
-                        border-radius: 0;
-                    }
-                }
+            .insafter {
+              width: 40px;
+              text-align: center;
+              line-height: 40px;
+              font-size: 20px;
+              background-color: #fe6c6f;
+              color: #ffffff;
             }
+            .el-input__inner {
+              flex: 1;
+              border-radius: 0;
+            }
+          }
         }
+      }
     }
-}
+  }
 </style>
 
