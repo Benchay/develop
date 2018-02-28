@@ -101,7 +101,7 @@
       querylisting() {
         var _this = this
         _this.centerDialogVisible = true;
-        callApiWithToken('mbs/api/listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
+        callApiWithToken('/api/listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
           _this.tableData = res.data.content.records
           console.log(res.data.content.records)
         })

@@ -261,11 +261,11 @@
     },
     created() {
       var _this = this
-      callApiWithToken('mbs/api/listing/find_web_site_code_dist', {}, function (res) {
+      callApiWithToken('/api/listing/find_web_site_code_dist', {}, function (res) {
         _this.webSiteCodeList = res.data.content
         console.log(res)
       })
-      callApiWithToken('mbs/api/listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
+      callApiWithToken('/api/listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
         _this.tableData = res.data.content.records
         console.log(res.data.content.records)
       })
@@ -295,7 +295,7 @@
       },
       addproduct() {
         var _this = this
-        callApiWithToken('mbs/api/listing/add_listing', this.listing, function (res) {
+        callApiWithToken('/api/listing/add_listing', this.listing, function (res) {
           if(res.data.success){
             _this.centerDialogVisible=false;
             alert("添加成功")
@@ -323,7 +323,7 @@
       },
       grabproduct() {
         var _this = this
-        callApiWithToken('mbs/api/listing/grab_listing', {
+        callApiWithToken('/api/listing/grab_listing', {
           'listingUrl': this.listing.url,
           'webSiteCode': this.webSiteCode
         }, function (res) {
