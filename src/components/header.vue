@@ -61,7 +61,7 @@
             <el-menu-item index="3"><i class="spreadscentericon"></i>推广中心</el-menu-item>
             <el-menu-item index="4"><i class="myspreadicon"></i><span class="myspreadtitle">我的推广</span></el-menu-item>
             <el-menu-item index="5"><i class="taskicon"></i><span>审核任务</span><span class="tasktitle">22</span></el-menu-item> -->
-            <el-menu-item v-for="item in ItemList" :index="item.id + ''">{{item.name}}</el-menu-item>
+            <el-menu-item v-for="item in ItemList" :index="item.authId + ''">{{item.name}}</el-menu-item>
           </el-menu>
         </div>
     </div>
@@ -129,7 +129,7 @@ export default {
       this.username = localStorage.getItem('username')
       // 自动加载导航栏
       let me = this
-      callApiToken('/api/auth/query_auths_by_application', {applicationId: 1}, function (res) {
+      callApiToken('/role/query_user_auths', {applicationId: 1}, function (res) {
         if (res.status>= 200 && res.status<300) {
           if (res.data.success) {
             console.log(res)

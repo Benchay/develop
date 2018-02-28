@@ -18,6 +18,13 @@ module.exports = {
           '^/api': ''
         }
       },
+      '/ums': {
+        target: 'http://proxy.tintop.cn:26081/ums/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ums': ''
+        }
+      },
       // headers: {
       //   'token': 'SID=810q3nmoi5mfp8geb9bkm9jql0;'
       // }

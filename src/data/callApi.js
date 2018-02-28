@@ -32,7 +32,7 @@ export function callFormApi(url, paramObj, fun) {
 *******************************************************************************/
 export function callJsonApi(url, jsonData, fun) {
   axios({
-    url: '/api/ums/' + url,
+    url: '/ums/' + url,
     method: 'POST',
     data: jsonData
   }).then((res) => {
@@ -44,7 +44,7 @@ export function callApiToken(url, jsonData, fun) {
   console.log(url)
   var str = localStorage.getItem('access_token')
   axios({
-    url: '/api/ums/api/' + url +'?access_token=' + str,
+    url: '/ums/api/' + url +'?access_token=' + str,
     method: 'POST',
     data: jsonData
   }).then((res) => {
