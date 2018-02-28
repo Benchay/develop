@@ -3,12 +3,12 @@
         <div class="top">
           <el-row>
             <el-col :span="16">
-              <el-select v-model="value" placeholder="请选择" size="small" @change="changeSystem">
+              <el-select v-model="typeValue" placeholder="请选择" size="small" @change="changeSystem">
                 <el-option
                   v-for="item in systemList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
                 </el-option>
               </el-select>
             </el-col>
@@ -83,7 +83,7 @@ export default {
           label: '商户业务系统'
         },
       ],
-      value: '1',
+      typeValue: '',
       activeIndex:'10001',
     }
   },
@@ -92,7 +92,9 @@ export default {
     logout () {
       console.log('退出登录')
       localStorage.removeItem('access_token')
-      this.$router.push({path:'/signin'})
+      // this.$router.push({path:'/'})
+      window.location.reload(true)
+      // window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
     },
     handleSelect(index){
       if(index == 10001){
@@ -113,10 +115,10 @@ export default {
       }
     },
     changeSystem (value) {
-      if (value === '1') {
+      if (value == '1') {
         console.log(1)
         window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
-      } else if (value === '2') {
+      } else if (value == '2') {
         console.log(2)
         window.location.href='http://proxy.tintop.cn:26082/pbs/index.html'
       }
@@ -132,16 +134,18 @@ export default {
       callApiToken('/role/query_user_auths', {applicationId: 1}, function (res) {
         if (res.status>= 200 && res.status<300) {
           if (res.data.success) {
-            console.log(res)
             // 访问正常
             for (var i = 0; i < res.data.content.auths.length; i++) {
               if (res.data.content.auths[i].parentId === null) {
-
                 me.ItemList.push(res.data.content.auths[i])
               }
             }
             me.systemList = res.data.content.applications
-            me.typeValue = res.data.content.applications[0].name
+            for (var i = 0; i < res.data.content.applications.length; i++) {
+              if (res.data.content.applications[i].id === 1) {
+                me.typeValue = res.data.content.applications[i].name
+              }
+            }
           } else {
             console.log(res)
           }
