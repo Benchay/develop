@@ -213,7 +213,7 @@ import {callJsonApi} from '@/data/callApi'
       align-items: center;
       position: relative;
       .pwdForm{
-         @include wh(300px, 480px);
+         @include wh(340px, 520px);
          @include ctp(0, 450px);
          margin-top: 50px;
         //  left: 90%;

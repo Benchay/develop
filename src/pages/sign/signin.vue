@@ -154,7 +154,7 @@ import {callJsonApi} from '@/data/callApi'
         top: 50%;
         left: 80%;
         margin-top: -200px;
-        margin-left: -50px;
+        margin-left: -150px;
         padding: 25px 35px;
         border-radius: 5px;
         text-align: center;
