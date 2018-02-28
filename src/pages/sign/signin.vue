@@ -12,7 +12,7 @@
             <el-input type="password" v-model="form.password" placeholder="请输入密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
           </el-form-item>
           <el-form-item label="" prop="verificationCode">
-            <el-input v-model.number="form.verificationCode" style="width:60%;float: left;"></el-input>
+            <el-input v-model="form.verificationCode" style="width:60%;float: left;"></el-input>
             <el-tooltip class="item" effect="dark" content="点击切换图片" placement="top-start">
               <img :src="codeImgSrc" alt="${0}" style="height: 40px; width: 90px; margin-left: 10px;" @click="resetCodeImg">
             </el-tooltip>

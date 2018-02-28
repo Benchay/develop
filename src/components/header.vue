@@ -15,7 +15,7 @@
             <el-col :span="8" class="flex">
               <el-dropdown>
                 <span class="el-dropdown-link">
-                  <i class="userimg"><img src="../image/user.png" width="100%" height="100%" alt=""></i>我是某某某用户<i class="el-icon-arrow-down el-icon--right"></i>
+                  <i class="userimg"><img src="../image/user.png" width="100%" height="100%" alt=""></i>{{username}}<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <router-link :to='{path:"/user/basicinfo"}'><el-dropdown-item>个人中心</el-dropdown-item></router-link>
@@ -44,11 +44,11 @@
                 </el-dropdown-menu>
               </el-dropdown>
               <div class="logoout">
-                <router-link :to="{ path: '/signin' }">
-                  <span>
-                    <i class="outimg"><img src="../image/out.png" width="100%" height="100%" alt=""></i>退出登录
+                <!-- <router-link :to="{ path: '/signin' }"> -->
+                  <span @click="logout">
+                    <i class="outimg"><img src="../image/out.png"  width="100%" height="100%" alt=""></i>退出登录
                   </span>
-                </router-link>
+                <!-- </router-link> -->
               </div>
             </el-col>
           </el-row>
@@ -71,6 +71,7 @@ import {callApiToken} from '@/data/callApi'
 export default {
   data () {
     return {
+      username: '',
       ItemList: [],
       systemList: [
         {
@@ -83,26 +84,32 @@ export default {
         },
       ],
       value: '1',
-      activeIndex:'1',
+      activeIndex:'10001',
     }
   },
   methods: {
+    // 退出登录
+    logout () {
+      console.log('退出登录')
+      localStorage.removeItem('access_token')
+      this.$router.push({path:'/signin'})
+    },
     handleSelect(index){
-      if(index == 1){
+      if(index == 10001){
         this.$router.push({path:'/'})
-        this.activeIndex = '1';
-        }else if(index == 2){
+        this.activeIndex = '10001';
+      }else if(index == 10002){
         this.$router.push({path:'/product'})
-        this.activeIndex = '2';
-        }else if(index == 3){
+        this.activeIndex = '10002';
+      }else if(index == 10003){
         this.$router.push({path:'/spreadcenter'})
-        this.activeIndex = '3';
-        }else if(index == 4){
+        this.activeIndex = '10003';
+      }else if(index == 10004){
         this.$router.push({path:'/myspread'})
-        this.activeIndex = '4';
-        }else if(index == 5){
+        this.activeIndex = '10004';
+      }else if(index == 10005){
         this.$router.push({path:'/task'})
-        this.activeIndex = '5';
+        this.activeIndex = '10005';
       }
     },
     changeSystem (value) {
@@ -122,9 +129,10 @@ export default {
       this.username = localStorage.getItem('username')
       // 自动加载导航栏
       let me = this
-      callApiToken('/role/query_user_auths', {applicationId: 1}, function (res) {
+      callApiToken('/api/auth/query_auths_by_application', {applicationId: 1}, function (res) {
         if (res.status>= 200 && res.status<300) {
           if (res.data.success) {
+            console.log(res)
             // 访问正常
             for (var i = 0; i < res.data.content.auths.length; i++) {
               if (res.data.content.auths[i].parentId === null) {

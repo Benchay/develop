@@ -11,6 +11,7 @@ import personal from '@/pages/personal/personal'
 import signin from '@/pages/sign/signin'
 import register from '@/pages/sign/register'
 import forgetPwd from '@/pages/sign/forgetPwd'
+import resetPwd from '@/pages/sign/resetPwd'
 
 // import FinanceIndex from '@/pages/finance/FinanceIndex'
 // import FinanOverview from '@/pages/finance/FinanOverview'
@@ -41,7 +42,7 @@ var route =  new Router({
   routes: [
 	{
       path: '/index.html',
-      redirect: '/'
+      redirect: '/index'
     },
     {
       path: '/',
@@ -132,6 +133,11 @@ var route =  new Router({
       name: 'forgetPwd',
       component: forgetPwd
     },
+    {
+      path: '/resetPwd',
+      name: 'resetPwd',
+      component: resetPwd
+    }
   ]
 })
 
@@ -140,7 +146,7 @@ route.beforeEach(function (to, from, next) {
     var token =localStorage.getItem("access_token");
     //已登录的情况再去登录页，跳转至首页
     // console.log(token);
-    if (to.name != "signin" && to.name != "register") {
+    if (to.name != "signin" && to.name != "register" && to.name != "forgetPwd") {
         if (token) {
             next ();
         }else{

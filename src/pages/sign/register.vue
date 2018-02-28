@@ -34,10 +34,11 @@
             <img :src="imgsrc" alt="${0}"  @click="resetImgCode" style="display:block; width: 110px; height: 40px;">
           </el-form-item>
           <el-form-item  class="protocol">
-            <el-checkbox v-model="checked"><span style="font-size: 12px">阅读并接受</span></el-checkbox><a href="http://cws.nabei.net:8106/agreement.html" target="view_window" class="protocolColor">《推手系统用户注册协议》</a>
+            <el-checkbox v-model="checked"><span style="font-size: 12px">阅读并接受</span></el-checkbox><a href="http://cws.nabei.net:8106/agreement.html" target="view_window" class="protocolColor">《商户系统用户注册协议》</a>
           </el-form-item>
           <el-form-item class="loginSub">
-            <el-button type="primary" @click="onSubmit">立即注册</el-button>
+            <el-button v-if="checked" type="primary" style="height: 40px;" @click="onSubmit">立即注册</el-button>
+            <el-button v-else type="primary" style="background-color: #f5f7fb; color: black;  height: 40px;" disabled>立即注册</el-button>
           </el-form-item>
           <el-form-item class="pwdRegister">
             <router-link  :to='{path:"/signin"}' class="findpwd">已有账号？<span>马上登录</span></router-link>
@@ -99,7 +100,7 @@ import {callJsonApi} from '@/data/callApi'
       return{
         imgsrc: '',
         sendMobile: false,
-        countDown: '',
+        countDown: '获取验证码',
         checked:false,
         form: {
           password:'',
