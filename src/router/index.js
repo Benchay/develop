@@ -42,7 +42,7 @@ var route =  new Router({
   routes: [
 	{
       path: '/index.html',
-      redirect: '/index'
+      redirect: '/'
     },
     {
       path: '/',
