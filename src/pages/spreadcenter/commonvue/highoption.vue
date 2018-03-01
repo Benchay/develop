@@ -1,11 +1,11 @@
 <template>
   <div class="highoption">
       <div class="address">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="平台提供" name="first">
+      <el-tabs v-model="addressType" @tab-click="handleClick">
+        <el-tab-pane label="平台提供" name="1">
 
         </el-tab-pane>
-        <el-tab-pane label="商家自己提供" name="second">
+        <el-tab-pane label="商家自己提供" name="2">
             <div class="addressWrap">
             <el-input
             type="textarea"
@@ -18,8 +18,8 @@
       </el-tabs>
     </div>
     <div class="resource">
-         <el-tabs v-model="activeName2" @tab-click="handleClick">
-        <el-tab-pane label="平台提供" name="first">
+         <el-tabs v-model="resourceType" @tab-click="handleClick">
+        <el-tab-pane label="平台提供" name="1">
             <div class="platform">
                 <el-tabs tab-position="left" style="height: 200px;">
                     <el-tab-pane label="Clothing">
@@ -69,15 +69,15 @@
                 </div>
             </div>
             <div class="mateWrap">
-              <el-tabs v-model="activeNamemate" @tab-click="handleClick">
-                  <el-tab-pane label="优先匹配" name="1">
+              <el-tabs v-model="accountMatchType" @tab-click="handleClick">
+                  <el-tab-pane label="优先匹配" name="2">
                   </el-tab-pane>
-                  <el-tab-pane label="完全匹配" name="2">
+                  <el-tab-pane label="完全匹配" name="1">
                   </el-tab-pane>
               </el-tabs>
             </div>
         </el-tab-pane>
-        <el-tab-pane label="自有资源" name="second">
+        <el-tab-pane label="自有资源" name="2">
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -86,11 +86,11 @@
 <script>
 export default {
     data(){
-       return{ 
-           activeName:'second',
-           activeName2:'first',
-           activeNamemate:'1',
-            textarea3: '' 
+       return{
+         addressType:'1',
+         resourceType:'1',
+         accountMatchType:'1',
+            textarea3: ''
        }
     },
     methods:{

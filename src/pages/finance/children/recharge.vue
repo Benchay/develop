@@ -14,12 +14,20 @@
   </div>
 </template>
 <script>
-export default {
+  import {callApiWithToken} from '@/data/callApi'
+  export default {
   data(){
       return{
         activeName:'first'
       }
-  }
+  },
+  created () {
+    var _this=this
+    callApiWithToken('mbs/api/finance/query_receiver_config',{'pageSize':10,'pageNum':1,'status':1},function (res) {
+      _this.webSiteCodeList=res.data.content
+      console.log(res)
+    })
+  },
 }
 </script>
 <style lang="scss">

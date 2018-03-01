@@ -62,6 +62,17 @@ export function callApiForMbs(url, jsonData, fun) {
     fun(res)
   })
 }
+export function callApiWithToken(url, jsonData, fun) {
+  console.log(url)
+  var str = localStorage.getItem('access_token')
+  axios({
+    url: '/api/' + url +'?access_token=' + str,
+    method: 'POST',
+    data: jsonData
+  }).then((res) => {
+    fun(res)
+  })
+}
 
 /**************************************************************
     时间格式转换，将时间戳转为字符串格式 yyyy-MM-dd hh:mm:ss
