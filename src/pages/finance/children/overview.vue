@@ -219,14 +219,11 @@ export default {
           if (res.status >= 200 && res.status < 300) {
             if(res.data.success) {
               me.reLoadFinance()
-              me.$message({message:'成功获取',type: 'success'})
+              me.$message({message:'更改预警设置成功',type: 'success'})
               me.earlyWarnf = true
             }
           }
         })
-        // callApiForMbs('/finance/query_merchant_finance', {}, function (res) {
-        //
-        // })
 
       },
 

@@ -48,11 +48,9 @@ export function callApiToken(url, jsonData, fun) {
     data: jsonData
   }).then((res) => {
     if (res.status >= 200 && res.status < 300) {
-      if (res.data.errcode == 500 && res.data.errmsg != null && res.data.errmsg.indexOf('Token') == 1) {
-        console.log(res)
-        localStorage.removeItem('access_token')
-        // window.location.href='/'
-        window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
+      if (res.data.errcode == 500 && res.data.errmsg != null && res.data.errmsg.indexOf('Token') != -1) {
+            localStorage.removeItem('access_token')
+            window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
       } else {
         fun(res)
       }
@@ -68,11 +66,9 @@ export function callApiForMbs(url, jsonData, fun) {
     data: jsonData
   }).then((res) => {
     if (res.status >= 200 && res.status < 300) {
-      if (res.data.errcode == 500 && res.data.errmsg != null && res.data.errmsg.indexOf('Token') == 1) {
-        console.log(res)
-        localStorage.removeItem('access_token')
-        // window.location.href='/'
-        window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
+      if (res.data.errcode == 500 && res.data.errmsg != null && res.data.errmsg.indexOf('Token') != -1) {
+            localStorage.removeItem('access_token')
+            window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
       } else {
         fun(res)
       }
