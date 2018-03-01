@@ -6,8 +6,10 @@
       <div class="rechargewrap">
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="支付宝支付" name="first">
+              <alipay/>
             </el-tab-pane>
             <el-tab-pane label="网银支付" name="second">
+              <Onlinebank/>
             </el-tab-pane>
             <el-tab-pane label="微信支付" name="third">
             </el-tab-pane>
@@ -16,8 +18,13 @@
   </div>
 </template>
 <script>
-  import {callApiWithToken} from '@/data/callApi'
-  export default {
+import alipay from '@/pages/finance/children/Alipay'
+import Onlinebank from '@/pages/finance/children/Onlinebank'
+import {callApiWithToken} from '@/data/callApi'
+export default {
+  components: {
+    alipay,Onlinebank
+  },
   data(){
       return{
         activeName:'first'

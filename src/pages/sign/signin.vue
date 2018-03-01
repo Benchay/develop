@@ -100,6 +100,7 @@ import {callJsonApi} from '@/data/callApi'
                     localStorage.setItem('username', res.data.content.username)
                   } else {
                     me.$message.error('账号或密码错误，请确认后重新登录')
+                    console.log(res.data.content)
                   }
                 }
               })

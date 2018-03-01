@@ -103,6 +103,7 @@
   </div>
 </template>
 <script>
+import {callApiForMbs} from '@/data/callApi'
 export default {
    data(){
         return{
@@ -152,6 +153,14 @@ export default {
             detail:'说明',
           }]
         }
+   },
+   methods: {
+
+   },
+   created: function () {
+     callApiForMbs ('/finance/query_merchant_finance', {pageNum: 1, pageSize: 10}, function (res) {
+       console.log('错误信息' + res.data.errmsg)
+     })
    }
 }
 </script>
