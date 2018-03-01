@@ -203,6 +203,7 @@ export default {
                 padding-left: 30px;
                 margin-bottom: 20px;
                 position: relative;
+                font-size: 14px;
                 &:before{
                     position: absolute;
                     top: -6px;
@@ -223,6 +224,7 @@ export default {
                 padding-left: 30px;
                 margin-bottom: 20px;
                 position: relative;
+                font-size: 14px;
                 &:before{
                     position: absolute;
                     top: -3px;

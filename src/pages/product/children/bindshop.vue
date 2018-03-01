@@ -20,7 +20,7 @@
                             :value="item.value">
                             </el-option>
                         </el-select>
-                         <a href="javascript:;" class="addproduct" @click="centerDialogVisible = true"><i></i>新增授权电铺</a>
+                         <a href="javascript:;" class="addproduct" @click="centerDialogVisible = true"><i></i>新增授权店铺</a>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -71,6 +71,13 @@
                 </template>
             </el-table-column>
             </el-table>
+        </div>
+         <div class="paginationwrap">
+            <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="1000">
+                </el-pagination>
         </div>
     <el-dialog
     title="店铺授权"
@@ -304,5 +311,9 @@ export default {
              }
          }
      }
+    .paginationwrap{
+        margin-top: 20px;
+        text-align: right;
+    }
 }
 </style>

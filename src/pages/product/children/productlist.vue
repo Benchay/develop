@@ -40,9 +40,15 @@
                 <img :src="item.img" alt="" width="100%" height="100%">
                 <el-checkbox v-model="checked"></el-checkbox>
             </div>
-            <p class="productDetail">
-               {{item.productDetail}}
-            </p>
+            <div class="detailwrap">
+                <p class="productDetail">
+                {{item.productDetail}}
+                </p>
+                <i class="collect" @click="collectshow = !collectshow">
+                    <img src="./collect_a.png" alt=""  v-if="collectshow">
+                    <img src="./collect_b.png" alt="" v-if="!collectshow">
+                </i>
+            </div>
             <p class="productPrice">
                 <b class="price">{{item.price}}</b>
                 <span class="wish"></span>
@@ -50,6 +56,13 @@
 
         </div>
     </div>
+     <div class="paginationwrap">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="1000">
+        </el-pagination>
+      </div>
     <el-dialog
     title="添加商品"
     :visible.sync="centerDialogVisible"
@@ -61,6 +74,7 @@
         <div class="leftwrap">
             <p><span class="titledai">商品名称:</span><el-input size="small" v-model="productName" placeholder="请输入商品名称" style="width: 80%; margin-right: 10px"></el-input></p>
             <p><span class="titledai">商品ID:</span><el-input size="small" v-model="productId" placeholder="请输入商品ID" style="width: 80%; margin-right: 10px"></el-input></p>
+            <p><span class="titledai">网店平台:</span><el-input size="small" v-model="webstroe" placeholder="请输入网店平台" style="width: 80%; margin-right: 10px"></el-input></p>
             <p><span class="titledai">店铺名称:</span><el-input size="small" v-model="shopName" placeholder="请输入店铺名称" style="width: 80%; margin-right: 10px"></el-input></p>
             <p><span class="titledai">店铺ID:</span><el-input size="small" v-model="shopId" placeholder="请输入店铺ID" style="width: 80%; margin-right: 10px"></el-input></p>
             <p><span class="titledai">品牌名称:</span><el-input size="small" v-model="brandName" placeholder="请输入品牌名称" style="width: 80%; margin-right: 10px"></el-input></p>
@@ -99,7 +113,7 @@
         </el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">新增</el-button>
     </div>
-    <!-- <div class="tagwrap">
+    <div class="tagwrap">
         <span class="titledai">尺码:</span>
          <el-tag
         :key="tag"
@@ -120,11 +134,11 @@
         style="width: 80px;"
         >
         </el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput1">新增</el-button>
-    </div> -->
+        <el-button v-else class="button-new-tag" size="small">新增</el-button>
+    </div>
     <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addproduct()">确 定</el-button>
+        <el-button type="primary">确 定</el-button>
     </span>
     </el-dialog>
     </div> 
@@ -136,9 +150,11 @@ export default {
     },
     data() {
       return {
+        collectshow:true,
         productLink:'',
         productName:'',
         productId:'',
+        webstroe:'',
         shopName:'',
         shopId:'',
         brandName:'',
@@ -183,16 +199,22 @@ export default {
         ],
         valueSeach:'' ,
         containItems:[
-  
+                {
+                img: require('./111.png'),
+                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
+                price: '$11122122',
+                wish: 'wish'
+            }
         ]
       };
     },
     created () {
-    },
+      
+        },
     mounted(){
-        // this.initdata();
+      
     },
-    methods:{
+    methods:{ 
         handleClose(tag) {
         this.ColordynamicTags.splice(this.ColordynamicTags.indexOf(tag), 1);
       },
@@ -212,24 +234,6 @@ export default {
         this.inputVisible = false;
         this.inputValue = '';
       },
-    //   addproduct(){
-    //       let param = {
-    //           url:this.productLink,
-    //         title:this.productName
-    //     }
-    //       console.log(param);
-    //     this.$api.addProduct(param).then(res=>{
-
-    //     })
-    //    },
-    //    initdata(){
-    //        let param = {
-
-    //        }
-    //         this.$api.productList(param).then(res =>{
-
-    //         })
-    //    }
     }
 }
 </script>
@@ -247,6 +251,7 @@ export default {
          white-space: nowrap;
     }
     .contain{
+        overflow: hidden;
         .containItem{
             width: 250px;
             float: left;
@@ -266,24 +271,33 @@ export default {
                     top: 10px;
                 }
             }
-            .productDetail{
-                padding: 0 10px;
-                margin-bottom: 12px;
-                height: 28px;
-                line-height: 14px;
-                overflow: hidden;
-                position: relative;
-                &:after{
-                    content: '...';
-                    display: block;
-                    font-size: 14px;
-                    width: 42px;
-                    height: 13px;
-                    color: #000;
-                    background-color: #ffffff;
-                    position: absolute;
-                    right: 0;
-                    bottom: 0;
+            .detailwrap{
+              display: flex;
+                .productDetail{
+                    flex: 1;
+                    padding: 0 10px;
+                    margin-bottom: 12px;
+                    height: 28px;
+                    line-height: 14px;
+                    overflow: hidden;
+                    position: relative;
+                    &:after{
+                        content: '...';
+                        display: block;
+                        font-size: 14px;
+                        width: 42px;
+                        height: 13px;
+                        color: #000;
+                        background-color: #ffffff;
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                    }
+                }
+                .collect{
+                    width: 28px;
+                    height: 28px;
+                    margin-right: 10px;
                 }
             }
             .productPrice{
@@ -340,6 +354,11 @@ export default {
                 }
             }
         }
+    }
+    .paginationwrap{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: right;
     }
  }
 </style>

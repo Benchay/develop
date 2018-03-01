@@ -11,15 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: 'http://proxy.tintop.cn:26081',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/api'
-        }
-      },
-      headers: {
-        'token': 'SID=810q3nmoi5mfp8geb9bkm9jql0;'
+      target:'http://proxy.tintop.cn:26081/api/mbs/api',
+      changeOrigin: true,
+      pathRewrite:{
+        
       }
     },
     // Various Dev Server settings
