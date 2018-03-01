@@ -191,6 +191,7 @@ export default {
       };
     },
     methods: {
+      // 重新加载
       reLoadFinance () {
         let me = this
         callApiForMbs('/finance/get_finance_account', {}, function (res) {
@@ -211,6 +212,7 @@ export default {
           }
         })
       },
+      // 预警
       changeEarlyWarn () {
         let me = this
         callApiForMbs('/finance/operate_alertness', {financeAccountId:this.userFinance.id, activeAlertness: this.earlyWarn, alertnessAmount: this.earlyWarnAmount}, function (res) {
@@ -222,7 +224,9 @@ export default {
             }
           }
         })
-        callApiForMbs('/finance/query_merchant_finance', {})
+        // callApiForMbs('/finance/query_merchant_finance', {}, function (res) {
+        //
+        // })
 
       },
 

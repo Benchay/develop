@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 /*******************************************************************************
-  该文件封装了一些调用接口的函数，主要是针对本公司提供的服务器所封装的
+  该文件封装了一些调用接口的函数，主要是针对本公司提供的服务器所封装的(方便本人自身)
   其中的 url是以/api/ums/为前缀的，而/api则ums/是一个代理地址，详细配置请查看
   config/index.js 中的
   dev: {
@@ -48,9 +48,11 @@ export function callApiToken(url, jsonData, fun) {
     data: jsonData
   }).then((res) => {
     if (res.status >= 200 && res.status < 300) {
-      if (res.data.errcode == 500) {
+      if (res.data.errcode == 500 && res.data.errmsg != null && res.data.errmsg.indexOf('Token') == 1) {
+        console.log(res)
         localStorage.removeItem('access_token')
-        window.location.href='/'
+        // window.location.href='/'
+        window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
       } else {
         fun(res)
       }
@@ -66,9 +68,11 @@ export function callApiForMbs(url, jsonData, fun) {
     data: jsonData
   }).then((res) => {
     if (res.status >= 200 && res.status < 300) {
-      if (res.data.errcode == 500) {
+      if (res.data.errcode == 500 && res.data.errmsg != null && res.data.errmsg.indexOf('Token') == 1) {
+        console.log(res)
         localStorage.removeItem('access_token')
-        window.location.href='/'
+        // window.location.href='/'
+        window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
       } else {
         fun(res)
       }
