@@ -11,10 +11,32 @@ import personal from '@/pages/personal/personal'
 import signin from '@/pages/sign/signin'
 import register from '@/pages/sign/register'
 import forgetPwd from '@/pages/sign/forgetPwd'
+import resetPwd from '@/pages/sign/resetPwd'
+
+// import FinanceIndex from '@/pages/finance/FinanceIndex'
+// import FinanOverview from '@/pages/finance/FinanOverview'
+// import AccountConfig from '@/pages/finance/AccountConfig'
+// import TransactRecord from '@/pages/finance/TransactRecord'
+//
+import ManageMessage from '@/pages/message/ManageMessage'
+//
+import ManageLog from '@/pages/log/ManageLog'
+//
+import UserIndex from '@/pages/usercenter/UserIndex'
+import BasicInfo from '@/pages/usercenter/BasicInfo'
+import ManageRole from '@/pages/usercenter/ManageRole'
+import ManageStaff from '@/pages/usercenter/ManageStaff'
+//
+// import changeIndex from '@/pages/others/changeIndex'
+// import ChangePassword from '@/pages/others/ChangePassword'
+// import Login from '@/pages/others/Login'
+// import Register from '@/pages/others/Register'
+// import ReSetPassword from '@/pages/others/ReSetPassword'
+
 
 Vue.use(Router)
 
-export default new Router({
+var route =  new Router({
   mode: 'history',
   base: process.env.NODE_ENV === 'production' ? '/mbs' : '/',
   routes: [
@@ -58,16 +80,50 @@ export default new Router({
       }]
     },
     {
+      path: '/ManageMessage',
+      name: 'ManageMessage',
+      component: ManageMessage
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: UserIndex,
+      children: [
+        {
+          path: 'basicinfo',
+          name: 'basicinfo',
+          component: BasicInfo
+        },
+        {
+          path: 'managerole',
+          name: 'managerole',
+          component: ManageRole
+        },
+        {
+          path: 'managestaff',
+          name: 'managestaff',
+          component: ManageStaff
+        }
+      ]
+    },
+    {
+      path: '/ManageLog',
+      name: 'ManageLog',
+      component: ManageLog
+    },
+    {
       path: '/personal',
       name: 'personal',
       component: personal
     },
     {
+      // 登录系统
       path: '/signin',
       name: 'signin',
       component: signin
     },
     {
+      // 注册系统
       path: '/register',
       name: 'register',
       component: register
@@ -77,5 +133,32 @@ export default new Router({
       name: 'forgetPwd',
       component: forgetPwd
     },
+    {
+      path: '/resetPwd',
+      name: 'resetPwd',
+      component: resetPwd
+    }
   ]
 })
+
+
+// route.beforeEach(function (to, from, next) {
+//     var token =localStorage.getItem("access_token");
+//     //已登录的情况再去登录页，跳转至首页
+//     // console.log(token);
+//     if (to.name != "signin" && to.name != "register" && to.name != "forgetPwd") {
+//         if (token) {
+//             next ();
+//         }else{
+//           next({name:"signin"});
+//         }
+//     }else{
+//       if(token){
+//         next({name:"Home"})
+//       }else{
+//         next();
+//       }
+//     }
+// });
+
+export default route

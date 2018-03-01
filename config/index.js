@@ -11,11 +11,30 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      target:'http://proxy.tintop.cn:26081/api/mbs/api',
-      changeOrigin: true,
-      pathRewrite:{
-        
-      }
+      '/api': {
+        target: 'http://proxy.tintop.cn:26081/mbs/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+      '/ums': {
+        target: 'http://proxy.tintop.cn:26081/ums/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ums': ''
+        }
+      },
+      '/mbs': {
+        target: 'http://proxy.tintop.cn:26081/mbs/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mbs': ''
+        }
+      },
+      // headers: {
+      //   'token': 'SID=810q3nmoi5mfp8geb9bkm9jql0;'
+      // }
     },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -25,7 +44,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
