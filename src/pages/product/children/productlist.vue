@@ -166,7 +166,7 @@
     </div>
     <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary">确 定</el-button>
+        <el-button type="primary" @click="addproduct()">确 定</el-button>
     </span>
     </el-dialog>
   </div>
@@ -344,8 +344,7 @@
           'listingIds': listingIds
         }, function (res) {
           if(res.data.success){
-            alert("删除成功,共删除"+res.data.content.count)
-
+            _this.$message("删除成功,共删除"+res.data.content.count);
           }else{
             alert(res.data.errmsg)
           }
