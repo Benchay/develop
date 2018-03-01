@@ -7,14 +7,14 @@
         </div>
         <div class="ordinaryClick" v-for="item in activityList">
           <p>{{item.name}}</p>
-          <p>{{item.commissionChargePrice}}</p>
+          <p>每单价格:{{item.commissionChargePrice}}</p>
         </div>
       </div>
       <div class="tabBody">
         <div class="tabBodyItem">
           <div class="entrySearch">
             <span class="insbefore">搜索</span>
-            <el-input v-model="keyword" placeholder="请输入内容"></el-input>
+            <el-input v-model="entrance.keyword" placeholder="请输入内容"></el-input>
             <span class="insafter">X</span>
           </div>
           <div class="clickinputNum" v-for="item in activityList">
@@ -29,12 +29,14 @@
   </div>
 </template>
 <script>
+  import {callApiForMbs} from '@/data/callApi'
+
   export default {
     data() {
       return {
-        activityList: [
-        ],
-        keyword:'',
+        activityList: [],
+        entrance:{},
+        keyword: '',
         input: '',
         num1: '',
         num2: '',
@@ -45,6 +47,17 @@
       handleChange(value) {
         console.log(value);
       }
+    },
+    created() {
+      var _this = this
+      callApiForMbs('promote_activity/find_activity_by_scene_code', {sceneCode:'flow'}, function (res) {
+        if(res.data.success){
+          _this.activityList = res.data.content
+        }else{
+          alert(res.data.errmsg)
+        }
+        console.log(res)
+      })
     }
   }
 </script>

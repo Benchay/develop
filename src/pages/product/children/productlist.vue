@@ -36,6 +36,7 @@
         </p>
       </el-row>
     </div>
+    <!--显示产品列表-->
     <div class="contain">
     <div class="containItem" v-for="item in containItems">
         <div class="productImgwrap">
@@ -177,7 +178,7 @@
   </div>
 </template>
 <script>
-  import {callApiWithToken} from '@/data/callApi'
+  import {callApiForMbs} from '@/data/callApi'
 
   export default {
     props: {},
@@ -257,12 +258,12 @@
     },
     created() {
       var _this = this
-      callApiWithToken('/api/listing/find_web_site_code_dist', {}, function (res) {
+      callApiForMbs('listing/find_web_site_code_dist', {}, function (res) {
         _this.webSiteCodeList = res.data.content
         console.log(res)
       })
-      callApiWithToken('/api/listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
-        _this.tableData = res.data.content.records
+      callApiForMbs('listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
+        _this.listingList = res.data.content.records
         console.log(res.data.content.records)
       })
     },
@@ -291,7 +292,7 @@
       },
       addproduct() {
         var _this = this
-        callApiWithToken('/api/listing/add_listing', this.listing, function (res) {
+        callApiForMbs('/listing/add_listing', this.listing, function (res) {
           if(res.data.success){
             _this.centerDialogVisible=false;
             alert("添加成功")
@@ -319,7 +320,7 @@
       },
       grabproduct() {
         var _this = this
-        callApiWithToken('/api/listing/grab_listing', {
+        callApiForMbs('/listing/grab_listing', {
           'listingUrl': this.listing.url,
           'webSiteCode': this.webSiteCode
         }, function (res) {

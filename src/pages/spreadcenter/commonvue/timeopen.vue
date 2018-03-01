@@ -1,7 +1,7 @@
 <template>
   <div class="timeopen">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="自动设置" name="first">
+    <el-tabs v-model="timeType" @tab-click="handleClick">
+      <el-tab-pane label="自动设置" name="1">
         <el-date-picker
           v-model="picktime"
           type="datetimerange"
@@ -11,7 +11,7 @@
         </el-date-picker>
         <el-checkbox v-model="executeSoon">尽快执行</el-checkbox>
       </el-tab-pane>
-      <el-tab-pane label="手动设置" name="second">
+      <el-tab-pane label="手动设置" name="2">
         <div class="youselfTime">
           <div class="startTime">
             <el-date-picker
@@ -262,7 +262,7 @@
     data() {
       return {
         picktime: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-        activeName: 'second',
+        timeType: '1',
         executeSoon: true,
         filters: {
           date: {
