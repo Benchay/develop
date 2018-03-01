@@ -90,7 +90,7 @@ export default {
          addressType:'1',
          resourceType:'1',
          accountMatchType:'1',
-            textarea3: ''
+         address: []
        }
     },
     methods:{

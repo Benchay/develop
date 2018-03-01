@@ -30,34 +30,6 @@
           </div>
         </el-col>
       </el-row>
-      <div class="listWrap">
-      <el-table
-        :data="tableData"
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="商品编号"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="asin"
-          label="ASIN"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="title"
-          label="标题"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          label="操作">
-          <template slot-scope="scope">
-            <el-button plain> 编辑 </el-button>
-            <el-button type="primary">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
       <el-row>
         <p style="padding-top: 15px;">
           <el-button type="primary" plain>批量删除</el-button>
@@ -65,19 +37,18 @@
       </el-row>
     </div>
     <div class="contain">
-      <div class="containItem" v-for="item in containItems">
+      <div class="containItem" v-for="item in listingList">
         <div class="productImgwrap">
-          <img :src="item.img" alt="" width="100%" height="100%">
+          <img :src="item.mainImgUrl" alt="" width="100%" height="100%">
           <el-checkbox v-model="checked"></el-checkbox>
         </div>
         <p class="productDetail">
-          {{item.productDetail}}
+          {{item.description}}
         </p>
         <p class="productPrice">
           <b class="price">{{item.price}}</b>
           <span class="wish"></span>
         </p>
-
       </div>
     </div>
     <el-dialog
@@ -193,7 +164,7 @@
   </div>
 </template>
 <script>
-  import {callApiWithToken} from '@/data/callApi'
+  import {callApiForMbs} from '@/data/callApi'
 
   export default {
     props: {},
@@ -256,17 +227,17 @@
           }
         ],
         valueSeach: '',
-        containItems: []
+        listingList: []
       };
     },
     created() {
       var _this = this
-      callApiWithToken('/api/listing/find_web_site_code_dist', {}, function (res) {
+      callApiForMbs('listing/find_web_site_code_dist', {}, function (res) {
         _this.webSiteCodeList = res.data.content
         console.log(res)
       })
-      callApiWithToken('/api/listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
-        _this.tableData = res.data.content.records
+      callApiForMbs('listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
+        _this.listingList = res.data.content.records
         console.log(res.data.content.records)
       })
     },
