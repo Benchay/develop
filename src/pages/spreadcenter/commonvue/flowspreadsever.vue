@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-  import {callApiWithToken} from '@/data/callApi'
+  import {callApiForMbs} from '@/data/callApi'
 
   export default {
     data() {
@@ -50,7 +50,7 @@
     },
     created() {
       var _this = this
-      callApiWithToken('/api/promote_activity/find_activity_by_scene_code', {sceneCode:'flow'}, function (res) {
+      callApiForMbs('promote_activity/find_activity_by_scene_code', {sceneCode:'flow'}, function (res) {
         if(res.data.success){
           _this.activityList = res.data.content
         }else{

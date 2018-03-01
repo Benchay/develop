@@ -47,8 +47,23 @@
       :visible.sync="centerDialogVisible"
       width="46%"
       center
-
       class="productstyle">
+      <!--显示产品列表-->
+      <div class="contain">
+        <div class="containItem" v-for="item in listingList">
+          <div class="productImgwrap">
+            <img :src="item.mainImgUrl" alt="" width="100%" height="100%">
+            <el-checkbox v-model="checked"></el-checkbox>
+          </div>
+          <p class="productDetail">
+            {{item.description}}
+          </p>
+          <p class="productPrice">
+            <b class="price">{{item.price}}</b>
+            <span class="wish"></span>
+          </p>
+        </div>
+      </div>
       <div class="listWrap">
         <el-table
           :data="tableData"
@@ -82,40 +97,42 @@
   </div>
 </template>
 <script>
-  import {callApiWithToken} from '@/data/callApi'
+  import {callApiForMbs} from '@/data/callApi'
 
   export default {
     data() {
       return {
+        listingList: [],
         centerDialogVisible: false,
         tableData: [],
         added: false,
         radioSize: '',
         radioColor: '',
-        listing:{
-
-        }
+        listing: {}
       }
     },
     methods: {
       querylisting() {
         var _this = this
         _this.centerDialogVisible = true;
-        callApiWithToken('/api/listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
+        callApiForMbs('listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
+          _this.listingList = res.data.content.records
           _this.tableData = res.data.content.records
           console.log(res.data.content.records)
         })
       },
       filllisting(row) {
         this.centerDialogVisible = false;
-        this.added=true;
-        this.listing=row
+        this.added = true;
+        this.listing = row
         console.log(row)
       }
     }
   }
 </script>
 <style lang="scss">
+  @import '../../../style/mixin';
+
   .trade {
     display: flex;
     flex-direction: row;
@@ -175,5 +192,61 @@
         margin-right: 10px;
       }
     }
+    .contain {
+      .containItem {
+        width: 250px;
+        float: left;
+        font-size: 14px;
+        margin: 10px 0 10px 16px;
+        padding-bottom: 15px;
+        box-sizing: border-box;
+        border: 1px solid #e6e6e6;
+        .productImgwrap {
+          margin-bottom: 12px;
+          width: 100%;
+          height: 230px;
+          position: relative;
+          .el-checkbox {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+          }
+        }
+        .productDetail {
+          padding: 0 10px;
+          margin-bottom: 12px;
+          height: 28px;
+          line-height: 14px;
+          overflow: hidden;
+          position: relative;
+          &:after {
+            content: '...';
+            display: block;
+            font-size: 14px;
+            width: 42px;
+            height: 13px;
+            color: #000;
+            background-color: #ffffff;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+          }
+        }
+        .productPrice {
+          padding: 0 10px;
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: nowrap;
+          .price {
+            font-size: 16px;
+          }
+          .wish {
+            @include size(50px, 20px);
+            //background: url(./wish_logo.png) center no-repeat;
+          }
+        }
+      }
+    }
   }
+
 </style>

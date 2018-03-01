@@ -36,6 +36,7 @@
         </p>
       </el-row>
     </div>
+    <!--显示产品列表-->
     <div class="contain">
       <div class="containItem" v-for="item in listingList">
         <div class="productImgwrap">
@@ -227,7 +228,8 @@
           }
         ],
         valueSeach: '',
-        listingList: []
+        listingList: [],
+        checked:false
       };
     },
     created() {
@@ -266,7 +268,7 @@
       },
       addproduct() {
         var _this = this
-        callApiWithToken('/api/listing/add_listing', this.listing, function (res) {
+        callApiForMbs('/listing/add_listing', this.listing, function (res) {
           if(res.data.success){
             _this.centerDialogVisible=false;
             alert("添加成功")
@@ -294,7 +296,7 @@
       },
       grabproduct() {
         var _this = this
-        callApiWithToken('/api/listing/grab_listing', {
+        callApiForMbs('/listing/grab_listing', {
           'listingUrl': this.listing.url,
           'webSiteCode': this.webSiteCode
         }, function (res) {

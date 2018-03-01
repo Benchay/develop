@@ -41,7 +41,7 @@
   import timeopen from '../commonvue/timeopen'
   import highoption from '../commonvue/highoption'
   import spreadfoot from '../commonvue/spreadfoot'
-  import {callApiWithToken} from '@/data/callApi'
+  import {callApiForMbs} from '@/data/callApi'
 
   export default {
     components: {
@@ -83,7 +83,7 @@
         planVo.executeSoon=this.$refs.extData.executeSoon
         planVo.accountMatchType=this.$refs.extData.accountMatchType
         planVo.address=this.$refs.extData.address
-        callApiWithToken('/api/plan/create_plan', planVo, function (res) {
+        callApiForMbs('plan/create_plan', planVo, function (res) {
           console.log(res)
           if(res.data.success){
             alert("提交计划成功")
