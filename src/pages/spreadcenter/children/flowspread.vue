@@ -63,6 +63,7 @@
         //console.log(this.$refs.listingData.listing)
       },
       submit() {
+        var _this=this
         var planVo = {}
         planVo.name = this.name
         planVo.listing = this.$refs.listingData.listing
@@ -87,6 +88,7 @@
           console.log(res)
           if(res.data.success){
             alert("提交计划成功")
+            _this.$router.push('/myspread')
           }else{
             alert(res.data.errmsg)
           }

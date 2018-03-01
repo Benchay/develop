@@ -2,10 +2,10 @@
   <div class="trade">
     <div v-if="added">
       <div class="tradeAvatar">
-        <img src="./111.png" width="100%" height="100%" alt="">
+        <img :src="listing.mainImageUrl" width="100%" height="100%" alt="">
       </div>
       <div class="tradeName">
-        <p class="detail">控制反馈：控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；
+        <p class="detail">商品描述: {{listing.description}}
         </p>
         <div class="priceWrap">
           <div class="left">
@@ -17,7 +17,13 @@
             <el-checkbox v-model="listing.platformDelivery">FBA</el-checkbox>
           </div>
         </div>
-        <div class="size">
+        <div class="size" v-for="item in propList">
+          <span class="scTitle">{{item.propName}} : </span>
+          <el-radio-group v-model="radioSize" size="small" v-for="propVal in item.propValue">
+            <el-radio-button>{{propVal}}</el-radio-button>
+          </el-radio-group>
+        </div>
+        <!--<div class="size">
           <span class="scTitle">Size : </span>
           <el-radio-group v-model="radioSize" size="small">
             <el-radio-button label="S"></el-radio-button>
@@ -34,7 +40,7 @@
             <el-radio-button label="卢瑟"></el-radio-button>
             <el-radio-button label="黑色"></el-radio-button>
           </el-radio-group>
-        </div>
+        </div>-->
       </div>
     </div>
     <div v-else>
@@ -50,13 +56,13 @@
       class="productstyle">
       <!--显示产品列表-->
       <div class="contain">
-        <div class="containItem" v-for="item in listingList">
+        <div class="containItem" v-for="(item,$index) in listingList">
           <div class="productImgwrap">
-            <img :src="item.mainImgUrl" alt="" width="100%" height="100%">
-            <el-checkbox v-model="checked"></el-checkbox>
+            <img :src="item.mainImageUrl" alt="" width="100%" height="100%">
+            <el-checkbox v-model="item.checked" @change="input(item)"></el-checkbox>
           </div>
           <p class="productDetail">
-            {{item.description}}
+            {{item.title}}
           </p>
           <p class="productPrice">
             <b class="price">{{item.price}}</b>
@@ -108,7 +114,9 @@
         added: false,
         radioSize: '',
         radioColor: '',
-        listing: {}
+        listing: {},
+        propList:[]
+
       }
     },
     methods: {
@@ -122,8 +130,11 @@
         })
       },
       filllisting(row) {
-        this.centerDialogVisible = false;
-        this.added = true;
+        this.centerDialogVisible = false
+        this.added = true
+        var props=row.listingProps
+        var temp=JSON.parse(props)
+        this.propList=temp
         this.listing = row
         console.log(row)
       }

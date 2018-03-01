@@ -32,19 +32,19 @@
       </el-row>
       <el-row>
         <p style="padding-top: 15px;">
-          <el-button type="primary" plain>批量删除</el-button>
+          <el-button type="primary" plain @click="deleteListings">批量删除</el-button>
         </p>
       </el-row>
     </div>
     <!--显示产品列表-->
     <div class="contain">
-      <div class="containItem" v-for="item in listingList">
+      <div class="containItem" v-for="(item,$index) in listingList">
         <div class="productImgwrap">
-          <img :src="item.mainImgUrl" alt="" width="100%" height="100%">
-          <el-checkbox v-model="checked"></el-checkbox>
+          <img :src="item.mainImageUrl" alt="" width="100%" height="100%">
+          <el-checkbox v-model="item.checked" @change="input(item)"></el-checkbox>
         </div>
         <p class="productDetail">
-          {{item.description}}
+          {{item.title}}
         </p>
         <p class="productPrice">
           <b class="price">{{item.price}}</b>
@@ -171,7 +171,7 @@
     props: {},
     data() {
       return {
-        tableData:[],
+        tableData: [],
         webSiteCode: '',
         webStoreId: '',
         webSiteCodeList: [],
@@ -229,7 +229,7 @@
         ],
         valueSeach: '',
         listingList: [],
-        checked:false
+        checked: []
       };
     },
     created() {
@@ -238,10 +238,7 @@
         _this.webSiteCodeList = res.data.content
         console.log(res)
       })
-      callApiForMbs('listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
-        _this.listingList = res.data.content.records
-        console.log(res.data.content.records)
-      })
+      _this.refreshListing()
     },
     mounted() {
       // this.initdata();
@@ -269,10 +266,11 @@
       addproduct() {
         var _this = this
         callApiForMbs('/listing/add_listing', this.listing, function (res) {
-          if(res.data.success){
-            _this.centerDialogVisible=false;
-            alert("添加成功")
-          }else{
+          if (res.data.success) {
+            _this.centerDialogVisible = false;
+            _this.refreshListing();
+            _this.$message("添加成功")
+          } else {
             alert(res.data.errmsg)
           }
           console.log(res)
@@ -305,12 +303,52 @@
         })
       },
       findwebstore(code) {
-        this.listing.webSiteCode=code;
+        this.listing.webSiteCode = code;
         /*var _this=this
         callApiWithToken('mbs/api/web_store/find_web_store_dist',{'webSiteCode':code},function (res) {
           _this.webStoreList=res.data.content
           console.log(res)
         })*/
+      },
+      input(index) {
+        console.log(this.checked)
+        console.log(index)
+        /*var _this=this
+        callApiWithToken('mbs/api/web_store/find_web_store_dist',{'webSiteCode':code},function (res) {
+          _this.webStoreList=res.data.content
+          console.log(res)
+        })*/
+      },
+      //删除商品
+      deleteListings() {
+        var _this = this
+        var listingIds = []
+        for(var idx in _this.listingList){
+          var listing=_this.listingList[idx]
+          if(listing.checked){
+            listingIds.push(listing.id)
+          }
+        }
+        callApiForMbs('/listing/delete_listing', {
+          'listingIds': listingIds
+        }, function (res) {
+          if(res.data.success){
+            alert("删除成功,共删除"+res.data.content.count)
+
+          }else{
+            alert(res.data.errmsg)
+          }
+          _this.refreshListing()
+          console.log(res)
+        })
+      },
+      //刷新商品界面
+      refreshListing(){
+        var _this = this
+        callApiForMbs('listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
+          _this.listingList = res.data.content.records
+          console.log(res.data.content.records)
+        })
       }
     }
   }
