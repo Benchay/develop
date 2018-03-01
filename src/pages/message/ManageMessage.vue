@@ -56,7 +56,7 @@
 </template>
 
 <script>
-// import {callApiToken} from '@/data/callApi'
+import {callApiToken} from '@/data/callApi'
 export default {
   name: 'ManageLog',
   data () {
@@ -86,11 +86,8 @@ export default {
 
     },
     updateTableData (res) {
-      // console.log(0)
-      // console.log(res.data)
       let me = this
       if (res.status >= 200 && res.status < 300) {
-        // console.log(res.data)
         if (res.data.success) {
           console.log(res.data.content.records)
           me.tableData = res.data.content.records
@@ -99,7 +96,7 @@ export default {
     }
   },
   created: function () {
-    // callApiToken('/message/query_user_message', {page: 1, pageSize:10}, this.updateTableData)
+    callApiToken('/message/query_user_message', {page: 1, pageSize:10}, this.updateTableData)
   }
 }
 </script>
