@@ -36,7 +36,7 @@
 
               <div class="user-info-box">
                 <p><span>ShadowH</span>
-                  <el-button type="text" @click="routerGo('/change/password')">修改密码</el-button>
+                  <el-button type="text" @click="routerGo('/resetPwd')">修改密码</el-button>
                 </p>
                 <p>
                   <span>1362512362</span>

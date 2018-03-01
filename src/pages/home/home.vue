@@ -75,7 +75,7 @@
                       <img src="./111.png" alt="">
                   </div>
                   <p>
-                    
+
                   </p>
               </div>
           </div>
@@ -110,7 +110,11 @@ export default {
   },
   data(){
     return{
+      
     }
+  },
+  created: function () {
+
   }
 }
 </script>
@@ -129,7 +133,7 @@ export default {
         padding-left: 10px;
         font-weight: bold;
         }
-    } 
+    }
     .cardheader{
         width: 100%;
         height: 40px;
@@ -194,7 +198,7 @@ export default {
             box-sizing: border-box;
             border-radius: 4px;
             margin-bottom: 14px;
-          }   
+          }
             .goldwrap{
                 padding: 20px 15px 0;
                 color: #666666;

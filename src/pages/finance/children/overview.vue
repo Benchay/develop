@@ -7,15 +7,15 @@
                   <span>查看明细<i class="morewrap"><img src="./more.png" alt=""></i></span>
               </div>
               <div class="goldwrap">
-                <p class="firegold">账户余额：<span style="color: #f3900c;">$66666666666666666666</span></p>
-                <p class="freezegold">冻结金额：￥200.00</p>
+                <p class="firegold">账户余额：<span style="color: #f3900c;">${{userFinance.amount}}</span></p>
+                <p class="freezegold">冻结金额：￥<span>{{userFinance.frozenAmount}}</span></p>
               </div>
               <div class="btngroup">
                    <router-link  :to='{path:"/finance/recharge"}'><el-button type="warning">充值</el-button></router-link>
                   <el-button type="success">提现</el-button>
               </div>
           </div>
-          <div class="comaccount">
+          <!-- <div class="comaccount">
               <div class="cardheader">
                   <h2>佣金账户</h2>
                   <span>查看明细<i class="morewrap"><img src="./more.png" alt=""></i></span>
@@ -27,7 +27,7 @@
                <div class="btngroup">
                   <el-button type="primary">购买</el-button>
               </div>
-          </div>
+          </div> -->
           <div class="setwarning">
                <div class="cardheader">
                   <h2>预警设置</h2>
@@ -35,7 +35,7 @@
               <div class="goldwrap">
                 <p class="firegold warninglight" style="margin-bottom: 40px;">可用本金余额预警
                     <el-switch
-                    v-model="value3"
+                    v-model="earlyWarn"
                     style="margin-left: 15px;">
                     </el-switch>
                 </p>
@@ -102,14 +102,31 @@
       </div>
   </div>
 </template>
+
 <script>
+import {callApiForMbs} from '@/data/callApi'
 export default {
-    components: { 
+    components: {
 
       },
     data() {
       return {
-          value3:'',
+          userFinance: {
+            activeAlertness: '',
+            alertnessAmount:'',
+            amount:'',
+            companyId: '',
+            distributorCompanyId: '',
+            earnAmount: '',
+            earnCoin: '',
+            frozenAmount: '',
+            gmtCreate: '',
+            gmtModify: '',
+            id: '',
+            status: '',
+            version: ''
+          },
+          earlyWarn: false,
           tableData: [{
             waternum: '46465465465',
             time: '2016-12-6',
@@ -155,8 +172,26 @@ export default {
     },
     methods: {
 
+    },
+    created: function () {
+      let me = this
+      callApiForMbs('/finance/get_finance_account', {}, function (res) {
+        if (res.status >= 200 && res.status < 300) {
+          if (res.data.success) {
+            console.log(res.data.content)
+            me.userFinance = res.data.content
+            if (res.data.content.alertnessAmount) {
+              me.earlyWarn = true
+            } else {
+              me.earlyWarn = false
+            }
+          }
+        }
+        // me.userFinance = res.
+      })
     }
   }
+
 </script>
 <style lang="scss">
 .overview{
@@ -299,4 +334,3 @@ export default {
     }
 }
 </style>
-

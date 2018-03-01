@@ -14,7 +14,8 @@
             <el-input type="password" v-model="form.checkPass" placeholder="请再次输入新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
           </el-form-item>
           <el-form-item label="" prop="age">
-            <el-input v-model.number="form.age" style="width:60%;float: left;"></el-input>
+            <el-input v-model.number="form.age" style="width:60%;float: left; margin-left: 10px;"></el-input>
+            <img :src="imgsrc" alt="${0}"  @click="resetImgCode" style="display:block; width: 110px; height: 40px;">
           </el-form-item>
           <el-form-item class="loginSub">
             <el-button type="primary" @click="">确 认</el-button>
@@ -60,6 +61,7 @@
         }
       }
       return{
+        imgsrc: '',
         checked:false,
         form: {
           name: '',
@@ -81,7 +83,13 @@
       }
     },
     methods: {
-
+      
+      resetImgCode () {
+        this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+      }
+    },
+    created: function () {
+      this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
     }
   }
 </script>

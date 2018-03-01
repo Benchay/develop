@@ -106,6 +106,8 @@
 export default {
    data(){
         return{
+          station: '',
+          stationList: '',
             picktime: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
             valueSeach:'',
             tableData: [{

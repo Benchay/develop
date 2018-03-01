@@ -25,6 +25,13 @@ module.exports = {
           '^/ums': ''
         }
       },
+      '/mbs': {
+        target: 'http://proxy.tintop.cn:26081/mbs/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mbs': ''
+        }
+      },
       // headers: {
       //   'token': 'SID=810q3nmoi5mfp8geb9bkm9jql0;'
       // }

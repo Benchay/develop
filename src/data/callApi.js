@@ -41,10 +41,21 @@ export function callJsonApi(url, jsonData, fun) {
 }
 
 export function callApiToken(url, jsonData, fun) {
-  console.log(url)
   var str = localStorage.getItem('access_token')
   axios({
     url: '/ums/api/' + url +'?access_token=' + str,
+    method: 'POST',
+    data: jsonData
+  }).then((res) => {
+    fun(res)
+  })
+}
+
+export function callApiForMbs(url, jsonData, fun) {
+  console.log(url)
+  var str = localStorage.getItem('access_token')
+  axios({
+    url: '/mbs/api/' + url +'?access_token=' + str,
     method: 'POST',
     data: jsonData
   }).then((res) => {
