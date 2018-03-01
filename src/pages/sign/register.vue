@@ -188,11 +188,11 @@ import {callJsonApi} from '@/data/callApi'
         }
       },
       resetImgCode () {
-        this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+        this.imgsrc = 'http://proxy.tintop.cn:26082/ums/pub/user/v_code?' + Math.random()
       }
     },
     created: function () {
-      this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+      this.imgsrc = 'http://proxy.tintop.cn:26082/ums/pub/user/v_code?' + Math.random()
     }
   }
 </script>
