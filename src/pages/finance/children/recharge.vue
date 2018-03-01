@@ -9,6 +9,8 @@
             </el-tab-pane>
             <el-tab-pane label="网银支付" name="second">
             </el-tab-pane>
+            <el-tab-pane label="微信支付" name="third">
+            </el-tab-pane>
         </el-tabs>
       </div>
   </div>
@@ -20,6 +22,11 @@
       return{
         activeName:'first'
       }
+  },
+  methods: {
+    handleClick () {
+
+    }
   },
   created () {
     var _this=this

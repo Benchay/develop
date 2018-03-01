@@ -3,24 +3,32 @@
     <el-col :span="24" class="forgetPwd">
       <div class="pwdForm lr">
         <p class="loginTitle">忘记密码</p>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="demo-ruleForm">
-          <el-form-item label="" prop="name">
-            <el-input v-model="ruleForm2.name" placeholder="请输入帐号..." auto-complete="off" prefix-icon="el-icon-phones"></el-input>
+        <el-form :model="form" status-icon :rules="rules2" ref="form" class="demo-ruleForm">
+          <el-form-item label="" prop="mobile">
+            <el-input v-model="form.mobile" placeholder="请输入手机号..." auto-complete="off" prefix-icon="el-icon-phones"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="pass">
-            <el-input type="password" v-model="ruleForm2.pass" placeholder="请输新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
+          <el-form-item label="" prop="newPassword">
+            <el-input type="password" v-model="form.newPassword" placeholder="请输新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="checkPass">
-            <el-input type="password" v-model="ruleForm2.checkPass" placeholder="请再次输入新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
+          <el-form-item label="" prop="reNewPassword">
+            <el-input type="password" v-model="form.reNewPassword" placeholder="请再次输入新密码..." auto-complete="off" prefix-icon="el-icon-psd"></el-input>
           </el-form-item>
-          <el-form-item label="" prop="age">
-            <el-input v-model.number="ruleForm2.age" style="width:60%;float: left;"></el-input>
+
+          <!-- 手机验证码 -->
+          <el-form-item>
+            <el-input v-model="form.mobileCode" placeholder="请输入手机验证码">
+              <template slot="append" class="" >
+                <el-button v-if="sendMobile" type="infor" class="codeBtn" style="background-color: #205081; color:white; height: 38px;" @click="sendMobileCode">获取验证码</el-button>
+                <el-button disabled v-else type="primary" style="backgroudn-color: red; width: 110px;">{{countDown}}</el-button>
+              </template>
+            </el-input>
           </el-form-item>
+
           <el-form-item class="loginSub">
-            <el-button type="primary" @click="">确 认</el-button>
+            <el-button type="primary" @click="onSubmit">确 认</el-button>
           </el-form-item>
           <el-form-item class="pwdRegister">
-            <router-link  :to='{path:"/signin"}' class="findpwd">已有账号？<span>马上登录</span></router-link>
+            <router-link  :to='{path:"/signin"}' class="findpwd">记得密码<span>马上登录</span></router-link>
           </el-form-item>
         </el-form>
       </div>
@@ -29,31 +37,45 @@
 </template>
 
 <script>
+import {callJsonApi} from '@/data/callApi'
   export default {
     components: {
     },
     data(){
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入账户名称'));
-        } else {
-          callback();
+      var mobile = (rule, value, callback) => {
+        console.log(value)
+        let me = this
+        var reg = /^1\d{10}$/
+        if (reg.test(value)) {
+          callJsonApi ('/pub/user/check_mobile', {mobile: value}, function (res) {
+            console.log(res)
+            me.form.username = me.form.mobile
+            if (res.status >= 200 && res.status < 300) {
+              if (res.data.success) {
+                callback('账号不存在')
+              } else {
+                if (res.data.errmsg==='手机号已注册') {
+                  me.countDown = 60
+                  me.sendMobile = true
+                  callback()
+                }
+              }
+            }
+          })
         }
       };
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
-          }
           callback();
         }
       };
       var validatePass2 = (rule, value, callback) => {
+        console.log(value)
         if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
+          callback(new Error('请再次输入密码'))
+        } else if (value !== this.form.newPassword) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -61,19 +83,26 @@
       }
       return{
         checked:false,
-        ruleForm2: {
-          name: '',
-          pass:'',
-          checkPass: '',
+        sendMobile: false,
+        countDown: '获取验证码',
+        form: {
+          mobile: '',
+          newPassword:'',
+          reNewPassword: '',
+          mobileCode: '',
+          distributorId: 1
         },
         rules2: {
-          name: [
+          // 手机号
+          mobile: [
+            { validator: mobile, trigger: 'blur' }
+          ],
+          // 新密码
+          newPassword: [
             { validator: validatePass, trigger: 'blur' }
           ],
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
+          //
+          reNewPassword: [
             { validator: validatePass2, trigger: 'blur' }
           ],
         },
@@ -81,7 +110,61 @@
       }
     },
     methods: {
-
+      // 手机发送验证码
+      sendMobileCode () {
+        var reg = /^1\d{10}$/
+        if (this.sendMobile && reg.test(this.form.mobile)) {
+          // 异步发送手机验证码
+          callJsonApi('/pub/user/send_mobile_message', {mobile: this.form.mobile, distributorId: 1, type: 1}, function (res) {
+            console.log('发送短信')
+            console.log(res)
+            // 等待有所需求添加方法
+          })
+          // 禁用按钮
+          this.sendMobile = false
+          let me = this
+          // 使用定时器循环设置时间跳动
+          var time = setInterval(function () {
+            if (me.countDown-- > 0) {
+            }else {
+              clearInterval(time)
+              me.countDown = 60
+              me.sendMobile = true
+            }
+          }, 1000)
+        } else {
+          console.log('手机号有误')
+        }
+      },
+      // 提交注册信息
+      onSubmit () {
+        var reg = /^1\d{10}$/
+        let me = this
+        if (reg.test(this.form.mobile)) {
+            if (this.form.newPassword != '') {
+              if (this.form.reNewPassword) {
+                console.log(this.form)
+                callJsonApi('/pub/user/reset_user_password', this.form, function (res) {
+                  if (res.status >= 200 && res.status < 300) {
+                    console.log(res)
+                    if (res.data.success) {
+                      me.$message('密码修改成功，5秒后自动条转入登录页面')
+                      setTimeout(function () {
+                        me.$router.push({path: '/Login'})
+                      },5000)
+                    }
+                  }
+                })
+              }else{
+                this.$message('确认密码')
+              }
+            }else{
+              this.$message('请输入密码，确保您的账号安全')
+            }
+        } else {
+          this.$message('请输入手机号')
+        }
+      },
     }
   }
 </script>

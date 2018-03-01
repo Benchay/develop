@@ -97,16 +97,8 @@ import {callJsonApi} from '@/data/callApi'
                     me.$router.push({path: '/'})
                     // window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
                     localStorage.setItem('username', res.data.content.username)
-                    // console.log(res)
-                  }else{
-                    switch (me.form.type) {
-                      case 1:
-                        me.$message('您当前登录的是: 推手系统 ' + res.data.errmsg)
-                      break
-                      case 2:
-                        me.$message('您当前登录的是: 推手系统 ' + res.data.errmsg)
-                        break
-                    }
+                  } else {
+                    me.$message.error('账号或密码错误，请确认后重新登录')
                   }
                 }
               })

@@ -49,7 +49,7 @@
                     <el-radio-button label="未完成"></el-radio-button>
                     <el-radio-button label="已完成"></el-radio-button>
                 </el-radio-group>
-            </div>          
+            </div>
         </div>
       </div>
       <div class="tablewrap">
@@ -105,13 +105,9 @@
             </el-table>
       </div>
     <div class="paginationwrap">
-    <a href="javascript:;" class="putout"><i><img src="./derive.png" alt=""></i>导出表单</a>
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="1000">
-        </el-pagination>
-      </div>
+      <a href="javascript:;" class="putout"><i><img src="./derive.png" alt=""></i>导出表单</a>
+      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -180,14 +176,14 @@ export default {
              border: 1px solid #e6e6e6;
             font-size: 16px;
              .stateSelect{
-                padding: 5px 8px;  
+                padding: 5px 8px;
                 &:first-child{
                     border-bottom: 1px dashed #e6e6e6;
-                } 
+                }
                  .el-radio-button__orig-radio:checked+.el-radio-button__inner{
                      background-color: #FFF;
                      font-weight: 600;
-                     color: #205081; 
+                     color: #205081;
                      box-shadow: none;
                      border-color: #ffffff;
                  }

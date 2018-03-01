@@ -35,14 +35,31 @@
               <div class="goldwrap">
                 <p class="firegold warninglight" style="margin-bottom: 40px;">可用本金余额预警
                     <el-switch
-                    v-model="earlyWarn"
+                    v-model="earlyWarn" @change="changeEarlyWarn"
                     style="margin-left: 15px;">
                     </el-switch>
                 </p>
-                <p class="freezegold setlight">预警阀值为：<span style="color: #f3900c; margin-right: 35px;">￥200.00</span><i><img src="./warning_gai.png" alt=""></i></p>
+                <!-- 预警金额 -->
+                <p class="freezegold setlight">预警阀值为：
+                  <span v-if="earlyWarnf">
+                    <span style="color: #f3900c; margin-right: 35px;">
+                      ￥<span>{{earlyWarnAmount}}</span>
+                    </span>
+                    <i @click="earlyWarnf = !earlyWarnf"><img src="./warning_gai.png" alt=""></i>
+                  </span>
+
+                  <span v-else>
+                    <span style="color: #f3900c; margin-right: 35px;">
+                      ￥<el-input size="mini" style="width: 80px;" v-model="earlyWarnAmount"></el-input>
+                    </span>
+                    <el-button size="mini" type="primary" @click="changeEarlyWarn">确定</el-button>
+                    <el-button size="mini" @click="earlyWarnf = !earlyWarnf">取消</el-button>
+                  </span>
+                </p>
               </div>
           </div>
       </div>
+      <!-- <el-dialog></el-dialog> -->
       <div class="record">
           <div class="recordtitle">
                <h2>最近交易记录</h2>
@@ -127,6 +144,9 @@ export default {
             version: ''
           },
           earlyWarn: false,
+          earlyWarnAmount: 0,
+          earlyWarnf: true,
+
           tableData: [{
             waternum: '46465465465',
             time: '2016-12-6',
@@ -171,24 +191,47 @@ export default {
       };
     },
     methods: {
+      reLoadFinance () {
+        let me = this
+        callApiForMbs('/finance/get_finance_account', {}, function (res) {
+          if (res.status >= 200 && res.status < 300) {
+            if (res.data.success) {
+              me.userFinance = res.data.content
+              me.earlyWarnAmount = res.data.content.alertnessAmount
+              if (res.data.content.activeAlertness) {
+                me.earlyWarn = true
+              } else {
+                me.earlyWarn = false
+              }
+            } else {
+              this.$message.error(res)
+            }
+          } else {
+            this.$message.error(res)
+          }
+        })
+      },
+      changeEarlyWarn () {
+        let me = this
+        callApiForMbs('/finance/operate_alertness', {financeAccountId:this.userFinance.id, activeAlertness: this.earlyWarn, alertnessAmount: this.earlyWarnAmount}, function (res) {
+          if (res.status >= 200 && res.status < 300) {
+            if(res.data.success) {
+              me.reLoadFinance()
+              me.$message({message:'成功获取',type: 'success'})
+              me.earlyWarnf = true
+            }
+          }
+        })
+        callApiForMbs('/finance/query_merchant_finance')
+
+      },
+
+
+
 
     },
     created: function () {
-      let me = this
-      callApiForMbs('/finance/get_finance_account', {}, function (res) {
-        if (res.status >= 200 && res.status < 300) {
-          if (res.data.success) {
-            console.log(res.data.content)
-            me.userFinance = res.data.content
-            if (res.data.content.alertnessAmount) {
-              me.earlyWarn = true
-            } else {
-              me.earlyWarn = false
-            }
-          }
-        }
-        // me.userFinance = res.
-      })
+      this.reLoadFinance()
     }
   }
 

@@ -47,19 +47,32 @@ export function callApiToken(url, jsonData, fun) {
     method: 'POST',
     data: jsonData
   }).then((res) => {
-    fun(res)
+    if (res.status >= 200 && res.status < 300) {
+      if (res.data.errcode == 500) {
+        localStorage.removeItem('access_token')
+        window.location.href='/'
+      } else {
+        fun(res)
+      }
+    }
   })
 }
 
 export function callApiForMbs(url, jsonData, fun) {
-  console.log(url)
   var str = localStorage.getItem('access_token')
   axios({
     url: '/mbs/api/' + url +'?access_token=' + str,
     method: 'POST',
     data: jsonData
   }).then((res) => {
-    fun(res)
+    if (res.status >= 200 && res.status < 300) {
+      if (res.data.errcode == 500) {
+        localStorage.removeItem('access_token')
+        window.location.href='/'
+      } else {
+        fun(res)
+      }
+    }
   })
 }
 export function callApiWithToken(url, jsonData, fun) {
@@ -70,7 +83,14 @@ export function callApiWithToken(url, jsonData, fun) {
     method: 'POST',
     data: jsonData
   }).then((res) => {
-    fun(res)
+    if (res.status >= 200 && res.status < 300) {
+      if (res.data.errcode == 500) {
+        localStorage.removeItem('access_token')
+        window.location.href='/'
+      } else {
+        fun(res)
+      }
+    }
   })
 }
 

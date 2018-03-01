@@ -18,8 +18,8 @@
                   <span>查看明细<i class="morewrap"><img src="./more.png" alt=""></i></span>
               </div>
               <div class="goldwrap">
-                <p class="firegold">账户余额：<span style="color: #f3900c;">$66666666666666666666</span></p>
-                <p class="freezegold">冻结金额：￥200.00</p>
+                <p class="firegold">账户余额：<span style="color: #f3900c;">${{userFinance.amount}}</span></p>
+                <p class="freezegold">冻结金额：￥<span>{{userFinance.frozenAmount}}</span></p>
               </div>
               <div class="btngroup">
                    <router-link  :to='{path:"/finance/recharge"}'><el-button type="warning">充值</el-button></router-link>
@@ -104,17 +104,45 @@
 </template>
 
 <script>
+import {callApiForMbs} from '@/data/callApi'
 export default {
   components:{
 
   },
   data(){
     return{
-      
+      userFinance: {
+        activeAlertness: '',
+        alertnessAmount:'',
+        amount:'',
+        companyId: '',
+        distributorCompanyId: '',
+        earnAmount: '',
+        earnCoin: '',
+        frozenAmount: '',
+        gmtCreate: '',
+        gmtModify: '',
+        id: '',
+        status: '',
+        version: ''
+      },
     }
   },
   created: function () {
-
+    let me = this
+    callApiForMbs('/finance/get_finance_account', {}, function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        if (res.data.success) {
+          console.log(res.data.content)
+          me.userFinance = res.data.content
+          if (res.data.content.alertnessAmount) {
+            me.earlyWarn = true
+          } else {
+            me.earlyWarn = false
+          }
+        }
+      }
+    })
   }
 }
 </script>
