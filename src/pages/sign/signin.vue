@@ -83,6 +83,7 @@ import {callJsonApi} from '@/data/callApi'
           if (this.form.password) {
             if (this.form.verificationCode) {
               let me = this
+
               // 进行等路
               callJsonApi('/pub/user/login', this.form, function (res) {
                 if (res.status >= 200 && res.status < 300) {

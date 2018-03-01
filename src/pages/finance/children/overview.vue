@@ -222,7 +222,7 @@ export default {
             }
           }
         })
-        callApiForMbs('/finance/query_merchant_finance')
+        callApiForMbs('/finance/query_merchant_finance', {})
 
       },
 

@@ -30,34 +30,6 @@
           </div>
         </el-col>
       </el-row>
-      <div class="listWrap">
-      <el-table
-        :data="tableData"
-        style="width: 100%">
-        <el-table-column
-          prop="id"
-          label="商品编号"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="asin"
-          label="ASIN"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="title"
-          label="标题"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          label="操作">
-          <template slot-scope="scope">
-            <el-button plain> 编辑 </el-button>
-            <el-button type="primary">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
       <el-row>
         <p style="padding-top: 15px;">
           <el-button type="primary" plain>批量删除</el-button>
@@ -65,38 +37,39 @@
       </el-row>
     </div>
     <div class="contain">
-      <div class="containItem" v-for="item in containItems">
+    <div class="containItem" v-for="item in containItems">
         <div class="productImgwrap">
-          <img :src="item.img" alt="" width="100%" height="100%">
-          <el-checkbox v-model="checked"></el-checkbox>
+            <img :src="item.img" alt="" width="100%" height="100%">
+            <el-checkbox v-model="checked"></el-checkbox>
         </div>
-        <p class="productDetail">
-          {{item.productDetail}}
-        </p>
+        <div class="detailwrap">
+            <p class="productDetail">
+            {{item.productDetail}}
+            </p>
+            <i class="collect" @click="collectshow = !collectshow">
+                <img src="./collect_a.png" alt=""  v-if="collectshow">
+                <img src="./collect_b.png" alt="" v-if="!collectshow">
+            </i>
+        </div>
         <p class="productPrice">
-          <b class="price">{{item.price}}</b>
-          <span class="wish"></span>
+            <b class="price">{{item.price}}</b>
+            <span class="wish"></span>
         </p>
-
-      </div>
     </div>
+    </div>
+     <div class="paginationwrap">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="1000">
+        </el-pagination>
+      </div>
     <el-dialog
       title="添加商品"
       :visible.sync="centerDialogVisible"
       width="46%"
       center
       class="productstyle">
-      <p><span>网站平台:</span>
-        <el-select size="small" v-model="webSiteCode" placeholder="网站平台" style="width: 240px;"
-                   @change="findwebstore(webSiteCode)">
-          <el-option
-            v-for="item in webSiteCodeList"
-            :key="item.code"
-            :label="item.name"
-            :value="item.code">
-          </el-option>
-        </el-select>
-      </p>
       <p><span>商品链接:</span>
         <el-input size="small" v-model="listing.url" placeholder="请输入商品链接" style="width: 74%; margin: 0 10px">
         </el-input>
@@ -112,6 +85,17 @@
             <el-input size="small" v-model="listing.asin" placeholder="请输入商品ID"
                       style="width: 80%; margin-right: 10px"></el-input>
           </p>
+          <p><span class="titledai">网站平台:</span>
+            <el-select size="small" v-model="webSiteCode" placeholder="网站平台" style="width: 80%;"
+                    @change="findwebstore(webSiteCode)">
+            <el-option
+                v-for="item in webSiteCodeList"
+                :key="item.code"
+                :label="item.name"
+                :value="item.code">
+            </el-option>
+            </el-select>
+        </p>
           <p><span class="titledai">店铺名称:</span>
             <el-input size="small" v-model="listing.webStoreName" placeholder="请输入店铺名称"
                       style="width: 80%; margin-right: 10px"></el-input>
@@ -142,12 +126,35 @@
       <div class="tagwrap">
         <span class="titledai">颜色:</span>
         <el-tag
-          :key="tag"
-          v-for="tag in ColordynamicTags"
-          closable
-          :disable-transitions="false"
-          @close="handleClose(tag)">
-          {{tag}}
+        :key="tag"
+        v-for="tag in ColordynamicTags"
+        closable
+        :disable-transitions="false"
+        @close="handleClose(tag)">
+        {{tag}}
+        </el-tag>
+        <el-input
+        class="input-new-tag"
+        v-if="inputVisible"
+        v-model="inputValue"
+        ref="saveTagInput"
+        size="small"
+        @keyup.enter.native="handleInputConfirm"
+        @blur="handleInputConfirm"
+        style="width: 80px;"
+        >
+        </el-input>
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">新增</el-button>
+    </div>
+    <div class="tagwrap">
+        <span class="titledai">尺码:</span>
+         <el-tag
+        :key="tag"
+        v-for="tag in SizedynamicTags"
+        closable
+        :disable-transitions="false"
+        @close="handleClose(tag)">
+        {{tag}}
         </el-tag>
         <el-input
           class="input-new-tag"
@@ -160,34 +167,11 @@
           style="width: 80px;"
         >
         </el-input>
-        <!--<el-button v-else class="button-new-tag" size="small" @click="showInput">新增</el-button>-->
-      </div>
-      <!-- <div class="tagwrap">
-          <span class="titledai">尺码:</span>
-           <el-tag
-          :key="tag"
-          v-for="tag in SizedynamicTags"
-          closable
-          :disable-transitions="false"
-          @close="handleClose(tag)">
-          {{tag}}
-          </el-tag>
-          <el-input
-          class="input-new-tag"
-          v-if="inputVisible1"
-          v-model="inputValue1"
-          ref="saveTagInput1"
-          size="small"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-          style="width: 80px;"
-          >
-          </el-input>
-          <el-button v-else class="button-new-tag" size="small" @click="showInput1">新增</el-button>
-      </div> -->
-      <span slot="footer" class="dialog-footer">
+        <el-button v-else class="button-new-tag" size="small">新增</el-button>
+    </div>
+    <span slot="footer" class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addproduct()">确 定</el-button>
+        <el-button type="primary">确 定</el-button>
     </span>
     </el-dialog>
   </div>
@@ -199,6 +183,9 @@
     props: {},
     data() {
       return {
+        collectshow:true,
+        productLink:'',
+        checked: false,
         tableData:[],
         webSiteCode: '',
         webStoreId: '',
@@ -212,6 +199,7 @@
           asin: '',
           webStoreName: '',
           brandName: '',
+          webstroe:'',
           webStoreSysId: '',
           price: '',
           platformDelivery: false,
@@ -256,7 +244,15 @@
           }
         ],
         valueSeach: '',
-        containItems: []
+        containItems: [
+            {
+                img: require('./111.png'),
+                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
+                price: '$11122122',
+                wish: 'wish'
+            },
+
+        ]
       };
     },
     created() {
@@ -356,45 +352,69 @@
       padding: 0 8px 0 16px;
       white-space: nowrap;
     }
-    .contain {
-      .containItem {
-        width: 250px;
-        float: left;
-        font-size: 14px;
-        margin: 10px 0 10px 16px;
-        padding-bottom: 15px;
-        box-sizing: border-box;
-        border: 1px solid #e6e6e6;
-        .productImgwrap {
-          margin-bottom: 12px;
-          width: 100%;
-          height: 230px;
-          position: relative;
-          .el-checkbox {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-          }
-        }
-        .productDetail {
-          padding: 0 10px;
-          margin-bottom: 12px;
-          height: 28px;
-          line-height: 14px;
-          overflow: hidden;
-          position: relative;
-          &:after {
-            content: '...';
-            display: block;
+    .contain{
+        overflow: hidden;
+        .containItem{
+            width: 250px;
+            float: left;
             font-size: 14px;
-            width: 42px;
-            height: 13px;
-            color: #000;
-            background-color: #ffffff;
-            position: absolute;
-            right: 0;
-            bottom: 0;
-          }
+            margin: 10px 0 10px 16px;
+            padding-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #e6e6e6;
+            .productImgwrap{
+                margin-bottom: 12px;
+                width: 100%;
+                height: 230px;
+                position: relative;
+                .el-checkbox{
+                    position: absolute;
+                    right: 10px;
+                    top: 10px;
+                }
+            }
+            .detailwrap{
+              display: flex;
+                .productDetail{
+                    flex: 1;
+                    padding: 0 10px;
+                    margin-bottom: 12px;
+                    height: 28px;
+                    line-height: 14px;
+                    overflow: hidden;
+                    position: relative;
+                    &:after{
+                        content: '...';
+                        display: block;
+                        font-size: 14px;
+                        width: 42px;
+                        height: 13px;
+                        color: #000;
+                        background-color: #ffffff;
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                    }
+                }
+                .collect{
+                    width: 28px;
+                    height: 28px;
+                    margin-right: 10px;
+                }
+            }
+            .productPrice{
+                padding: 0 10px;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+                .price{
+                    font-size: 16px;
+                }
+                .wish{
+                    @include size(50px,20px);
+                    background: url(./wish_logo.png) center no-repeat;
+                }
+            }
         }
         .productPrice {
           padding: 0 10px;
@@ -410,6 +430,11 @@
           }
         }
       }
+        .paginationwrap{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
     }
     .productstyle {
       overflow: hidden;
@@ -451,5 +476,4 @@
         }
       }
     }
-  }
 </style>
