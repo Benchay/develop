@@ -5,13 +5,17 @@
             <P><span>所需本金 : <span class="orange">$200.00</span></span><span>所需佣金 : <span class="orange">10</span></span></P>
         </div>
         <div class="btngrounp">
-            <el-button type="warning" >确认提交</el-button>
+            <el-button type="warning" @click="$router.push('/spreadcenter/planlist')">确认提交</el-button>
         </div>
     </div>
 </template>
 <script>
 export default {
-
+     data() {
+      return {
+          
+      }
+     }
 }
 </script>
 <style lang="scss">

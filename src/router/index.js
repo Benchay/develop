@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from '@/pages/home/home'
 import product from '@/pages/product/product'
 import spreadcenter from '@/pages/spreadcenter/spreadcenter'
+import planlist from '@/pages/spreadcenter/commonvue/planlist'
 import myspread from '@/pages/myspread/myspread'
 import task from '@/pages/task/task'
 import finance from '@/pages/finance/finance'
@@ -58,7 +59,12 @@ var route =  new Router({
     {
       path: '/spreadcenter',
       name: 'spreadcenter',
-      component: spreadcenter
+      component: spreadcenter,
+      children: [{
+          path: '/spreadcenter/planlist',
+          name: 'planlist',
+          component: planlist
+      }]
     },
     {
       path: '/myspread',
