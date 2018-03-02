@@ -4,22 +4,74 @@
           <h2>金额提现</h2>
       </div>
       <div class="rechargewrap">
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="支付宝支付" name="first">
-              <!-- <alipay/> -->
-            </el-tab-pane>
-            <el-tab-pane label="网银支付" name="second">
-              <!-- <Onlinebank/> -->
-            </el-tab-pane>
-            <el-tab-pane label="微信支付" name="third">
-              <!-- <WeCha tPay/> -->
-            </el-tab-pane>
-        </el-tabs>
+          <div class="content-box">
+            <!-- 开头 -->
+            <el-row type="flex" justify="center">
+              <el-col :span="18">
+                <div class="content-title">
+                  <span>当前账户余额：</span>
+                  <span>￥1000</span>
+                </div>
+              </el-col>
+            </el-row>
+            <!-- 中心内容 -->
+            <el-row type="flex" justify="center">
+                <div class="concent-body">
+                  <div class="content-body-content">
+                    <p>
+                      <span>提现账户:</span>
+                      <el-select v-model="form.payeeAccount" placeholder="请选择" @visible-change="getPresentAccount" v-if="select">
+                        <el-option v-for="item in withdrawalsOptions" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                      </el-select>
+                      <el-input v-else></el-input>
+                    </p>
+                    <p>
+                      <span>提现金额:</span>
+                      <el-input>
+                        <template slot="append">
+                          <span>元</span>
+                        </template>
+                      </el-input>
+                    </p>
+                    <p>
+                      <!-- 手机验证码 -->
+                      <span>短信验证:</span>
+                        <el-input v-model="code" placeholder="请输入手机验证码">
+                          <template slot="append" class="" >
+                            <el-button v-if="sendMobile" type="infor" class="codeBtn" style="">获取验证码</el-button>
+                          </template>
+                        </el-input>
+                    </p>
+                  </div>
+                </div>
+            </el-row>
+            <el-row type="flex" justify="center">
+              <el-col :span="18">
+                <div class="promptMsg">
+                  <span style="color: red;">*</span>
+                  <span class="">请您认真核对提现金额及提现账户，确保户名与帐号一致，以免造成提现失败甚至金额损失。</span>
+                </div>
+              </el-col>
+            </el-row>
+
+            <el-row type="flex" justify="center">
+              <div class="botton-area">
+                <div class="content-body-content">
+                  <p>
+                    <el-button class="Determine" @click="onSubmit">提现</el-button>
+                    <el-button class="cancel">取消</el-button>
+                  </p>
+                </div>
+              </div>
+            </el-row>
+          </div>
       </div>
   </div>
 </template>
 <script>
 // import {callApiWithToken} from '@/data/callApi'
+import {callApiForMbs} from '@/data/callApi'
 export default {
   name: 'withdrawals',
   components: {
@@ -27,10 +79,58 @@ export default {
   },
   data(){
       return{
-        activeName:'first'
+        select: true,
+
+
+        sendMobile: true,
+        activeName:'first',
+        withdrawalsOptions: [
+          {label: '支付宝', value: '1'},
+          {label: '网银', value: '2'},
+          {label: '微信', value: '3'}
+        ],
+
+
+        form: {
+           payerAccount:"222222",
+           payeeAccount:"123456",
+           financeItemCode: '1',
+           amount: -100,
+        },
+        withdrawalsType: '',
+        code: '',
       }
   },
   methods: {
+    getPresentAccount (getAccount) {
+      if (getAccount) {
+        let me = this
+        /*
+          如果有选择账号的话，可以在这里调用接口
+          填写如url（字符串）以及发送数据（json对象即可）
+          接下来在箭头函数中进行数据返回后的操作
+        */
+        // callApiForMbs('', {}, (res) => {
+        //   if (res.status >= 200 && res.status < 300) {
+        //     if (res.data.success) {
+        //       me.withdrawalsOptions = res.data.content
+        //     }
+        //   }
+        // })
+      }
+    },
+    onSubmit () {
+      let me = this
+      callApiForMbs('/finance/withdraw', this.form, function (res) {
+        if (res.status >= 200 && res.status < 300) {
+          if (res.data.success) {
+            me.$message({message: '申请成功，请等待审核', type: 'success'})
+            return
+          }
+        }
+        me.$message.error(res.data.errmsg)
+      })
+    },
     handleClick () {
 
     }
@@ -59,7 +159,6 @@ export default {
         box-sizing: border-box;
         overflow: hidden;
         margin-bottom: 20px;
-        // border-bottom: 1px dashed #e9ebea;
         h2{
             padding-left: 10px;
             display: inline-block;
@@ -72,34 +171,51 @@ export default {
         }
     }
     .rechargewrap{
-        .el-tabs__item{
-            margin-right: 10px;
-            border: 1px solid #cccccc;
+      .content-box {
+        .content-title {
+          background-color: #205081;
+          height: 40px;
+          line-height: 40px;
+          padding-left: 40px;
+          color: white;
         }
-        .el-tabs__nav-wrap{
-            display: inline-block;
-            position: relative;
-            &:after{
-                    background-color: #ffffff;
+        .concent-body {
+          padding-top: 20px;
+          text-align: center;
+          .content-body-content {
+            width:400px;
+            p {
+              margin-bottom: 20px;
+              .el-select {
+                width: 250px;
+              }
+              .el-input {
+                width: 250px;
+                .el-button {
+                  background-color: #205081;
+                  color:white;
+                  height: 38px;
                 }
-        }
-        .el-tabs__item.is-active{
-            border: 1px solid #205081;
-            position: relative;
-            &:before{
-                content: "";
-                position: absolute;
-                bottom: 0;
-                right: 0;
-                width: 26px;
-                height: 26px;
-                background: url(./pitch_up.png) center center no-repeat;
+              }
             }
+          }
         }
-        .el-tabs__active-bar{
-            background-color: #ffffff;
-            height: 0;
+        .promptMsg {
+          font-size: 10px;
         }
+        .botton-area {
+          padding-top: 20px;
+          .Determine {
+            background-color: #205081;
+            color:white;
+            height: 38px;
+          }
+          .cancel {
+            height: 38px;
+          }
+        }
+      }
+
     }
 }
 </style>

@@ -39,10 +39,10 @@
                   <el-button type="text" @click="routerGo('/resetPwd')">修改密码</el-button>
                 </p>
                 <p>
-                  <span>1362512362</span>
+                  <span>{{userMobile}}</span>
                 </p>
                 <p>
-                  <span>2018-01-01 00:00:00</span>
+                  <span>{{registerTime}}</span>
                 </p>
               </div>
             </div>
@@ -88,11 +88,15 @@
 </template>
 
 <script>
+import {callApiToken} from '@/data/callApi'
+import {changeDateFormat} from '@/data/callApi'
 export default {
   name: 'BasicInfo',
   data () {
     return {
       userName: '',
+      userMobile: '',
+      registerTime: '',
       activeIndex: '/basicinfo',
       imageUrl: '',
       currentPage: 1,
@@ -134,7 +138,19 @@ export default {
     }
   },
   created: function () {
-  this.userName = localStorage.getItem('username')
+    this.userName = localStorage.getItem('username')
+    let me = this
+    callApiToken('/user/load_user_info',{}, function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        if (res.data.success) {
+          me.userName = res.data.content.username
+          me.userMobile = res.data.content.mobile
+          me.registerTime = changeDateFormat(res.data.content.registerTime)
+        }
+      }
+      // me.userName = res
+      console.log(res)
+    })
   }
 }
 </script>

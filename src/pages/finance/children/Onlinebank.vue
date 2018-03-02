@@ -1,5 +1,5 @@
 <template>
-  <div class="alipay-pay">
+  <div class="onlinebank-pay">
     <el-row type="flex" justify="center">
       <div class="package-box" style="padding-top: 20px;">
         充值金额:
@@ -44,11 +44,14 @@
       </div>
     </el-row>
 
-    <el-row>
-      <div class="text-box" style="padding-top: 50px;">
-        <p style="padding-left: 130px;"><img src="${1}" alt="${0}"/>温馨提示</p>
-        <p style="padding-left: 130px;">请填写真实有效的充值信息，连续超过3次错误，将被定义为恶意充值，并冻结账号</p>
-      </div>
+    <el-row type="flex" justify="center">
+      <el-col :span="15">
+        <div class="text-info-box" style="padding-top: 50px;">
+          <p >温馨提示</p>
+          <p >请填写真实有效的充值信息，连续超过3次错误，将被定义为恶意充值，并冻结账号</p>
+        </div>
+      </el-col>
+
     </el-row>
   </div>
 </template>
@@ -62,7 +65,7 @@ export default {
       form: {
         payerAccount: '',
         payeeAccount: '',
-        amount: '',
+        amount: '50',
         financeItemCode:'2',
         tradingType: 3,
         transactionNumber: '',
@@ -82,13 +85,25 @@ export default {
             return
           }
         }
-        me.$message.error('充值失败')
+        me.$message.error(res.data.errmsg)
       })
     }
   }
 }
 </script>
 
-<style>
-
+<style scoped lang="scss">
+.onlinebank-pay {
+  .text-info-box {
+    padding-top: 20px;
+    font-size: 10px;
+  }
+  .el-button {
+    height: 38px;
+  }
+  .success {
+    background-color: #205081;
+    color: white;
+  }
+}
 </style>

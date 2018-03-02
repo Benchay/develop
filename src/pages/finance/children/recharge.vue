@@ -3,8 +3,19 @@
       <div class="title">
           <h2>本金充值</h2>
       </div>
+
       <div class="rechargewrap">
           <el-tabs v-model="activeName" @tab-click="handleClick">
+            <!-- 新增数据 -->
+            <div class="user-amount">
+              <el-row type="flex" justify="center">
+                <div class="user-amount-title">
+                  当前账户余额：￥
+                  <span>{{userAmount}} 元</span>
+                </div>
+              </el-row>
+            </div>
+
             <el-tab-pane label="支付宝支付" name="first">
               <alipay/>
             </el-tab-pane>
@@ -29,7 +40,8 @@ export default {
   },
   data(){
       return{
-        activeName:'first'
+        activeName:'first',
+        userAmount: '100',
       }
   },
   methods: {
@@ -73,7 +85,24 @@ export default {
             line-height: 20px;
         }
     }
+
+
     .rechargewrap{
+
+      // 新增
+      .user-amount {
+        .user-amount-title {
+          height: 40px;
+          width: 800px;
+          background-color: #205081;
+          padding-left: 40px;
+          line-height: 40px;
+          color: white;
+
+        }
+
+      }
+
         .el-tabs__item{
             margin-right: 10px;
             border: 1px solid #cccccc;

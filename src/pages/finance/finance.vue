@@ -4,7 +4,7 @@
         <el-tab-pane label="财务总览" name="first">
           <v-overview v-if="$route.name == 'finance'"></v-overview>
           <v-recharge v-if="$route.name == 'recharge'"></v-recharge>
-          <!-- <v-withdrawals v-if="$route.name == 'withdrawals'"></v-withdrawals> -->
+          <v-withdrawals v-if="$route.name == 'withdrawals'"></v-withdrawals>
 
         </el-tab-pane>
         <el-tab-pane label="金额交易记录" name="second"><v-principal></v-principal></el-tab-pane>

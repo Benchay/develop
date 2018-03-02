@@ -1,5 +1,5 @@
 <template>
-  <div class="alipay-pay">
+  <div class="wechat-pay">
     <el-row type="flex" justify="center">
       <div class="package-box" style="padding-top: 20px;">
         充值金额:
@@ -23,12 +23,15 @@
         <el-button >取消</el-button>
       </div>
     </el-row>
-    <el-row>
-      <div class="text-box" style="padding-top: 50px; padding-left: 130px;">
-        <p>温馨提示</p>
-        <p>1、不支持信用卡方式充值</p>
-        <p>2、首次使用需要在手机端下载微信</p>
-      </div>
+
+    <el-row type="flex" justify="center">
+      <el-col :span="15">
+        <div class="text-info-box">
+          <p>温馨提示</p>
+          <p>1、不支持信用卡方式充值</p>
+          <p>2、首次使用需要在手机端下载微信</p>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -69,8 +72,17 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+.wechat-pay {
+  .text-info-box {
+    padding-top: 20px;
+    font-size: 10px;
+  }
+  .el-button {
+    height: 38px;
+  }
   .success {
     background-color: #205081;
     color: white;
   }
+}
 </style>
