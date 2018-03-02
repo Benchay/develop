@@ -165,7 +165,7 @@ export default {
     background-color: #ffffff;
     height: 40px;
     line-height: 40px;
-    padding: 0 60px;
+    padding: 0 0px;
     .system{
         line-height: 37px;
     }

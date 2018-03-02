@@ -148,9 +148,11 @@ export default {
           me.registerTime = changeDateFormat(res.data.content.registerTime)
         }
       }
-      // me.userName = res
       console.log(res)
     })
+    // callApiToken('', {}, (res) => {
+    //
+    // })
   }
 }
 </script>
@@ -198,6 +200,7 @@ export default {
 
           }
           .user-info-box {
+            padding-top: 5px;
             margin-left: 100px;
             float:left;
             p {
