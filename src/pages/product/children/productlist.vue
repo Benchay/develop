@@ -71,6 +71,17 @@
       width="46%"
       center
       class="productstyle">
+        <p style="margin-bottom: 20px;"><span class="titledai">网站平台:</span>
+        <el-select size="small" v-model="webSiteCode" placeholder="网站平台" style="width: 90%;"
+                @change="findwebstore(webSiteCode)">
+        <el-option
+            v-for="item in webSiteCodeList"
+            :key="item.code"
+            :label="item.name"
+            :value="item.code">
+        </el-option>
+        </el-select>
+    </p>
       <p><span>商品链接:</span>
         <el-input size="small" v-model="listing.url" placeholder="请输入商品链接" style="width: 74%; margin: 0 10px">
         </el-input>
@@ -86,17 +97,6 @@
             <el-input size="small" v-model="listing.asin" placeholder="请输入商品ID"
                       style="width: 80%; margin-right: 10px"></el-input>
           </p>
-          <p><span class="titledai">网站平台:</span>
-            <el-select size="small" v-model="webSiteCode" placeholder="网站平台" style="width: 80%;"
-                    @change="findwebstore(webSiteCode)">
-            <el-option
-                v-for="item in webSiteCodeList"
-                :key="item.code"
-                :label="item.name"
-                :value="item.code">
-            </el-option>
-            </el-select>
-        </p>
           <p><span class="titledai">店铺名称:</span>
             <el-input size="small" v-model="listing.webStoreName" placeholder="请输入店铺名称"
                       style="width: 80%; margin-right: 10px"></el-input>
