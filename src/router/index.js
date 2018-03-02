@@ -26,6 +26,7 @@ import UserIndex from '@/pages/usercenter/UserIndex'
 import BasicInfo from '@/pages/usercenter/BasicInfo'
 import ManageRole from '@/pages/usercenter/ManageRole'
 import ManageStaff from '@/pages/usercenter/ManageStaff'
+import withdrawals from '@/pages/finance/children/withdrawals'
 //
 // import changeIndex from '@/pages/others/changeIndex'
 // import ChangePassword from '@/pages/others/ChangePassword'
@@ -73,11 +74,18 @@ var route =  new Router({
       path: '/finance',
       name: 'finance',
       component: finance,
-      children:[{
+      children:[
+        {
           path: '/finance/recharge',
           name: 'recharge',
           component: recharge,
-      }]
+        },
+        {
+          path: '/finance/withdrawals',
+          name: 'withdrawals',
+          component: withdrawals
+        }
+      ]
     },
     {
       path: '/ManageMessage',

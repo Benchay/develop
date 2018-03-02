@@ -1,31 +1,29 @@
 <template>
-  <div class="recharge">
+  <div class="withdrawals">
       <div class="title">
-          <h2>本金充值</h2>
+          <h2>金额提现</h2>
       </div>
       <div class="rechargewrap">
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="支付宝支付" name="first">
-              <alipay/>
+              <!-- <alipay/> -->
             </el-tab-pane>
             <el-tab-pane label="网银支付" name="second">
-              <Onlinebank/>
+              <!-- <Onlinebank/> -->
             </el-tab-pane>
             <el-tab-pane label="微信支付" name="third">
-              <WeChatPay/>
+              <!-- <WeCha tPay/> -->
             </el-tab-pane>
         </el-tabs>
       </div>
   </div>
 </template>
 <script>
-import alipay from '@/pages/finance/children/Alipay'
-import Onlinebank from '@/pages/finance/children/Onlinebank'
-import WeChatPay from '@/pages/finance/children/WeChatPay'
-import {callApiWithToken} from '@/data/callApi'
+// import {callApiWithToken} from '@/data/callApi'
 export default {
+  name: 'withdrawals',
   components: {
-    alipay,Onlinebank,WeChatPay
+    // alipay,Onlinebank,WeChatPay
   },
   data(){
       return{
@@ -38,16 +36,16 @@ export default {
     }
   },
   created () {
-    var _this=this
-    callApiWithToken('mbs/api/finance/query_receiver_config',{'pageSize':10,'pageNum':1,'status':1},function (res) {
-      _this.webSiteCodeList=res.data.content
-      console.log(res)
-    })
+    // var _this=this
+    // callApiWithToken('mbs/api/finance/query_receiver_config',{'pageSize':10,'pageNum':1,'status':1},function (res) {
+    //   _this.webSiteCodeList=res.data.content
+    //   console.log(res)
+    // })
   },
 }
 </script>
 <style lang="scss">
-.recharge{
+.withdrawals{
    background-color: #ffffff;
     padding: 30px 20px 35px;
     border: 1px solid #cccccc;

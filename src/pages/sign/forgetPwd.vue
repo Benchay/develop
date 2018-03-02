@@ -151,9 +151,11 @@ import {callJsonApi} from '@/data/callApi'
                       me.$message('密码修改成功，5秒后自动条转入登录页面')
                       setTimeout(function () {
                         me.$router.push({path: '/Login'})
+                        return
                       },5000)
                     }
                   }
+                  me.$message.error(res.data.errmsg)
                 })
               }else{
                 this.$message('确认密码')

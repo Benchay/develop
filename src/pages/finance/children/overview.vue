@@ -11,8 +11,8 @@
                 <p class="freezegold">冻结金额：￥<span>{{userFinance.frozenAmount}}</span></p>
               </div>
               <div class="btngroup">
-                   <router-link  :to='{path:"/finance/recharge"}'><el-button type="warning">充值</el-button></router-link>
-                  <el-button type="success">提现</el-button>
+                  <router-link  :to='{path:"/finance/recharge"}'><el-button type="warning">充值</el-button></router-link>
+                  <router-link  :to='{path:"/finance/withdrawals"}'><el-button type="success">提现</el-button></router-link>
               </div>
           </div>
           <!-- <div class="comaccount">
@@ -228,7 +228,7 @@ export default {
     },
     created: function () {
       this.reLoadFinance()
-      
+
     }
   }
 

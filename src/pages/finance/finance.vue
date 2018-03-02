@@ -4,6 +4,8 @@
         <el-tab-pane label="财务总览" name="first">
           <v-overview v-if="$route.name == 'finance'"></v-overview>
           <v-recharge v-if="$route.name == 'recharge'"></v-recharge>
+          <!-- <v-withdrawals v-if="$route.name == 'withdrawals'"></v-withdrawals> -->
+
         </el-tab-pane>
         <el-tab-pane label="金额交易记录" name="second"><v-principal></v-principal></el-tab-pane>
         <!-- <el-tab-pane label="佣金交易记录" name="third"><v-commission></v-commission></el-tab-pane> -->
@@ -15,12 +17,14 @@ import overview from './children/overview'
 import principal from './children/principal'
 import commission from './children/commission'
 import recharge from './children/recharge'
+import withdrawals from './children/withdrawals'
 export default {
     components: {
       'v-overview': overview,
       'v-principal': principal,
       'v-commission': commission,
-      'v-recharge': recharge
+      'v-recharge': recharge,
+      'v-withdrawals': withdrawals,
       },
     data() {
       return {

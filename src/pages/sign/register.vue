@@ -144,9 +144,11 @@ import {callJsonApi} from '@/data/callApi'
                       me.$message('注册成功，5秒后自动条转入登录页面')
                       setTimeout(function () {
                         me.$router.push({path: '/Login'})
+                        return
                       },5000)
                     }
                   }
+                  me.$message.error(res.data.errmsg)
                 })
               }else{
                 this.$message('请输入验证码')
