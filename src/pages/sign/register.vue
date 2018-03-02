@@ -1,5 +1,5 @@
 <template>
-  <div class="register">
+  <div class="register" @keyup.enter="onSubmit">
     <el-col :span="24" class="register3">
       <div class="pwdForm lr">
         <p class="loginTitle">新用户注册</p>
@@ -188,11 +188,11 @@ import {callJsonApi} from '@/data/callApi'
         }
       },
       resetImgCode () {
-        this.imgsrc = 'http://proxy.tintop.cn:26082/ums/pub/user/v_code?' + Math.random()
+        this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
       }
     },
     created: function () {
-      this.imgsrc = 'http://proxy.tintop.cn:26082/ums/pub/user/v_code?' + Math.random()
+      this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
     }
   }
 </script>

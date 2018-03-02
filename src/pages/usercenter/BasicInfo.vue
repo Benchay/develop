@@ -35,7 +35,7 @@
               </div>
 
               <div class="user-info-box">
-                <p><span>ShadowH</span>
+                <p><span>{{userName}}</span>
                   <el-button type="text" @click="routerGo('/resetPwd')">修改密码</el-button>
                 </p>
                 <p>
@@ -92,6 +92,7 @@ export default {
   name: 'BasicInfo',
   data () {
     return {
+      userName: '',
       activeIndex: '/basicinfo',
       imageUrl: '',
       currentPage: 1,
@@ -131,6 +132,9 @@ export default {
     routerGo (url) {
       this.$router.push({path: url})
     }
+  },
+  created: function () {
+  this.userName = localStorage.getItem('username')
   }
 }
 </script>

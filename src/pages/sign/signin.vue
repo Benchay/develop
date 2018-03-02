@@ -1,5 +1,5 @@
 <template>
-  <div class="signin">
+  <div class="signin" @keyup.enter="onSubmit">
     <el-col :span="24" class="loginContent">
       <el-col :span="14" class="flex2" style="margin-top: 80px"><img src="./bj.png" alt=""></el-col>
       <div class="loginForm">
@@ -96,7 +96,6 @@ import {callJsonApi} from '@/data/callApi'
                     localStorage.setItem('usertype', me.form.type)
                     localStorage.setItem('access_token', res.data.content.access_token)
                     me.$router.push({path: '/'})
-                    // window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
                     localStorage.setItem('username', res.data.content.username)
                   } else {
                     me.$message.error('账号或密码错误，请确认后重新登录')

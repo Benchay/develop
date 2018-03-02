@@ -8,12 +8,12 @@
 </template>
 <script>
 export default {
-  
+
 }
 </script>
 <style lang="scss">
-.loginheader{
-    .loginTop{
+.loginheader {
+    .loginTop {
       height: 60px;
       border-bottom: 3px solid #205081;
       div{

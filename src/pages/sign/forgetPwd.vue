@@ -1,5 +1,5 @@
 <template>
-  <div class="forgetPwd">
+  <div class="forgetPwd" @keyup.enter="onSubmit">
     <el-col :span="24" class="forgetPwd">
       <div class="pwdForm lr">
         <p class="loginTitle">忘记密码</p>
