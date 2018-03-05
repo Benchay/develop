@@ -283,10 +283,7 @@
         _this.webSiteCodeList = res.data.content
         console.log(res)
       })
-      callApiForMbs('listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
-        _this.listingList = res.data.content.records
-        console.log(res.data.content.records)
-      })
+      this.refreshlisting()
     },
     mounted() {
       // this.initdata();
@@ -316,10 +313,11 @@
         callApiForMbs('/listing/add_listing', this.listing, function (res) {
           if (res.data.success) {
             _this.centerDialogVisible = false;
-            alert("添加成功")
+            _this.$message("添加产品成功")
           } else {
             alert(res.data.errmsg)
           }
+          _this.refreshlisting()
           console.log(res)
         })
         /*let param = {
@@ -341,11 +339,13 @@
       },
       grabproduct() {
         var _this = this
+        var _listingUrl=_this.listing.url
         callApiForMbs('/listing/grab_listing', {
           'listingUrl': this.listing.url,
           'webSiteCode': this.webSiteCode
         }, function (res) {
           _this.listing = res.data.content
+          _this.listing.url = _listingUrl
           console.log(res)
         })
       },
@@ -359,6 +359,13 @@
       },
       deleteListings() {
 
+      },
+      refreshlisting(){
+        var _this=this
+        callApiForMbs('listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
+          _this.listingList = res.data.content.records
+          console.log(res.data.content.records)
+        })
       }
     }
   }

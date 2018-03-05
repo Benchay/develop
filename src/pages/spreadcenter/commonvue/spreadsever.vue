@@ -155,7 +155,7 @@ export default {
                 height: 38px;
                 text-align: center;
                 background-color: #f5f5f5;
-                margin-right: 20px;  
+                margin-right: 20px;
                 border-radius: 20px 20px 0 0;
                 border: 1px solid #cccccc;
                 overflow: hidden;
@@ -166,10 +166,10 @@ export default {
                     flex: 4;
                 }
                 &:last-child{
-                margin-right: 0px;  
+                margin-right: 0px;
                 }
                 p{
-                  height: 38px;  
+                  height: 38px;
                   line-height: 38px;
                   span{
                       color: #ee811e;
@@ -184,11 +184,11 @@ export default {
                  padding: 0 30px;
                  margin-bottom: 20px;
                 &>div{
-                  flex: 3; 
+                  flex: 3;
                   height: 40px;
-                  margin-right: 20px;   
+                  margin-right: 20px;
                     &:last-child{
-                margin-right: 0px;  
+                margin-right: 0px;
                 }
                 }
                 .entrySearch{

@@ -88,7 +88,7 @@
         callApiForMbs('plan/create_plan', planVo, function (res) {
           console.log(res)
           if(res.data.success){
-            alert("提交计划成功")
+            _this.$message("提交计划成功")
             _this.$router.push('/myspread')
           }else{
             alert(res.data.errmsg)

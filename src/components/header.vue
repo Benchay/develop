@@ -46,7 +46,7 @@
                     </el-dropdown-menu>
                   </el-dropdown>
                   <div class="logoout">
-                    <span @click="logout">
+                    <span @click="logout()">
                       <i class="outimg"><img src="../image/out.png"  width="100%" height="100%" alt=""></i>退出登录
                     </span>
                   </div>
@@ -94,9 +94,9 @@ export default {
     logout () {
       console.log('退出登录')
       localStorage.removeItem('access_token')
-      this.$router.push({path:'/signin'})
+      //this.$router.push({path:'/'})
+      window.location.reload(true)
       // window.location.reload(true)
-      // window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
     },
     handleSelect(index){
       if(index == 10001){

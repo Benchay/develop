@@ -11,7 +11,7 @@
             type="textarea"
             :autosize="{ minRows: 4, maxRows: 6}"
             placeholder="请输入具体地址（多行输入）"
-            v-model="textarea3">
+            v-model="address">
             </el-input>
             </div>
         </el-tab-pane>
