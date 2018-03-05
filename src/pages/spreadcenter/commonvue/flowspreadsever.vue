@@ -33,47 +33,48 @@
       center
       class="entrystyle">
       <p><span class="titledai">入口类型:</span>
-         <el-select size="small" v-model="webSiteCode" placeholder="入口" style="width: 80%;"
-                @change="findwebstore(webSiteCode)">
-        <el-option
-            v-for="item in typelist"
-            :key="item.value"
-            :label="item.lable"
-            :value="item.value">
-        </el-option>
+        <el-select size="small" v-model="entrance.entranceType" placeholder="入口" style="width: 80%;"
+                   @change="">
+          <el-option
+            v-for="item in entranceTypes"
+            :key="item.type"
+            :label="item.name"
+            :value="item.code">
+          </el-option>
         </el-select>
       </p>
-       <p><span class="titledai">关键词:</span>
-          <el-input size="small" v-model="ktext" placeholder="请输入关键词"
-                    style="width: 80%;"></el-input>
-        </p>
+      <p><span class="titledai">关键词:</span>
+        <el-input size="small" v-model="ktext" placeholder="请输入关键词"
+                  style="width: 80%;"></el-input>
+      </p>
       <p><span class="titledai">类目选择:</span>
-         <el-select size="small" v-model="webSiteCode" placeholder="All department" style="width: 80%;"
-                @change="findwebstore(webSiteCode)">
-        <el-option
-            v-for="item in typelist"
+        <el-select size="small" v-model="entrance.catagory" placeholder="All department" style="width: 80%;"
+                   @change="">
+          <el-option
+            v-for="item in catagorys"
             :key="item.value"
             :label="item.lable"
             :value="item.value">
-        </el-option>
+          </el-option>
         </el-select>
       </p>
-        <p><span class="titledai">价格区间:</span>
-          <el-input size="small" v-model="ktext" placeholder="请输入价格"
-                    style="width: 38%;"></el-input>--
-          <el-input size="small" v-model="ktext" placeholder="请输入价格"
-                    style="width: 38%;"></el-input>
-        </p>
-        <div class="mateWrap">
-        <el-tabs v-model="accountMatchType" @tab-click="handleClick">
-            <el-tab-pane label="优先匹配" name="2">
-            </el-tab-pane>
-            <el-tab-pane label="完全匹配" name="1">
-            </el-tab-pane>
+      <p><span class="titledai">价格区间:</span>
+        <el-input size="small" v-model="entrance.minPrice" placeholder="请输入价格"
+                  style="width: 38%;"></el-input>
+        --
+        <el-input size="small" v-model="entrance.maxPrice" placeholder="请输入价格"
+                  style="width: 38%;"></el-input>
+      </p>
+      <div class="mateWrap">
+        <el-tabs v-model="entrance.sort">
+          <el-tab-pane label="价格排序" name="2">
+          </el-tab-pane>
+          <el-tab-pane label="热度排序" name="1">
+          </el-tab-pane>
         </el-tabs>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary">保 存</el-button>
+        <el-button type="primary" @click="savelistingentrance()">保 存</el-button>
     </span>
     </el-dialog>
   </div>
@@ -82,12 +83,30 @@
   import {callApiForMbs} from '@/data/callApi'
 
   export default {
+    props: ['listingId'],
     data() {
       return {
-        ktext:'',
+        ktext: '',
         centerDialogVisible: false,
         activityList: [],
-        entrance:{},
+        entranceType:'',
+        entranceTypes: [{
+          type: 1,
+          code: "keyword",
+          name:"搜索"
+        }, {
+          type: 2,
+          code: "catagory",
+          name:"类目"
+        },
+          {
+            type: 3,
+            code: "ad",
+            name:"广告"
+          }],
+        entrance: {},
+        catagory:'',
+        catagorys:[],
         keyword: '',
         input: '',
         num1: '',
@@ -98,14 +117,37 @@
     methods: {
       handleChange(value) {
         console.log(value);
+      },
+      savelistingentrance(){
+        var _this=this
+        var listingEntrances={}
+        var listingId=this.listingId
+        listingEntrances.listingId=listingId
+        listingEntrances.entranceTypeCode=_this.entrance.entranceType
+        var entranceVal={}
+        entranceVal.keyword=this.entrance.keyword
+        entranceVal.catagory=this.entrance.catagory
+        entranceVal.minPrice=this.entrance.minPrice
+        entranceVal.maxPrice=this.entrance.maxPrice
+        entranceVal.sort=this.entrance.sort
+        listingEntrances.entranceVal=JSON.stringify(entranceVal)
+        callApiForMbs('listing_entrances/save', listingEntrances, function (res) {
+          if (res.data.success) {
+            _this.$message("保存成功")
+            _this.centerDialogVisible=false
+          } else {
+            alert(res.data.errmsg)
+          }
+          console.log(res)
+        })
       }
     },
     created() {
       var _this = this
-      callApiForMbs('promote_activity/find_activity_by_scene_code', {sceneCode:'flow'}, function (res) {
-        if(res.data.success){
+      callApiForMbs('promote_activity/find_activity_by_scene_code', {sceneCode: 'flow'}, function (res) {
+        if (res.data.success) {
           _this.activityList = res.data.content
-        }else{
+        } else {
           alert(res.data.errmsg)
         }
         console.log(res)
@@ -215,47 +257,47 @@
         }
       }
     }
-    .entrystyle{
+    .entrystyle {
       p {
-          white-space: nowrap;
-          margin-top: 20px;
-        }
-        .titledai {
-          display: inline-block;
-          width: 60px;
-          margin-right: 10px;
-        }
-        .mateWrap{
-          margin-top: 20px;
-            .el-tabs__nav-wrap{
-                display: inline-block;
-                padding-left: 75px;
-                position: relative;
-                &:before{
-                    content: '排序:';
-                    width: 90px;
-                    height: 40px;
-                    background-color: #ffffff;
-                    position: absolute;
-                    left: 0;
-                    top: 8px;
-                }
-                &:after{
-                    background-color: #ffffff;
-                }
-            }
-             .el-tabs__item{
+        white-space: nowrap;
+        margin-top: 20px;
+      }
+      .titledai {
+        display: inline-block;
+        width: 60px;
         margin-right: 10px;
-        border: 1px solid #cccccc;
-    }
-    .el-tabs__item:hover{
-        color: #205081;
-    }
-    .el-tabs__item.is-active{
-        color: #205081;
-        border: 1px solid #205081;
-        position: relative;
-        &:before{
+      }
+      .mateWrap {
+        margin-top: 20px;
+        .el-tabs__nav-wrap {
+          display: inline-block;
+          padding-left: 75px;
+          position: relative;
+          &:before {
+            content: '排序:';
+            width: 90px;
+            height: 40px;
+            background-color: #ffffff;
+            position: absolute;
+            left: 0;
+            top: 8px;
+          }
+          &:after {
+            background-color: #ffffff;
+          }
+        }
+        .el-tabs__item {
+          margin-right: 10px;
+          border: 1px solid #cccccc;
+        }
+        .el-tabs__item:hover {
+          color: #205081;
+        }
+        .el-tabs__item.is-active {
+          color: #205081;
+          border: 1px solid #205081;
+          position: relative;
+          &:before {
             content: "";
             position: absolute;
             bottom: 0;
@@ -263,13 +305,13 @@
             width: 26px;
             height: 26px;
             background: url(./pitch_up.png) center center no-repeat;
+          }
         }
-    }
-    .el-tabs__active-bar{
-        background-color: #ffffff;
-        height: 0;
-    }
+        .el-tabs__active-bar {
+          background-color: #ffffff;
+          height: 0;
         }
+      }
     }
   }
 </style>

@@ -48,18 +48,8 @@
             style="width: 100%">
             <el-table-column
             label="产品ID"
-            width="200">
-            <template slot-scope="scope">
-                <div  v-if="scope.row.isShow === false">
-                 <i class="jtwrap"></i><span class="ordernamewrap">{{scope.row.productID}}</span>
-                </div>
-                <el-popover trigger="hover" placement="top" v-else>
-                    <p>{{ scope.row.tiktip }}</p>
-                     <div slot="reference" class="name-wrapper">
-                         <i class="jtwrap"><img src="./jth.png" alt=""></i><span class="ordernamewrap">{{scope.row.productID}}</span>
-                    </div>
-                </el-popover>
-            </template>
+            width="200"
+            prop="productID">
             </el-table-column>
             <el-table-column
             label="任务类型"
@@ -73,7 +63,18 @@
             <el-table-column
             label="执行状态"
             width="180"
-            prop="goingstate">
+            >
+                <template slot-scope="scope">
+                <div  v-if="scope.row.isShow === false">
+                <i class="jtwrap"></i><span class="ordernamewrap">{{scope.row.goingstate}}</span>
+                </div>
+                <el-popover trigger="hover" placement="top" v-else>
+                    <p style="color: #fe6c6f;">{{ scope.row.tiktip }}</p>
+                    <div slot="reference" class="name-wrapper">
+                        <i class="jtwrap"><img src="./jth.png" alt=""></i><span class="ordernamewrap">{{scope.row.goingstate}}</span>
+                    </div>
+                </el-popover>
+            </template>
             </el-table-column>
             <el-table-column label="操作">
             <template slot-scope="scope">
@@ -88,6 +89,13 @@
             </el-table-column>
         </el-table>
     </div>
+    <div class="paginationwrap">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="1000">
+        </el-pagination>
+      </div>
   </div>
 </template>
 <script>
@@ -135,7 +143,7 @@ export default {
             productID: '我是推广名称',
             tasktype: '销量推广',
             taskmessage: '关键词: 小号: 初始排名: 当前排名:',
-            goingstate: '正在执行',
+            goingstate: '失败',
             tiktip:'排单价格与电商平台价格不符合'
             }, {
             isShow:false,
@@ -180,6 +188,9 @@ export default {
      }
     .listWrap{
          border: 1px solid #e6e6e6;
+         .el-table th:first-child + th+th+th > .cell{
+                 left: 20px;
+         }
          .jtwrap{
              display: inline-block;
              width: 16px;
@@ -199,6 +210,10 @@ export default {
              height: 16px;
          }
      }
+    .paginationwrap{
+        margin-top: 20px;
+        text-align: right;
+    }
 }
 </style>
 

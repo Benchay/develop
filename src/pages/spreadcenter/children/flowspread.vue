@@ -10,10 +10,10 @@
     <div class="booksystem">
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item title="商品信息" name="1">
-          <v-trade ref="listingData"></v-trade>
+          <v-trade ref="listingData" @updatelistingid="updatelistingid" :listingId="listingId" ></v-trade>
         </el-collapse-item>
         <el-collapse-item title="设置推广服务" name="2">
-          <v-flowspreadsever ref="activityData"></v-flowspreadsever>
+          <v-flowspreadsever ref="activityData" :listingId="listingId"></v-flowspreadsever>
         </el-collapse-item>
         <el-collapse-item title="时间发布设置" name="3">
           <v-timeopen ref="timeData"></v-timeopen>
@@ -54,6 +54,7 @@
     data() {
       return {
         name: '',
+        listingId:'',
         valueSeach: '',
         activeNames: ['2']
       }
@@ -63,6 +64,7 @@
         //console.log(this.$refs.listingData.listing)
       },
       submit() {
+        var _this=this
         var planVo = {}
         planVo.name = this.name
         planVo.listing = this.$refs.listingData.listing
@@ -87,11 +89,16 @@
           console.log(res)
           if(res.data.success){
             alert("提交计划成功")
+            _this.$router.push('/myspread')
           }else{
             alert(res.data.errmsg)
           }
         })
+      },
+      updatelistingid(listingId){
+        this.listingId=listingId;
       }
+
     }
   }
 </script>

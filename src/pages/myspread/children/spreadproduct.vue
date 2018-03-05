@@ -58,12 +58,24 @@
             </el-table-column>
             <el-table-column
             label="总数/执行中/成功数/失败数"
-            prop="count">
+            prop="count"
+            width="280">
             </el-table-column>
             <el-table-column
             label="订单状态"
-            width="180"
-            prop="orderstate">
+            width="230"
+            >
+             <template slot-scope="scope" style="text-align: center;">
+                <div  v-if="scope.row.isShow === false">
+                 <i class="jtwrap"></i><span class="ordernamewrap">{{scope.row.ordername}}</span>
+                </div>
+                <el-popover trigger="hover" placement="top" v-else>
+                    <p style="color: #fe6c6f;">{{ scope.row.orderstate }}</p>
+                     <div slot="reference" class="name-wrapper">
+                         <i class="jtwrap"><img src="./jth.png" alt=""></i><span class="ordernamewrap">{{scope.row.orderstate}}</span>
+                    </div>
+                </el-popover>
+            </template>
             </el-table-column>
             <el-table-column label="操作">
             <template slot-scope="scope">
@@ -81,13 +93,20 @@
             </el-table-column>
         </el-table>
     </div>
+    <div class="paginationwrap">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="1000">
+        </el-pagination>
+      </div>
   </div>
 </template>
 <script>
 export default {
     components: { },
     props: {
-     
+
     },
     data(){
         return{
@@ -128,7 +147,7 @@ export default {
             ordername: '我是推广名称',
             spreadtype: '销量推广',
             count: '80/20/20/20',
-            orderstate: '正在执行',
+            orderstate: '暂停',
             tiktip:'你的账号余额不足'
             }, {
             isShow:false,
@@ -140,14 +159,14 @@ export default {
             }]
         }
     },
-    methods: {    
+    methods: {
         handleEdit(index, row) {
             console.log(index, row);
         },
         handleDelete(index, row) {
             console.log(index, row);
-        }  
-      }    
+        }
+      }
 }
 </script>
 <style lang="scss">
@@ -168,7 +187,7 @@ export default {
             .el-radio-button__orig-radio:checked+.el-radio-button__inner{
                 background-color: #FFF;
                 font-weight: 600;
-                color: #205081; 
+                color: #205081;
                 box-shadow: none;
                 border-color: #ffffff;
             }
@@ -179,6 +198,9 @@ export default {
      }
     .listWrap{
          border: 1px solid #e6e6e6;
+          .el-table th:first-child + th+th+th > .cell{
+                 left: 20px;
+         }
          .jtwrap{
              display: inline-block;
              width: 16px;
@@ -198,6 +220,10 @@ export default {
              height: 16px;
          }
      }
+    .paginationwrap{
+        margin-top: 20px;
+        text-align: right;
+    }
 }
 </style>
 
