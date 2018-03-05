@@ -125,6 +125,7 @@
         this.centerDialogVisible = false;
         this.added = true;
         this.listing = row
+        this.$emit('updatelistingid',this.listing.id); //主动触发updatelistingid方法，listing.id 为向父组件传递的数据
         console.log(row)
       }
     }
