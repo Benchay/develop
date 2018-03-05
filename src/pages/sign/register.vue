@@ -82,10 +82,17 @@ import {callJsonApi} from '@/data/callApi'
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.form.rePassword !== '') {
-            this.$refs.form.validateField('rePassword');
+          //
+          // if (this.form.rePassword !== '') {
+          //   this.$refs.form.validateField('rePassword');
+          // }
+          var reg = /^[A-Za-z0-9]{6,20}$/
+          if (reg.test(value)) {
+            callback()
+          } else {
+            callback('注册密码应为.....')
           }
-          callback();
+
         }
       };
       var validatePass2 = (rule, value, callback) => {

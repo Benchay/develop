@@ -96,7 +96,7 @@ export default {
       localStorage.removeItem('access_token')
       //this.$router.push({path:'/'})
       window.location.reload(true)
-      //window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
+      // window.location.reload(true)
     },
     handleSelect(index){
       if(index == 10001){

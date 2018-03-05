@@ -134,7 +134,14 @@ var route =  new Router({
       // 登录系统
       path: '/signin',
       name: 'signin',
-      component: signin
+      component: signin,
+      beforeEnter (to, from, next) {
+        // console.log(to)
+        signin.created()
+        next(vm => {
+          // console.log('1111111111111111111')
+        })
+      }
     },
     {
       // 注册系统

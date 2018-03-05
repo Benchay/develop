@@ -38,6 +38,7 @@
 <script>
 import {callJsonApi} from '@/data/callApi'
   export default {
+
     components: {
     },
     data(){
@@ -90,7 +91,8 @@ import {callJsonApi} from '@/data/callApi'
                   // 登录成功
                   if (res.data.success) {
                     // 装在用户ID以及用户所在公司ID
-                    console.log(res.data.content)
+                    console.log(res)
+                    me.$message({message: '登录成功', type: 'success'})
                     localStorage.setItem('userId', res.data.content.userId)
                     localStorage.setItem('companyId', res.data.content.companyId)
                     localStorage.setItem('usertype', me.form.type)
@@ -99,7 +101,7 @@ import {callJsonApi} from '@/data/callApi'
                     localStorage.setItem('username', res.data.content.username)
                   } else {
                     me.$message.error('账号或密码错误，请确认后重新登录')
-                    console.log(res.data.content)
+                    console.log(res)
                   }
                 }
               })
@@ -116,11 +118,14 @@ import {callJsonApi} from '@/data/callApi'
       // 更新验证码
       resetCodeImg () {
         this.codeImgSrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
-      },
+      }
     },
     // 自动加载图片验证码
     created: function () {
       this.codeImgSrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
+      // this.form.username = ''
+      // this.form.password = ''
+      // this.form.verificationCode = ''
     }
   }
 </script>

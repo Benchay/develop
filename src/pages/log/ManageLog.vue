@@ -124,6 +124,7 @@ export default {
       callApiToken('/message/query_users_log', {startTime: startTime, endTime: endTime, operatorId: this.queryValue, type: this.selectValue, page: value, pageSize:10}, this.updateTableData)
     },
     updateTableData (res) {
+      console.log(res)
       if (res.status>=200 && res.status <300) {
         if (res.data.success) {
           this.tableData = res.data.content.records

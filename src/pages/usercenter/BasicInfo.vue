@@ -29,17 +29,18 @@
             <div class="main-header">
 
               <div class="user-title-box">
-                <p><span>用户名：</span></p>
+                <!-- <p><span>用户名：</span></p> -->
                 <p><span>手机号码：</span></p>
                 <p><span>注册时间：</span></p>
               </div>
 
               <div class="user-info-box">
-                <p><span>{{userName}}</span>
-                  <el-button type="text" @click="routerGo('/resetPwd')">修改密码</el-button>
-                </p>
+                <!-- <p><span>{{userName}}</span> -->
+
+                <!-- </p> -->
                 <p>
                   <span>{{userMobile}}</span>
+                  <el-button type="text" @click="routerGo('/resetPwd')">修改密码</el-button>
                 </p>
                 <p>
                   <span>{{registerTime}}</span>

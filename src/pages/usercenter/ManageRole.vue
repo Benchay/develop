@@ -52,6 +52,8 @@
             </div>
           </el-col>
         </el-row>
+
+        <!--  -->
         <el-dialog title="编辑角色" :visible.sync="addFlag" width="40%" :before-close="closeDialog">
           <el-form :model="form">
             <el-form-item label="角色名称" >
@@ -61,11 +63,15 @@
               <el-input v-model="form.content" style="width: 250px;"></el-input>
             </el-form-item>
             <el-form-item >
-
               <!-- 授权 -->
               <el-tabs type="border-card" @tab-click="changeMenuItem">
                 <el-tab-pane v-for="item in authItem" :label="item.name" :name="item.id + ''">
-                  <span style="margin-right: 20px;" v-for="childItem in childAuthItem"><el-checkbox v-model="childItem.checked">{{childItem.name}}</el-checkbox></span>
+
+                  <el-tree :data="childAuthItem" show-checkbox
+                    node-key="id"
+                    :default-checked-keys="[5]"
+                    :props="itemParamName">
+                  </el-tree>
                 </el-tab-pane>
               </el-tabs>
             </el-form-item>
@@ -95,6 +101,9 @@ export default {
   name: 'ManageRole',
   data () {
     return {
+      itemParamName: {
+        label: 'name',
+      },
       form: {
         id: 0,
         name: '',
@@ -148,8 +157,8 @@ export default {
       this.$router.push({path: url})
     },
     changeMenuItem (val) {
+      console.log(val)
       this.childAuthItem = []
-      // console.log(this.allAuthItem)
       for (var i = 0; i < this.allAuthItem.length; i++) {
         if (this.allAuthItem[i].parentId == val.name) {
           this.childAuthItem.push(this.allAuthItem[i])
