@@ -51,7 +51,7 @@
       <!--显示产品列表-->
       <div class="contain">
         <div class="containItem" v-for="item in listingList">
-          <div class="productImgwrap">
+          <div class="productImgwrap" @click="filllisting(item)">
             <img :src="item.mainImgUrl" alt="" width="100%" height="100%">
             <el-checkbox v-model="checked"></el-checkbox>
           </div>
@@ -63,35 +63,6 @@
             <span class="wish"></span>
           </p>
         </div>
-      </div>
-      <div class="listWrap">
-        <el-table
-          :data="tableData"
-          @row-click="filllisting"
-          style="width: 100%">
-          <el-table-column
-            prop="id"
-            label="商品编号"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="asin"
-            label="ASIN"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="title"
-            label="标题"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            label="操作">
-            <template slot-scope="scope">
-              <el-button plain> 编辑 </el-button>
-              <el-button type="primary">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
       </div>
     </el-dialog>
   </div>
@@ -145,6 +116,101 @@
       border: 1px solid #cccccc;
       margin-right: 20px;
     }
+    .productstyle {
+      overflow: hidden;
+      p {
+        white-space: nowrap;
+      }
+      .titledai {
+        display: inline-block;
+        width: 60px;
+        margin-right: 10px;
+      }
+      .tagwrap {
+        margin-top: 20px;
+        .titledai {
+          margin-right: 5px;
+        }
+        .el-tag {
+          margin-right: 10px;
+          margin-bottom: 5px;
+        }
+      }
+      .dialogmainwrap {
+        margin-top: 20px;
+        display: flex;
+        .leftwrap {
+          flex: 1;
+          p {
+            margin-bottom: 20px;
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+        .rightwrap {
+          .Qimgwrap {
+            width: 190px;
+            height: 190px;
+          }
+        }
+      }
+      .contain {
+        .containItem {
+          width: 250px;
+          float: left;
+          font-size: 14px;
+          margin: 10px 0 10px 16px;
+          padding-bottom: 15px;
+          box-sizing: border-box;
+          border: 1px solid #e6e6e6;
+          .productImgwrap {
+            margin-bottom: 12px;
+            width: 100%;
+            height: 230px;
+            position: relative;
+            .el-checkbox {
+              position: absolute;
+              right: 10px;
+              top: 10px;
+            }
+          }
+          .productDetail {
+            padding: 0 10px;
+            margin-bottom: 12px;
+            height: 28px;
+            line-height: 14px;
+            overflow: hidden;
+            position: relative;
+            &:after {
+              content: '...';
+              display: block;
+              font-size: 14px;
+              width: 42px;
+              height: 13px;
+              color: #000;
+              background-color: #ffffff;
+              position: absolute;
+              right: 0;
+              bottom: 0;
+            }
+          }
+          .productPrice {
+            padding: 0 10px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            .price {
+              font-size: 16px;
+            }
+            .wish {
+              @include size(50px, 20px);
+              //background: url(./wish_logo.png) center no-repeat;
+            }
+          }
+        }
+      }
+    }
     .tradeName {
       flex: 1;
       .detail {
@@ -191,61 +257,6 @@
         display: inline-block;
         width: 45px;
         margin-right: 10px;
-      }
-    }
-    .contain {
-      .containItem {
-        width: 250px;
-        float: left;
-        font-size: 14px;
-        margin: 10px 0 10px 16px;
-        padding-bottom: 15px;
-        box-sizing: border-box;
-        border: 1px solid #e6e6e6;
-        .productImgwrap {
-          margin-bottom: 12px;
-          width: 100%;
-          height: 230px;
-          position: relative;
-          .el-checkbox {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-          }
-        }
-        .productDetail {
-          padding: 0 10px;
-          margin-bottom: 12px;
-          height: 28px;
-          line-height: 14px;
-          overflow: hidden;
-          position: relative;
-          &:after {
-            content: '...';
-            display: block;
-            font-size: 14px;
-            width: 42px;
-            height: 13px;
-            color: #000;
-            background-color: #ffffff;
-            position: absolute;
-            right: 0;
-            bottom: 0;
-          }
-        }
-        .productPrice {
-          padding: 0 10px;
-          display: flex;
-          justify-content: space-between;
-          flex-wrap: nowrap;
-          .price {
-            font-size: 16px;
-          }
-          .wish {
-            @include size(50px, 20px);
-            //background: url(./wish_logo.png) center no-repeat;
-          }
-        }
       }
     }
   }

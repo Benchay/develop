@@ -13,7 +13,7 @@
       <div class="tabBody">
         <div class="tabBodyItem">
           <div class="entrySearch">
-            <span class="insbefore" @click="centerDialogVisible = true">搜索</span>
+            <span class="insbefore" @click="centerDialogVisible = true">{{entrance.name}}</span>
             <el-input v-model="entrance.keyword" placeholder="请输入内容"></el-input>
             <span class="insafter">X</span>
           </div>
@@ -34,7 +34,7 @@
       class="entrystyle">
       <p><span class="titledai">入口类型:</span>
         <el-select size="small" v-model="entrance.entranceType" placeholder="入口" style="width: 80%;"
-                   @change="">
+                   @change="changeentrancename">
           <el-option
             v-for="item in entranceTypes"
             :key="item.type"
@@ -44,7 +44,7 @@
         </el-select>
       </p>
       <p><span class="titledai">关键词:</span>
-        <el-input size="small" v-model="ktext" placeholder="请输入关键词"
+        <el-input size="small" v-model="entrance.keyword" placeholder="请输入关键词"
                   style="width: 80%;"></el-input>
       </p>
       <p><span class="titledai">类目选择:</span>
@@ -120,6 +120,10 @@
       },
       savelistingentrance(){
         var _this=this
+        if(_this.entrance.entranceType!='keyword'){
+          _this.centerDialogVisible=false
+          return
+        }
         var listingEntrances={}
         var listingId=this.listingId
         listingEntrances.listingId=listingId
@@ -140,6 +144,14 @@
           }
           console.log(res)
         })
+      },
+      changeentrancename(name){
+        for(var idx in this.entranceTypes){
+          var enType=this.entranceTypes[idx]
+          if(enType.code==name){
+            this.entrance.name=enType.name
+          }
+        }
       }
     },
     created() {
