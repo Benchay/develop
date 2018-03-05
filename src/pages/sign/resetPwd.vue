@@ -85,19 +85,28 @@ import {callApiToken} from '@/data/callApi'
     methods: {
       onSubmit () {
         let me = this
-        callApiToken('/user/change_user_password', this.form, function (res) {
-          console.log(res)
-          if (res.status >= 200 && res.status < 300) {
-            if (res.data.success) {
-              me.$message({message: '密码修改成功', type: 'success'})
-              localStorage.removeItem('access_token')
-              window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
-            } else {
-              me.$message.error(res.data.errmsg)
-            }
+        if (me.form.newPassword != me.form.reNewPassword) {
+          if (me.form.newPassword != me.form.oldPassword) {
+            callApiToken('/user/change_user_password', this.form, function (res) {
+              console.log(res)
+              if (res.status >= 200 && res.status < 300) {
+                if (res.data.success) {
+                  me.$message({message: '密码修改成功, 请重新登录', type: 'success'})
+                  localStorage.removeItem('access_token')
+                  setTimeout(function() {
+                    window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
+                  }, 1000)
+                } else {
+                  me.$message.error(res.data.errmsg)
+                }
+              }
+            })
+          } else {
+            me.$message.error('您输入的新密码与旧密码一直，请重新输入')
           }
-
-        })
+        } else {
+          me.$message.error('您输入的两次新密码不一致，请重新确认！')
+        }
       },
       resetImgCode () {
         this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
@@ -105,6 +114,7 @@ import {callApiToken} from '@/data/callApi'
     },
     created: function () {
       this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
+      console.log(123)
     }
   }
 </script>

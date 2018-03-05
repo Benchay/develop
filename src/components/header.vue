@@ -94,8 +94,8 @@ export default {
     logout () {
       console.log('退出登录')
       localStorage.removeItem('access_token')
-      // this.$router.push({path:'/'})
-      window.location.reload(true)
+      this.$router.push({path:'/signin'})
+      // window.location.reload(true)
       // window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
     },
     handleSelect(index){
