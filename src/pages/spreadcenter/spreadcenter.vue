@@ -39,6 +39,7 @@ export default {
     },
     methods: {
       handleClick(tab, event) {
+        this.$router.push('/spreadcenter');
         console.log(tab, event);
       }
     }

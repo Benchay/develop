@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import home from '@/pages/home/home'
 import product from '@/pages/product/product'
 import spreadcenter from '@/pages/spreadcenter/spreadcenter'
+import planlist from '@/pages/spreadcenter/commonvue/planlist'
 import myspread from '@/pages/myspread/myspread'
 import task from '@/pages/task/task'
 import finance from '@/pages/finance/finance'
@@ -26,6 +27,7 @@ import UserIndex from '@/pages/usercenter/UserIndex'
 import BasicInfo from '@/pages/usercenter/BasicInfo'
 import ManageRole from '@/pages/usercenter/ManageRole'
 import ManageStaff from '@/pages/usercenter/ManageStaff'
+import withdrawals from '@/pages/finance/children/withdrawals'
 //
 // import changeIndex from '@/pages/others/changeIndex'
 // import ChangePassword from '@/pages/others/ChangePassword'
@@ -57,7 +59,12 @@ var route =  new Router({
     {
       path: '/spreadcenter',
       name: 'spreadcenter',
-      component: spreadcenter
+      component: spreadcenter,
+      children: [{
+          path: '/spreadcenter/planlist',
+          name: 'planlist',
+          component: planlist
+      }]
     },
     {
       path: '/myspread',
@@ -73,11 +80,18 @@ var route =  new Router({
       path: '/finance',
       name: 'finance',
       component: finance,
-      children:[{
+      children:[
+        {
           path: '/finance/recharge',
           name: 'recharge',
           component: recharge,
-      }]
+        },
+        {
+          path: '/finance/withdrawals',
+          name: 'withdrawals',
+          component: withdrawals
+        }
+      ]
     },
     {
       path: '/ManageMessage',

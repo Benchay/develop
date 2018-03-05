@@ -38,19 +38,33 @@
     </div>
     <!--显示产品列表-->
     <div class="contain">
-      <div class="containItem" v-for="(item,$index) in listingList">
+      < class="containItem" v-for="item in listingList">
         <div class="productImgwrap">
-          <img :src="item.mainImageUrl" alt="" width="100%" height="100%">
-          <el-checkbox v-model="item.checked" @change="input(item)"></el-checkbox>
+          <img :src="item.mainImgUrl" alt="" width="100%" height="100%">
+          <el-checkbox v-model="checked"></el-checkbox>
         </div>
         <p class="productDetail">
-          {{item.title}}
+          {{item.description}}
         </p>
+    <!--<div class="containItem" v-for="item in containItems">
+        <div class="productImgwrap">
+            <img :src="item.img" alt="" width="100%" height="100%">
+            <el-checkbox v-model="checked"></el-checkbox>
+        </div>
+        <div class="detailwrap">
+            <p class="productDetail">
+            {{item.productDetail}}
+            </p>
+            <i class="collect" @click="collectshow = !collectshow">
+                <img src="./collect_a.png" alt=""  v-if="collectshow">
+                <img src="./collect_b.png" alt="" v-if="!collectshow">
+            </i>
+        </div>
         <p class="productPrice">
             <b class="price">{{item.price}}</b>
             <span class="wish"></span>
         </p>
-      </div>
+      </div>-->
     </div>
      <div class="paginationwrap">
       <el-pagination
@@ -65,6 +79,17 @@
       width="46%"
       center
       class="productstyle">
+        <p style="margin-bottom: 20px;"><span class="titledai">网站平台:</span>
+        <el-select size="small" v-model="webSiteCode" placeholder="网站平台" style="width: 90%;"
+                @change="findwebstore(webSiteCode)">
+        <el-option
+            v-for="item in webSiteCodeList"
+            :key="item.code"
+            :label="item.name"
+            :value="item.code">
+        </el-option>
+        </el-select>
+    </p>
       <p><span>商品链接:</span>
         <el-input size="small" v-model="listing.url" placeholder="请输入商品链接" style="width: 74%; margin: 0 10px">
         </el-input>
@@ -80,17 +105,6 @@
             <el-input size="small" v-model="listing.asin" placeholder="请输入商品ID"
                       style="width: 80%; margin-right: 10px"></el-input>
           </p>
-          <p><span class="titledai">网站平台:</span>
-            <el-select size="small" v-model="webSiteCode" placeholder="网站平台" style="width: 80%;"
-                    @change="findwebstore(webSiteCode)">
-            <el-option
-                v-for="item in webSiteCodeList"
-                :key="item.code"
-                :label="item.name"
-                :value="item.code">
-            </el-option>
-            </el-select>
-        </p>
           <p><span class="titledai">店铺名称:</span>
             <el-input size="small" v-model="listing.webStoreName" placeholder="请输入店铺名称"
                       style="width: 80%; margin-right: 10px"></el-input>
@@ -240,7 +254,16 @@
         ],
         valueSeach: '',
         listingList: [],
-        checked: []
+        checked:false,
+        containItems: [
+            {
+                img: require('./111.png'),
+                productDetail: '我文件文件夹管理科江苏高考零售价格单联开关吉林省的会计管理科深度国际拉克丝大驾光临开始大驾光临',
+                price: '$11122122',
+                wish: 'wish'
+            },
+
+        ]
       };
     },
     created() {
@@ -249,7 +272,10 @@
         _this.webSiteCodeList = res.data.content
         console.log(res)
       })
-      _this.refreshListing()
+      callApiForMbs('listing/query_listings', {'pageSize':10,'pageNum':1}, function (res) {
+        _this.listingList = res.data.content.records
+        console.log(res.data.content.records)
+      })
     },
     mounted() {
       // this.initdata();
@@ -277,11 +303,10 @@
       addproduct() {
         var _this = this
         callApiForMbs('/listing/add_listing', this.listing, function (res) {
-          if (res.data.success) {
-            _this.centerDialogVisible = false;
-            _this.refreshListing();
-            _this.$message("添加成功")
-          } else {
+          if(res.data.success){
+            _this.centerDialogVisible=false;
+            alert("添加成功")
+          }else{
             alert(res.data.errmsg)
           }
           console.log(res)
@@ -314,51 +339,12 @@
         })
       },
       findwebstore(code) {
-        this.listing.webSiteCode = code;
+        this.listing.webSiteCode=code;
         /*var _this=this
         callApiWithToken('mbs/api/web_store/find_web_store_dist',{'webSiteCode':code},function (res) {
           _this.webStoreList=res.data.content
           console.log(res)
         })*/
-      },
-      input(index) {
-        console.log(this.checked)
-        console.log(index)
-        /*var _this=this
-        callApiWithToken('mbs/api/web_store/find_web_store_dist',{'webSiteCode':code},function (res) {
-          _this.webStoreList=res.data.content
-          console.log(res)
-        })*/
-      },
-      //删除商品
-      deleteListings() {
-        var _this = this
-        var listingIds = []
-        for(var idx in _this.listingList){
-          var listing=_this.listingList[idx]
-          if(listing.checked){
-            listingIds.push(listing.id)
-          }
-        }
-        callApiForMbs('/listing/delete_listing', {
-          'listingIds': listingIds
-        }, function (res) {
-          if(res.data.success){
-            _this.$message("删除成功,共删除"+res.data.content.count);
-          }else{
-            alert(res.data.errmsg)
-          }
-          _this.refreshListing()
-          console.log(res)
-        })
-      },
-      //刷新商品界面
-      refreshListing(){
-        var _this = this
-        callApiForMbs('listing/query_listings', {'pageSize': 10, 'pageNum': 1}, function (res) {
-          _this.listingList = res.data.content.records
-          console.log(res.data.content.records)
-        })
       }
     }
   }

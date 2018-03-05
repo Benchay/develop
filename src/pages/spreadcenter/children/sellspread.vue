@@ -1,5 +1,7 @@
 <template>
-  <div class="sellspread">
+<div>
+    <v-planlist v-if="$route.name == 'planlist'"></v-planlist>
+  <div class="sellspread" v-else>
       <div class="title">
         <el-row :gutter="20">
             <el-col :span="10">
@@ -25,6 +27,7 @@
       </div>
       <v-spreadfoot></v-spreadfoot>
   </div>
+</div>
 </template>
 <script>
 import trade from '../commonvue/trade'
@@ -32,6 +35,7 @@ import spreadsever from '../commonvue/spreadsever'
 import timeopen from '../commonvue/timeopen'
 import highoption from '../commonvue/highoption'
 import spreadfoot from '../commonvue/spreadfoot'
+import planlist from '../commonvue/planlist'
 export default {
 components: { 
     'v-trade': trade,
@@ -39,6 +43,7 @@ components: {
     'v-timeopen': timeopen,
     'v-highoption': highoption,
     'v-spreadfoot': spreadfoot,
+    'v-planlist': planlist,
     },
    data(){
        return{

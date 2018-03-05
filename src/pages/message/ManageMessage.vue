@@ -1,5 +1,5 @@
 <template>
-  <div class="ManageMessage">
+  <div class="ManageMessage" style="width: 1370px;">
     <el-container>
       <el-header style="height: 40px;">
         <div class="menu">
@@ -103,9 +103,7 @@ export default {
 
 <style scoped lang='scss'>
   .ManageMessage {
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin-left: -20px;
     .menu {
       height: 37px;
       width: 110px;

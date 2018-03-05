@@ -13,7 +13,7 @@
       <div class="tabBody">
         <div class="tabBodyItem">
           <div class="entrySearch">
-            <span class="insbefore">搜索</span>
+            <span class="insbefore" @click="centerDialogVisible = true">搜索</span>
             <el-input v-model="entrance.keyword" placeholder="请输入内容"></el-input>
             <span class="insafter">X</span>
           </div>
@@ -26,6 +26,56 @@
     <div class="addMore">
       <el-button plain>+ 添加更多</el-button>
     </div>
+    <el-dialog
+      title="入口设置"
+      :visible.sync="centerDialogVisible"
+      width="30%"
+      center
+      class="entrystyle">
+      <p><span class="titledai">入口类型:</span>
+         <el-select size="small" v-model="webSiteCode" placeholder="入口" style="width: 80%;"
+                @change="findwebstore(webSiteCode)">
+        <el-option
+            v-for="item in typelist"
+            :key="item.value"
+            :label="item.lable"
+            :value="item.value">
+        </el-option>
+        </el-select>
+      </p>
+       <p><span class="titledai">关键词:</span>
+          <el-input size="small" v-model="ktext" placeholder="请输入关键词"
+                    style="width: 80%;"></el-input>
+        </p>
+      <p><span class="titledai">类目选择:</span>
+         <el-select size="small" v-model="webSiteCode" placeholder="All department" style="width: 80%;"
+                @change="findwebstore(webSiteCode)">
+        <el-option
+            v-for="item in typelist"
+            :key="item.value"
+            :label="item.lable"
+            :value="item.value">
+        </el-option>
+        </el-select>
+      </p>
+        <p><span class="titledai">价格区间:</span>
+          <el-input size="small" v-model="ktext" placeholder="请输入价格"
+                    style="width: 38%;"></el-input>--
+          <el-input size="small" v-model="ktext" placeholder="请输入价格"
+                    style="width: 38%;"></el-input>
+        </p>
+        <div class="mateWrap">
+        <el-tabs v-model="accountMatchType" @tab-click="handleClick">
+            <el-tab-pane label="优先匹配" name="2">
+            </el-tab-pane>
+            <el-tab-pane label="完全匹配" name="1">
+            </el-tab-pane>
+        </el-tabs>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary">保 存</el-button>
+    </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -34,6 +84,8 @@
   export default {
     data() {
       return {
+        ktext:'',
+        centerDialogVisible: false,
         activityList: [],
         entrance:{},
         keyword: '',
@@ -162,6 +214,62 @@
           }
         }
       }
+    }
+    .entrystyle{
+      p {
+          white-space: nowrap;
+          margin-top: 20px;
+        }
+        .titledai {
+          display: inline-block;
+          width: 60px;
+          margin-right: 10px;
+        }
+        .mateWrap{
+          margin-top: 20px;
+            .el-tabs__nav-wrap{
+                display: inline-block;
+                padding-left: 75px;
+                position: relative;
+                &:before{
+                    content: '排序:';
+                    width: 90px;
+                    height: 40px;
+                    background-color: #ffffff;
+                    position: absolute;
+                    left: 0;
+                    top: 8px;
+                }
+                &:after{
+                    background-color: #ffffff;
+                }
+            }
+             .el-tabs__item{
+        margin-right: 10px;
+        border: 1px solid #cccccc;
+    }
+    .el-tabs__item:hover{
+        color: #205081;
+    }
+    .el-tabs__item.is-active{
+        color: #205081;
+        border: 1px solid #205081;
+        position: relative;
+        &:before{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 26px;
+            height: 26px;
+            background: url(./pitch_up.png) center center no-repeat;
+        }
+    }
+    .el-tabs__active-bar{
+        background-color: #ffffff;
+        height: 0;
+    }
+        }
     }
   }
 </style>

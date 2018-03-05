@@ -61,13 +61,13 @@
               <el-input v-model="form.content" style="width: 250px;"></el-input>
             </el-form-item>
             <el-form-item >
+
               <!-- 授权 -->
               <el-tabs type="border-card" @tab-click="changeMenuItem">
-                <!-- <el-tab-pane v-for="item in authItem" :label="item.name" :name="item.id + ''">
-                  <span v-for=""><el-checkbox v-model="checked">备选项</el-checkbox></span>
-                </el-tab-pane> -->
+                <el-tab-pane v-for="item in authItem" :label="item.name" :name="item.id + ''">
+                  <span style="margin-right: 20px;" v-for="childItem in childAuthItem"><el-checkbox v-model="childItem.checked">{{childItem.name}}</el-checkbox></span>
+                </el-tab-pane>
               </el-tabs>
-
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-// import {callApiToken} from '@/data/callApi'
+import {callApiToken} from '@/data/callApi'
 export default {
   name: 'ManageRole',
   data () {
@@ -129,7 +129,6 @@ export default {
     }
   },
   methods: {
-
     querySearchAsync () {
 
     },
@@ -149,14 +148,16 @@ export default {
       this.$router.push({path: url})
     },
     changeMenuItem (val) {
+      this.childAuthItem = []
+      // console.log(this.allAuthItem)
       for (var i = 0; i < this.allAuthItem.length; i++) {
-        if (this.allAuthItem[i].parentId === val) {
+        if (this.allAuthItem[i].parentId == val.name) {
           this.childAuthItem.push(this.allAuthItem[i])
         }
+        // console.log(this.allAuthItem[i].parentId == val.name)
       }
-      // this.childAuthItem
       console.log(this.childAuthItem)
-
+      // console.log(val.name)
     },
     // 开启添加修改角色窗口
     openAddRoleDialog (rowValue) {
@@ -216,17 +217,17 @@ export default {
   created: function () {
     let me = this
     // 获取权限列表
-    // callApiToken('/auth/query_auths_by_application', {applicationId: 1}, function (res) {
-      // console.log(res)
-      // if (res.data.success) {
-      //   me.allAuthItem = res.data.content
-      //   for (var i = 0; i < res.data.content.length; i++) {
-      //     if (res.data.content[i].parentId === null) {
-      //       me.authItem.push(res.data.content[i])
-      //     }
-      //   }
-      // }
-    // })
+    callApiToken('/auth/query_auths_by_application', {applicationId: 1}, function (res) {
+      console.log(res)
+      if (res.data.success) {
+        me.allAuthItem = res.data.content
+        for (var i = 0; i < res.data.content.length; i++) {
+          if (res.data.content[i].parentId === null) {
+            me.authItem.push(res.data.content[i])
+          }
+        }
+      }
+    })
 
   }
 }

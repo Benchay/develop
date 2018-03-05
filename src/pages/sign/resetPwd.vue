@@ -1,5 +1,5 @@
 <template>
-  <div class="resetPwd">
+  <div class="resetPwd" @keyup.enter="onSubmit">
     <el-col :span="24" class="resetPwd">
       <div class="pwdForm lr">
         <p class="loginTitle">修改密码</p>
@@ -84,16 +84,27 @@ import {callApiToken} from '@/data/callApi'
     },
     methods: {
       onSubmit () {
+        let me = this
         callApiToken('/user/change_user_password', this.form, function (res) {
           console.log(res)
+          if (res.status >= 200 && res.status < 300) {
+            if (res.data.success) {
+              me.$message({message: '密码修改成功', type: 'success'})
+              localStorage.removeItem('access_token')
+              window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
+            } else {
+              me.$message.error(res.data.errmsg)
+            }
+          }
+
         })
       },
       resetImgCode () {
-        this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+        this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
       }
     },
     created: function () {
-      this.imgsrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+      this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
     }
   }
 </script>

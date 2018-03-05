@@ -62,7 +62,7 @@
 </template>
 
 <script>
-// import {callApiToken, changeDateFormat} from '@/data/callApi'
+import {callApiToken, changeDateFormat} from '@/data/callApi'
 export default {
   name: 'ManageLog',
   data () {
@@ -138,6 +138,9 @@ export default {
   created: function () {
     let me = this
     callApiToken('/message/query_users_log', {page:1, pageSize:10}, this.updateTableData)
+    // callApiToken('/message/query_users_log', {page:1, pageSize:10}, function (res) {
+    //   console.log(res.data)
+    // })
     callApiToken('/auth/query_auths_by_application', {applicationId: 1}, function (res) {
       me.options = res.data.content
       console.log(res.data.content)

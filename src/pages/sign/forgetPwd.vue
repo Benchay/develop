@@ -1,5 +1,5 @@
 <template>
-  <div class="forgetPwd">
+  <div class="forgetPwd" @keyup.enter="onSubmit">
     <el-col :span="24" class="forgetPwd">
       <div class="pwdForm lr">
         <p class="loginTitle">忘记密码</p>
@@ -19,16 +19,16 @@
             <el-input v-model="form.mobileCode" placeholder="请输入手机验证码">
               <template slot="append" class="" >
                 <el-button v-if="sendMobile" type="infor" class="codeBtn" style="background-color: #205081; color:white; height: 38px;" @click="sendMobileCode">获取验证码</el-button>
-                <el-button disabled v-else type="primary" style="backgroudn-color: red; width: 110px;">{{countDown}}</el-button>
+                <el-button disabled v-else type="primary" style="backgroudn-color: red; width: 110px; height: 38px;">{{countDown}}</el-button>
               </template>
             </el-input>
           </el-form-item>
 
           <el-form-item class="loginSub">
-            <el-button type="primary" @click="onSubmit">确 认</el-button>
+            <el-button type="primary" style="height: 38px;" @click="onSubmit">确 认</el-button>
           </el-form-item>
           <el-form-item class="pwdRegister">
-            <router-link  :to='{path:"/signin"}' class="findpwd">记得密码<span>马上登录</span></router-link>
+            记得密码<router-link  :to='{path:"/signin"}' class="findpwd"><span>马上登录</span></router-link>
           </el-form-item>
         </el-form>
       </div>
@@ -82,7 +82,7 @@ import {callJsonApi} from '@/data/callApi'
         }
       }
       return{
-        checked:false,
+        checked:true,
         sendMobile: false,
         countDown: '获取验证码',
         form: {
@@ -106,19 +106,28 @@ import {callJsonApi} from '@/data/callApi'
             { validator: validatePass2, trigger: 'blur' }
           ],
         },
-        showLogin:false,
+        showLogin: false,
       }
     },
     methods: {
       // 手机发送验证码
       sendMobileCode () {
+        let me = this
         var reg = /^1\d{10}$/
         if (this.sendMobile && reg.test(this.form.mobile)) {
+
           // 异步发送手机验证码
           callJsonApi('/pub/user/send_mobile_message', {mobile: this.form.mobile, distributorId: 1, type: 1}, function (res) {
-            console.log('发送短信')
             console.log(res)
-            // 等待有所需求添加方法
+            if (res.status >= 200 && res.status < 300) {
+              if (res.data.success) {
+                me.$message({message: res.data.content, type: 'success'})
+                return
+              }
+            }
+
+            me.$message.error('短信发送失败')
+            // console.log('发送短信')
           })
           // 禁用按钮
           this.sendMobile = false
@@ -151,9 +160,11 @@ import {callJsonApi} from '@/data/callApi'
                       me.$message('密码修改成功，5秒后自动条转入登录页面')
                       setTimeout(function () {
                         me.$router.push({path: '/Login'})
+                        return
                       },5000)
                     }
                   }
+                  me.$message.error(res.data.errmsg)
                 })
               }else{
                 this.$message('确认密码')

@@ -1,5 +1,5 @@
 <template>
-  <div class="signin">
+  <div class="signin" @keyup.enter="onSubmit">
     <el-col :span="24" class="loginContent">
       <el-col :span="14" class="flex2" style="margin-top: 80px"><img src="./bj.png" alt=""></el-col>
       <div class="loginForm">
@@ -96,10 +96,10 @@ import {callJsonApi} from '@/data/callApi'
                     localStorage.setItem('usertype', me.form.type)
                     localStorage.setItem('access_token', res.data.content.access_token)
                     me.$router.push({path: '/'})
-                    // window.location.href='http://proxy.tintop.cn:26082/mbs/index.html'
                     localStorage.setItem('username', res.data.content.username)
                   } else {
                     me.$message.error('账号或密码错误，请确认后重新登录')
+                    console.log(res.data.content)
                   }
                 }
               })
@@ -115,12 +115,12 @@ import {callJsonApi} from '@/data/callApi'
       },
       // 更新验证码
       resetCodeImg () {
-        this.codeImgSrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+        this.codeImgSrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
       },
     },
     // 自动加载图片验证码
     created: function () {
-      this.codeImgSrc = 'http://10.6.20.28:8670/pub/user/v_code?' + Math.random()
+      this.codeImgSrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
     }
   }
 </script>

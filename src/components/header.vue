@@ -1,56 +1,58 @@
 <template>
     <div class="hello">
         <div class="top">
-          <el-row>
-            <el-col :span="16">
-              <el-select v-model="typeValue" placeholder="请选择" size="small" @change="changeSystem">
-                <el-option
-                  v-for="item in systemList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="8" class="flex">
-              <el-dropdown>
+          <el-row type="flex" justify="center">
+            <div style="width: 1350px;">
+              <el-row>
+                <el-col :span="16">
+                  <el-select v-model="typeValue" placeholder="请选择" size="small" @change="changeSystem">
+                    <el-option
+                      v-for="item in systemList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-col>
+
+                <el-col :span="8" class="flex">
+                  <el-dropdown style="margin-left: 40px;">
+                    <span class="el-dropdown-link">
+                      <i class="userimg"><img src="../image/user.png" width="100%" height="100%" alt=""></i>{{username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <router-link :to='{path:"/user/basicinfo"}'><el-dropdown-item>个人中心</el-dropdown-item></router-link>
+                      <router-link :to='{path:"/finance"}'><el-dropdown-item>财务管理</el-dropdown-item></router-link>
+                      <router-link :to='{path:"/ManageLog"}'><el-dropdown-item>日志管理</el-dropdown-item></router-link>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+
+                  <el-dropdown>
+                    <span class="el-dropdown-link">
+                      <i class="systemimg"><img src="../image/set.png" width="100%" height="100%" alt=""></i>系统设置<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item>黄金糕</el-dropdown-item>
+                      <el-dropdown-item>狮子头</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                  <el-dropdown >
                 <span class="el-dropdown-link">
-                  <i class="userimg"><img src="../image/user.png" width="100%" height="100%" alt=""></i>{{username}}<i class="el-icon-arrow-down el-icon--right"></i>
+                  消息通知<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu slot="dropdown">
-                  <router-link :to='{path:"/user/basicinfo"}'><el-dropdown-item>个人中心</el-dropdown-item></router-link>
-                  <router-link :to='{path:"/finance"}'><el-dropdown-item>财务管理</el-dropdown-item></router-link>
-                  <router-link :to='{path:"/ManageLog"}'><el-dropdown-item>日志管理</el-dropdown-item></router-link>
-                </el-dropdown-menu>
-              </el-dropdown>
-
-
-              <el-dropdown>
-            <span class="el-dropdown-link">
-              <i class="systemimg"><img src="../image/set.png" width="100%" height="100%" alt=""></i>系统设置<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>黄金糕</el-dropdown-item>
-                  <el-dropdown-item>狮子头</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <el-dropdown >
-            <span class="el-dropdown-link">
-              消息通知<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-                <el-dropdown-menu slot="dropdown">
-                  <router-link :to='{path: "/ManageMessage"}'><el-dropdown-item >消息管理</el-dropdown-item></router-link>
-                  <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <div class="logoout">
-                <!-- <router-link :to="{ path: '/signin' }"> -->
-                  <span @click="logout">
-                    <i class="outimg"><img src="../image/out.png"  width="100%" height="100%" alt=""></i>退出登录
-                  </span>
-                <!-- </router-link> -->
-              </div>
-            </el-col>
+                    <el-dropdown-menu slot="dropdown">
+                      <router-link :to='{path: "/ManageMessage"}'><el-dropdown-item >消息管理</el-dropdown-item></router-link>
+                      <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                  <div class="logoout">
+                    <span @click="logout">
+                      <i class="outimg"><img src="../image/out.png"  width="100%" height="100%" alt=""></i>退出登录
+                    </span>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
           </el-row>
         </div>
         <div class="mian flexDQ2">
@@ -163,7 +165,7 @@ export default {
     background-color: #ffffff;
     height: 40px;
     line-height: 40px;
-    padding: 0 60px;
+    padding: 0 0px;
     .system{
         line-height: 37px;
     }
