@@ -85,7 +85,8 @@ import {callApiToken} from '@/data/callApi'
     methods: {
       onSubmit () {
         let me = this
-        if (me.form.newPassword != me.form.reNewPassword) {
+        // console.log(me.form.newPassword+'-'+ me.form.reNewPassword)
+        if (me.form.newPassword == me.form.reNewPassword) {
           if (me.form.newPassword != me.form.oldPassword) {
             callApiToken('/user/change_user_password', this.form, function (res) {
               console.log(res)
@@ -102,7 +103,7 @@ import {callApiToken} from '@/data/callApi'
               }
             })
           } else {
-            me.$message.error('您输入的新密码与旧密码一直，请重新输入')
+            me.$message.error('您输入的新密码与旧密码一致，请重新输入')
           }
         } else {
           me.$message.error('您输入的两次新密码不一致，请重新确认！')
@@ -114,7 +115,7 @@ import {callApiToken} from '@/data/callApi'
     },
     created: function () {
       this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
-      console.log(123)
+
     }
   }
 </script>

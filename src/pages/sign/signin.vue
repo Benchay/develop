@@ -100,7 +100,7 @@ import {callJsonApi} from '@/data/callApi'
                     me.$router.push({path: '/'})
                     localStorage.setItem('username', res.data.content.username)
                   } else {
-                    me.$message.error('账号或密码错误，请确认后重新登录')
+                    me.$message.error(res.data.errmsg)
                     console.log(res)
                   }
                 }

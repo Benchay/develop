@@ -37,6 +37,7 @@
             </el-table>
           </div>
         </el-row>
+
         <el-row class="row-bg footer-row">
           <el-col :span="24">
             <div class="left-export-button">
@@ -66,12 +67,16 @@
               <!-- 授权 -->
               <el-tabs type="border-card" @tab-click="changeMenuItem">
                 <el-tab-pane v-for="item in authItem" :label="item.name" :name="item.id + ''">
-
-                  <el-tree :data="childAuthItem" show-checkbox
-                    node-key="id"
-                    :default-checked-keys="[5]"
-                    :props="itemParamName">
-                  </el-tree>
+                  <span v-if="childAuthItem.length > 0">
+                    <span v-for="childItem in childAuthItem" style="margin-right: 20px;">
+                      <el-checkbox v-model="childItem.checked">{{childItem.name}}</el-checkbox>
+                    </span>
+                      <!-- <el-tree
+                      :props="itemParamName"
+                      :data="childAuthItem"
+                      show-checkbox>
+                      </el-tree> -->
+                  </span>
                 </el-tab-pane>
               </el-tabs>
             </el-form-item>
@@ -81,6 +86,7 @@
             <el-button type="primary" @click="commitAddRole">确 定</el-button>
           </div>
         </el-dialog>
+
         <el-dialog title="删除角色" :visible.sync="removeRole" width="30%">
           <p>是否删除:</p>
           <h4>角色：{{form.roleName}}</h4>
@@ -103,10 +109,11 @@ export default {
     return {
       itemParamName: {
         label: 'name',
+        children: 'children'
       },
       form: {
-        id: 0,
         name: '',
+        content: '',
     		applicationId: 1,
     		auths:[]
       },
@@ -157,16 +164,26 @@ export default {
       this.$router.push({path: url})
     },
     changeMenuItem (val) {
-      console.log(val)
+      // console.log(val.name)
       this.childAuthItem = []
       for (var i = 0; i < this.allAuthItem.length; i++) {
         if (this.allAuthItem[i].parentId == val.name) {
+          // this.allAuthItem[i].children=[
+          //   {name: '查看'},
+          //   {name: '编辑'}
+          // ]
           this.childAuthItem.push(this.allAuthItem[i])
         }
-        // console.log(this.allAuthItem[i].parentId == val.name)
       }
-      console.log(this.childAuthItem)
-      // console.log(val.name)
+      if (this.childAuthItem.length < 1) {
+        for (var i = 0; i < this.allAuthItem.length; i++) {
+          if (this.allAuthItem[i].id == val.name) {
+            this.allAuthItem[i]
+            this.childAuthItem.push(this.allAuthItem[i])
+          }
+        }
+      }
+      console.log(this.childAuthItem.length)
     },
     // 开启添加修改角色窗口
     openAddRoleDialog (rowValue) {
@@ -179,16 +196,26 @@ export default {
       this.addFlag = true;
     },
     commitAddRole () {
-      var temp = {
-        name: this.form.name,
-        content: this.form.content
-      }
-      if (this.form.id != 0) {
-        temp.id = this.form.id
-      }
-      // callApiToken('/role/save_role',temp, function (res) {
 
-      // })
+      for(var i=0; i< this.allAuthItem.length; i++) {
+        if (this.allAuthItem[i].checked === true) {
+          this.form.auths.push({authId: this.allAuthItem[i].id, editable: true, parentId: this.allAuthItem[i].parentId})
+        }
+      }
+      console.log(this.form)
+      var authLength = this.form.auths.length
+      for (var i = 0; i < this.authItem.length; i++) {
+        for (var j = 0; j < authLength; j++) {
+          if (this.authItem[i].id == this.form.auths[j].parentId) {
+            this.form.auths.push({authId: this.authItem[i].id, editable: true})
+            break;
+          }
+        }
+      }
+      console.log(this.form)
+      callApiToken('/role/save_role', this.form, function (res) {
+        console.log(res)
+      })
       this.addFlag = false
     },
     deleteDialog (rowValue) {
@@ -197,15 +224,10 @@ export default {
       this.form.roleDescribe = rowValue.roleDescribe
       this.removeRole = true
     },
+
     commitDeleteRole () {
-      var temp = []
-      for (var i = 0; i < this.tableData.length; i++) {
-        if (this.tableData[i].Id === this.form.Id)
-          continue
-        temp.push(this.tableData[i])
-      }
-      this.tableData = temp
-      this.removeRole = false
+      console.log('红箭从')
+      console.log(this.allAuthItem)
     },
     closeDialog () {
       this.form.Id = ''

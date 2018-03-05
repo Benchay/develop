@@ -151,7 +151,7 @@ import {callJsonApi} from '@/data/callApi'
         let me = this
         if (reg.test(this.form.mobile)) {
             if (this.form.newPassword != '') {
-              if (this.form.newPassword != this.form.reNewPassword) {
+              if (this.form.newPassword == this.form.reNewPassword) {
                 console.log(this.form)
                 callJsonApi('/pub/user/reset_user_password', this.form, function (res) {
                   if (res.status >= 200 && res.status < 300) {
