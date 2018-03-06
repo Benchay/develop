@@ -16,8 +16,9 @@
                 <el-button type="small" style="background-color: #67C238;color: white;" @click="openAddRoleDialog()">+添加角色</el-button>
               </div>
               <div class="right-operation">
-                <el-autocomplete v-model="queryValue" :fetch-suggestions="querySearchAsync" size="small" suffix-icon="el-icon-search"
-                  placeholder="请输入内容" @select="handleSelect"></el-autocomplete>
+                <!-- <el-autocomplete v-model="queryValue" :fetch-suggestions="querySearchAsync" size="small" suffix-icon="el-icon-search"
+                  placeholder="请输入内容" @select="handleSelect"></el-autocomplete> -->
+                  <el-input></el-input>
               </div>
             </div>
           </el-col>
@@ -44,17 +45,14 @@
               <el-button size="small">表单导出</el-button>
             </div>
             <div class="current-page-area">
-              <el-pagination
-                class="right"
-                background
-                layout="prev, pager, next"
-                :total="1000">
+              <el-pagination class="right" background layout="prev, pager, next" :current-page="currentPage" :total="total"
+              @current-change="handleCurrentChange">
               </el-pagination>
             </div>
           </el-col>
         </el-row>
 
-        <!--  -->
+        <!-- 编辑角色窗口 -->
         <el-dialog title="编辑角色" :visible.sync="addFlag" width="40%" :before-close="closeDialog">
           <el-form :model="form">
             <el-form-item label="角色名称" >
@@ -67,16 +65,9 @@
               <!-- 授权 -->
               <el-tabs type="border-card" @tab-click="changeMenuItem">
                 <el-tab-pane v-for="item in authItem" :label="item.name" :name="item.id + ''">
-                  <span v-if="childAuthItem.length > 0">
-                    <span v-for="childItem in childAuthItem" style="margin-right: 20px;">
-                      <el-checkbox v-model="childItem.checked">{{childItem.name}}</el-checkbox>
-                    </span>
-                      <!-- <el-tree
-                      :props="itemParamName"
-                      :data="childAuthItem"
-                      show-checkbox>
-                      </el-tree> -->
-                  </span>
+                    <el-checkbox-group v-model="checkedItem" @change="handleCheckedCitiesChange">
+                      <el-checkbox v-for="childItem in childAuthItem" :label="childItem.id" :key="childItem.id">{{childItem.name}}</el-checkbox>
+                    </el-checkbox-group>
                 </el-tab-pane>
               </el-tabs>
             </el-form-item>
@@ -87,10 +78,11 @@
           </div>
         </el-dialog>
 
+        <!-- 删除弹窗 -->
         <el-dialog title="删除角色" :visible.sync="removeRole" width="30%">
           <p>是否删除:</p>
-          <h4>角色：{{form.roleName}}</h4>
-          <span>描述：{{form.roleDescribe}}</span>
+          <h4>角色：{{removeForm.name}}</h4>
+          <span>描述：{{removeForm.content}}</span>
           <div slot="footer" class="dialog-footer">
             <el-button @click="closeDialog">取 消</el-button>
             <el-button type="primary" @click="commitDeleteRole">确 定</el-button>
@@ -117,9 +109,17 @@ export default {
     		applicationId: 1,
     		auths:[]
       },
+      removeForm: {
+        id: '',
+        name: '',
+        content: ''
+      },
+
       authItem: [],
       allAuthItem: [],
-      childAuthItem: [],
+      checkedItem: [10006, 10001],
+
+      childAuthItem: [{name: '首页', id: 10001}, {name: '啦啦啦', id: 10002}, {name: '洪建成', id: 10003}],
 
       checked: [],
 
@@ -131,47 +131,41 @@ export default {
       dateValue: '',
       options: [
         {label: '登录平台', value: '1'},
-        {label: '角色管理', value: '2'},
-        {label: '员工管理', value: '3'},
-        {label: '基本资料', value: '4'},
-        {label: '账户总览', value: '5'},
-        {label: '财务交易', value: '6'},
-        {label: '账户设置', value: '7'}
+        {label: '角色管理', value: '2'}
       ],
       selectValue: '',
+      total: 0,
+      currentPage: 0,
       tableData: [
-        {Id: '1', name: '管理员', content: '拥有最大权限'}
+        {id: '1', name: '管理员', content: '拥有最大权限'}
       ]
     }
   },
   methods: {
+    // 搜索
     querySearchAsync () {
 
     },
     handleSelect () {
 
     },
-    handleSizeChange () {
 
+    // 页面跳转
+    handleCurrentChange (value) {
+      callApiToken('/role/query_role', {applicationId: 1, name: this.queryValue, page: value, pageSize: 10}, this.updateTableData)
     },
-    handleCurrentChange () {
-
-    },
-    handleAvatarSuccess () {
-
+    handleCheckedCitiesChange(value) {
+        console.log(value)
     },
     routerGo (url) {
       this.$router.push({path: url})
     },
+
+    // 修改子集item
     changeMenuItem (val) {
-      // console.log(val.name)
       this.childAuthItem = []
       for (var i = 0; i < this.allAuthItem.length; i++) {
         if (this.allAuthItem[i].parentId == val.name) {
-          // this.allAuthItem[i].children=[
-          //   {name: '查看'},
-          //   {name: '编辑'}
-          // ]
           this.childAuthItem.push(this.allAuthItem[i])
         }
       }
@@ -183,26 +177,40 @@ export default {
           }
         }
       }
-      console.log(this.childAuthItem.length)
     },
+
     // 开启添加修改角色窗口
     openAddRoleDialog (rowValue) {
+      this.addFlag = true
+      let me = this
+      let temp = this.allAuthItem
       if (rowValue) {
-        this.form.id = rowValue.id
-        this.form.name = rowValue.name
-        this.form.content = rowValue.content
-        // callApiToken('')
+        callApiToken('/role/get_role_info', {roleId: rowValue.id} ,function (res) {
+          if (res.status >= 200 && res.status < 300) {
+            if (res.data.success) {
+              // 成功，并开始循环
+              // me.checkedItem = res.data.content.auths
+              me.checkedItem = []
+              for (var i = 0; i < res.data.content.auths.length; i++) {
+                me.checkedItem.push(res.data.content.auths[i].authId)
+              }
+            }
+          }
+        })
+      } else {
+        this.form.id = ''
       }
-      this.addFlag = true;
     },
-    commitAddRole () {
 
+    // 提交添加表单
+    commitAddRole () {
+      let me =this
       for(var i=0; i< this.allAuthItem.length; i++) {
         if (this.allAuthItem[i].checked === true) {
           this.form.auths.push({authId: this.allAuthItem[i].id, editable: true, parentId: this.allAuthItem[i].parentId})
         }
       }
-      console.log(this.form)
+      // 从小类权限获取大类权限
       var authLength = this.form.auths.length
       for (var i = 0; i < this.authItem.length; i++) {
         for (var j = 0; j < authLength; j++) {
@@ -212,35 +220,54 @@ export default {
           }
         }
       }
-      console.log(this.form)
+      // 提交到服务器
       callApiToken('/role/save_role', this.form, function (res) {
-        console.log(res)
+        // 重新刷新
+        callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: me.currentPage, pageSize: 10}, me.updateTableData)
       })
       this.addFlag = false
     },
+
+    // 打开删除警告窗口
     deleteDialog (rowValue) {
-      this.form.Id = rowValue.Id
-      this.form.roleName = rowValue.roleName
-      this.form.roleDescribe = rowValue.roleDescribe
+      this.removeForm.id = rowValue.id
+      this.removeForm.name = rowValue.name
+      this.removeForm.content = rowValue.content
       this.removeRole = true
     },
 
+    // 提交删除方法
     commitDeleteRole () {
-      console.log('红箭从')
-      console.log(this.allAuthItem)
+      let me = this
+      callApiToken('/role/delete_role', {roleIds: [this.removeForm.id]}, function (res) {
+        console.log(res)
+        if (res.status >= 200 && res.status < 300) {
+          if (res.data.success) {
+            callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: 1, pageSize: 10}, me.updateTableData)
+          }
+        }
+      })
     },
+
+    // 关闭所有窗口
     closeDialog () {
-      this.form.Id = ''
-      this.form.roleName = ''
-      this.form.roleDescribe = ''
+      this.form.id = ''
+      this.form.name = ''
+      this.form.content = ''
       this.addFlag = false
       this.removeRole = false
+      this.checkedItem = []
     },
-    updateTableData(res){
-      console.log(res)
+
+    // 修改表格及分页信息
+    updateTableData (res) {
+      console.log(res.data.content)
       if (res.status >= 200 && res.status < 300) {
         if (res.data.success) {
           this.tableData = res.data.content.records
+          this.total = res.data.content.total
+          this.currentPage = res.data.content.page
+          this.closeDialog()
         }
       }
     }
@@ -249,7 +276,6 @@ export default {
     let me = this
     // 获取权限列表
     callApiToken('/auth/query_auths_by_application', {applicationId: 1}, function (res) {
-      console.log(res)
       if (res.data.success) {
         me.allAuthItem = res.data.content
         for (var i = 0; i < res.data.content.length; i++) {
@@ -260,6 +286,8 @@ export default {
       }
     })
 
+    // 获取角色列表
+      callApiToken('/role/query_role', {applicationId:1, page:1, pageSize:10}, this.updateTableData)
   }
 }
 </script>

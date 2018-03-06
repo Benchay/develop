@@ -21,14 +21,16 @@
           </el-menu>
         </el-aside>
         <el-main>
-          <onlineAlipay/>
+          <onlineAlipay v-if="page == '1'"/>
+          <alipay v-if="page == '2'"/>
+          <Onlinebank v-if="page == 3"/>
         </el-main>
       </el-container>
   </div>
 </template>
 <script>
-import alipay from '@/pages/finance/children/Alipay'
-import Onlinebank from '@/pages/finance/children/Onlinebank'
+import alipay from '@/pages/finance/childrenPage/Alipay'
+import Onlinebank from '@/pages/finance/childrenPage/Onlinebank'
 import WeChatPay from '@/pages/finance/children/WeChatPay'
 import onlineAlipay from '@/pages/finance/childrenPage/onlineAlipay'
 export default {
@@ -43,12 +45,23 @@ export default {
       }
   },
   methods: {
+
     handleSelect (value) {
-      console.log(value)
-      if (value == '1') {
-        this.$router.push('/finance/recharge/online-alipay')
-      }
+      this.page = value
+      // console.log(this.page)
+      // switch (value) {
+        // case 1: page = 1 brea
+      // }
+      // console.log(value)
+
     }
+
+    // handleSelect (value) {
+    //   console.log(value)
+    //   if (value == '1') {
+    //     this.$router.push('/finance/recharge/online-alipay')
+    //   }
+    // }
   },
   created () {
   },
