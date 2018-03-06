@@ -18,7 +18,7 @@
               <div class="right-operation">
                 <!-- <el-autocomplete v-model="queryValue" :fetch-suggestions="querySearchAsync" size="small" suffix-icon="el-icon-search"
                   placeholder="请输入内容" @select="handleSelect"></el-autocomplete> -->
-                  <el-input></el-input>
+                  <el-input size="small" v-model="queryValue" @change="querySearchAsync"></el-input>
               </div>
             </div>
           </el-col>
@@ -126,6 +126,7 @@ export default {
       addFlag: false,
       removeRole: false,
       activeIndex: '/managerole',
+
       queryValue: '',
       currentPage: 1,
       dateValue: '',
@@ -144,10 +145,7 @@ export default {
   methods: {
     // 搜索
     querySearchAsync () {
-
-    },
-    handleSelect () {
-
+      callApiToken('/role/query_role', {applicationId: 1, name: this.queryValue, page: 1, pageSize: 10}, this.updateTableData)
     },
 
     // 页面跳转
@@ -183,48 +181,76 @@ export default {
     openAddRoleDialog (rowValue) {
       this.addFlag = true
       let me = this
-      let temp = this.allAuthItem
       if (rowValue) {
+        // 修改修改
+        this.form.roleId = rowValue.id
         callApiToken('/role/get_role_info', {roleId: rowValue.id} ,function (res) {
           if (res.status >= 200 && res.status < 300) {
             if (res.data.success) {
-              // 成功，并开始循环
-              // me.checkedItem = res.data.content.auths
+              console.log(res.data.success)
+              me.form.name = res.data.content.role.name
+              me.form.content = res.data.content.role.content
               me.checkedItem = []
               for (var i = 0; i < res.data.content.auths.length; i++) {
                 me.checkedItem.push(res.data.content.auths[i].authId)
               }
+              return
             }
           }
+          console.log(res)
         })
       } else {
-        this.form.id = ''
+        this.form.roleId = ''
       }
     },
 
     // 提交添加表单
     commitAddRole () {
       let me =this
-      for(var i=0; i< this.allAuthItem.length; i++) {
-        if (this.allAuthItem[i].checked === true) {
-          this.form.auths.push({authId: this.allAuthItem[i].id, editable: true, parentId: this.allAuthItem[i].parentId})
-        }
+      for (var i = 0; i < me.checkedItem.length; i++) {
+        this.form.auths.push({authId: me.checkedItem[i], editable: true})
       }
-      // 从小类权限获取大类权限
-      var authLength = this.form.auths.length
-      for (var i = 0; i < this.authItem.length; i++) {
-        for (var j = 0; j < authLength; j++) {
-          if (this.authItem[i].id == this.form.auths[j].parentId) {
-            this.form.auths.push({authId: this.authItem[i].id, editable: true})
+      var temp = []
+      for (var i = 0; i < me.authItem.length; i++) {
+        for (var j = 0; j < me.checkedItem.length; j++) {
+          if ((me.checkedItem[j]+'').indexOf(me.authItem[i].id) != -1 && me.checkedItem[j] != me.authItem[i].id) {
+            temp.push(me.authItem[i].id)
             break;
           }
         }
       }
+      for (var i = 0; i < temp.length; i++) {
+        this.form.auths.push({authId: temp[i], editable: true})
+      }
+
+      if (this.form.roleId) {
+        callApiToken('/role/update_role', this.form, function (res) {
+          // 重新刷新
+          if (res.status >= 200 && res.status < 300) {
+            if (res.data.success) {
+              this.$message({message: '修改成功', type: 'success'})
+              callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: me.currentPage, pageSize: 10}, me.updateTableData)
+              return
+            }
+          }
+          me.$message.error('修改失败' + res.data.errmsg)
+          console.log(res)
+        })
+      } else {
+        callApiToken('/role/save_role', this.form, function (res) {
+          if (res.status >= 200 && res.status < 300) {
+            if (res.data.success) {
+              this.$message({message: '修改成功', type: 'success'})
+              callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: me.currentPage, pageSize: 10}, me.updateTableData)
+              return
+            }
+          }
+          me.$message.error('添加失败' + res.data.errmsg)
+          console.log(res)
+        })
+      }
       // 提交到服务器
-      callApiToken('/role/save_role', this.form, function (res) {
-        // 重新刷新
-        callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: me.currentPage, pageSize: 10}, me.updateTableData)
-      })
+
       this.addFlag = false
     },
 
@@ -243,9 +269,12 @@ export default {
         console.log(res)
         if (res.status >= 200 && res.status < 300) {
           if (res.data.success) {
+            me.$message({message: res.data.content, type: 'success'})
             callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: 1, pageSize: 10}, me.updateTableData)
+            return
           }
         }
+        me.$message.error('删除失败' + res.data.errmsg)
       })
     },
 
