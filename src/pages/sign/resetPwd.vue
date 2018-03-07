@@ -45,8 +45,9 @@ import {callApiToken} from '@/data/callApi'
         }
       };
       var validatePass1 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入账户名称'));
+        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
+        if (reg.test(value)) {
+          callback(new Error('注册密码应为6-20位包含英文大小写、特殊字符、数字'));
         } else {
           callback();
         }
@@ -68,6 +69,7 @@ import {callApiToken} from '@/data/callApi'
           newPassword:'',
           reNewPassword: '',
         },
+        queryData: {},
         rules2: {
           oldPassword: [
             { validator: validatePass, trigger: 'blur' }
@@ -85,7 +87,7 @@ import {callApiToken} from '@/data/callApi'
     methods: {
       onSubmit () {
         let me = this
-        // console.log(me.form.newPassword+'-'+ me.form.reNewPassword)
+        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
         if (me.form.newPassword == me.form.reNewPassword) {
           if (me.form.newPassword != me.form.oldPassword) {
             callApiToken('/user/change_user_password', this.form, function (res) {
@@ -115,7 +117,9 @@ import {callApiToken} from '@/data/callApi'
     },
     created: function () {
       this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
-
+    },
+    mounted () {
+      this.queryData = this.$route.query
     }
   }
 </script>

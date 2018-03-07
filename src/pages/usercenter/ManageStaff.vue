@@ -40,9 +40,9 @@
         <el-row class="row-bg">
           <el-col :span="24">
             <div class="button-box">
-              <el-button size="small" @click="addStaffDialog()">添加成员</el-button>
-              <el-button size="small" @click="changeAbleToTrue">启用</el-button>
-              <el-button size="small"@click="changeAbleToFalse">禁用</el-button>
+              <el-button size="small" @click="addStaffDialog()" type="primary">添加成员</el-button>
+              <el-button size="small" @click="changeAbleToTrue" type="primary">启用</el-button>
+              <el-button size="small"@click="changeAbleToFalse" type="primary">禁用</el-button>
             </div>
           </el-col>
         </el-row>
@@ -230,7 +230,7 @@ export default {
     // 分页查询
     handleCurrentChange (value) {
       console.log(value)
-      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, page: value, pageSize: 10}, this.updateTableData)
+      callApiToken('/user/load_user_infos', {mobile: this.queryMobileValue, name: this.queryNameValue, page: value, pageSize: 10}, this.updateTableData)
     },
     handleAvatarSuccess () {
 
@@ -250,7 +250,7 @@ export default {
       for (var i = 0; i < this.selectedTable.length; i++) {
         temp.push(this.selectedTable[i].id)
       }
-      console.log(temp)
+
     },
     // 修改选中选项
     handleSelectionChange (value) {
@@ -275,6 +275,7 @@ export default {
         this.form.name = rowValue.name
         this.updateStaff = true
         callApiToken('/role/get_user_roles', {userId: rowValue.id}, function (res) {
+          console.log(res)
           if (res.status >= 200 && res.status < 300) {
             if (res.data.success) {
               for (var i = 0; i < res.data.content.length; i++) {

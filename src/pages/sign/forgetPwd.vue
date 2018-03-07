@@ -28,7 +28,7 @@
             <el-button type="primary" style="height: 38px;" @click="onSubmit">确 认</el-button>
           </el-form-item>
           <el-form-item class="pwdRegister">
-            记得密码<router-link  :to='{path:"/signin"}' class="findpwd"><span>马上登录</span></router-link>
+            记得密码<router-link  :to='{path:"/signin", query: queryData}' class="findpwd"><span>马上登录</span></router-link>
           </el-form-item>
         </el-form>
       </div>
@@ -65,10 +65,11 @@ import {callJsonApi} from '@/data/callApi'
         }
       };
       var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
+        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
+        if (reg.test(value)) {
           callback();
+        } else {
+          callback(new Error('注册密码应为6-20位包含英文大小写、特殊字符、数字'));
         }
       };
       var validatePass2 = (rule, value, callback) => {
@@ -85,6 +86,7 @@ import {callJsonApi} from '@/data/callApi'
         checked:true,
         sendMobile: false,
         countDown: '获取验证码',
+        queryData: {},
         form: {
           mobile: '',
           newPassword:'',
@@ -179,6 +181,9 @@ import {callJsonApi} from '@/data/callApi'
     },
     created: function () {
       console.log(123)
+    },
+    mounted(){
+      this.queryData = this.$route.query
     }
   }
 </script>

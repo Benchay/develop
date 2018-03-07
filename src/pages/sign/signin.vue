@@ -4,7 +4,7 @@
       <el-col :span="14" class="flex2" style="margin-top: 80px"><img src="./bj.png" alt=""></el-col>
       <div class="loginForm">
         <p class="loginTitle">商务系统</p>
-        <el-form :model="form" status-icon :rules="rules2" ref="form" class="demo-ruleForm">
+        <el-form :model="form" status-icon ref="form" class="demo-ruleForm">
           <el-form-item label="" prop="username">
             <el-input v-model="form.username" placeholder="请输入帐号..." auto-complete="off" prefix-icon="el-icon-user"></el-input>
           </el-form-item>
@@ -26,8 +26,8 @@
             <el-button type="primary" style="height: 40px;" @click="onSubmit">登 录</el-button>
           </el-form-item>
           <el-form-item class="loginRegister">
-            <router-link  :to='{path:"/register"}' class="findpwd">立即注册</router-link>
-            <router-link  :to='{path:"/forgetPwd"}' class="findpwd">忘记密码？</router-link>
+            <router-link  :to='{path:"/register", query: queryData}' class="findpwd">立即注册</router-link>
+            <router-link  :to='{path:"/forgetPwd", query: queryData}' class="findpwd">忘记密码？</router-link>
           </el-form-item>
         </el-form>
       </div>
@@ -67,6 +67,8 @@ import {callJsonApi} from '@/data/callApi'
           applicationId: 1,
       		type: 1
         },
+        queryData: {},
+
         rules2: {
           username: [
             { validator: validatePass, trigger: 'blur' }
@@ -85,7 +87,6 @@ import {callJsonApi} from '@/data/callApi'
           if (this.form.password) {
             if (this.form.verificationCode) {
               let me = this
-
               // 进行等路
               callJsonApi('/pub/user/login', this.form, function (res) {
                 if (res.status >= 200 && res.status < 300) {
@@ -124,9 +125,10 @@ import {callJsonApi} from '@/data/callApi'
     // 自动加载图片验证码
     created: function () {
       this.codeImgSrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
-      // this.form.username = ''
-      // this.form.password = ''
-      // this.form.verificationCode = ''
+
+    },
+    mounted(){
+      this.queryData = this.$route.query
     }
   }
 </script>

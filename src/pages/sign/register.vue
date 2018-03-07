@@ -41,7 +41,7 @@
             <el-button v-else type="primary" style="background-color: #f5f7fb; color: black;  height: 40px;" disabled>立即注册</el-button>
           </el-form-item>
           <el-form-item class="pwdRegister">
-            <router-link  :to='{path:"/signin"}' class="findpwd">已有账号？<span>马上登录</span></router-link>
+            <router-link  :to='{path:"/signin", query: queryData}' class="findpwd">已有账号？<span>马上登录</span></router-link>
           </el-form-item>
         </el-form>
       </div>
@@ -82,15 +82,11 @@ import {callJsonApi} from '@/data/callApi'
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          //
-          // if (this.form.rePassword !== '') {
-          //   this.$refs.form.validateField('rePassword');
-          // }
-          var reg = /^[A-Za-z0-9]{6,20}$/
+          var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
           if (reg.test(value)) {
             callback()
           } else {
-            callback('注册密码应为.....')
+            callback('注册密码应为6-20位包含英文大小写、特殊字符、数字')
           }
 
         }
@@ -105,6 +101,7 @@ import {callJsonApi} from '@/data/callApi'
         }
       }
       return{
+        queryData: {},
         imgsrc: '',
         sendMobile: false,
         countDown: '获取验证码',
@@ -209,6 +206,9 @@ import {callJsonApi} from '@/data/callApi'
     },
     created: function () {
       this.imgsrc = 'http://proxy.tintop.cn:26081/ums/pub/user/v_code?' + Math.random()
+    },
+    mounted () {
+      this.queryData = this.$route.query
     }
   }
 </script>
