@@ -82,7 +82,7 @@ import {callJsonApi} from '@/data/callApi'
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*?,<>{}\[\]\.\\/\'\"`~\:;+=-\_\|\\\(\)]).*$/
+          var reg = /^(?![^a-zA-Z]+$)(?!\D+$).{6,20}/
           if (reg.test(value)) {
             callback()
           } else {
@@ -136,7 +136,7 @@ import {callJsonApi} from '@/data/callApi'
       onSubmit () {
         var reg = /^1\d{10}$/
         let me = this
-        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*?,<>{}\[\]\.\\/\'\"`~\:;+=-\_\|\\\(\)]).*$/
+        var reg = /^(?![^a-zA-Z]+$)(?!\D+$).{6,20}/
         if (this.form.mobile) {
           if (this.form.mobileCode != '') {
             if (reg.test(this.form.password)) {

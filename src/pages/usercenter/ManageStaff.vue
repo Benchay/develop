@@ -20,9 +20,9 @@
                   </el-option>
                 </el-select>
 
-                <el-select v-model="selectSoleValue" placeholder="全部角色" size="small" class="selectbox">
+                <el-select v-model="selectRoleValue" placeholder="全部角色" size="small" class="selectbox" @change="selectRoleFunction">
                   <el-option v-for="item in roleOptions"
-                    :key="item.value" :label="item.label" :value="item.value">
+                    :key="item.value" :label="item.name" :value="item.id">
                   </el-option>
                 </el-select>
                 <!-- 名称过滤 -->
@@ -180,7 +180,7 @@ export default {
       mobileQuery: '',
       activeIndex: '/managestaff',
 
-      selectSoleValue: '',
+      selectRoleValue: '',
       selectStatusValue: '',
 
       queryNameValue: '',
@@ -213,6 +213,10 @@ export default {
     // 用户名过滤
     querySearchName () {
       callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, applicationId: 1, page: 1, pageSize: 10},this.updateTableData)
+    },
+    // 角色过滤
+    selectRoleFunction () {
+        callApiToken('/user/load_user_infos', {roleId: this.selectRoleValue, able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, applicationId: 1, page: 1, pageSize: 10},this.updateTableData)
     },
     // 电话号码过滤
     querySearchMobile () {
@@ -397,7 +401,7 @@ export default {
     // 修改表格数据
     updateTableData (res) {
       let me = this
-      console.log(res)
+      // console.log(res)
       if (res.status >= 200 && res.status < 300) {
         if (res.data.success) {
           me.tableData = res.data.content.records
@@ -415,11 +419,13 @@ export default {
   created: function () {
     let me = this
     callApiToken('/user/load_user_infos',{applicationId: 1, page: 1, pageSize: 10}, this.updateTableData)
-    callApiToken('/role/query_role', {page: 1}, function (res) {
-      console.log(res)
-    })
+    // callApiToken('/role/query_role', {applicationId: 1, page: 1}, function (res) {
+    //   console.log(res)
+    // })
     callApiToken('/role/query_role', {applicationId: 1, page:1, pageSize: 100}, function (res) {
-      me.roleItem = res.data.content.records
+      console.log(res.data.content)
+      me.roleOptions = res.data.content.records
+      me.roleOptions.push({name: '全部角色', id: null})
     })
   }
 }
