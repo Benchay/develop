@@ -137,7 +137,7 @@ import {callJsonApi} from '@/data/callApi'
         var reg = /^1\d{10}$/
         let me = this
         var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
-        if (reg.test(this.form.mobile)) {
+        if (this.form.mobile) {
           if (this.form.mobileCode != '') {
             if (reg.test(this.form.password)) {
               if (this.form.verificationCode) {
