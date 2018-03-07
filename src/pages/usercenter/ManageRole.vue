@@ -227,7 +227,7 @@ export default {
           // 重新刷新
           if (res.status >= 200 && res.status < 300) {
             if (res.data.success) {
-              this.$message({message: '修改成功', type: 'success'})
+              me.$message({message: '修改成功', type: 'success'})
               callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: me.currentPage, pageSize: 10}, me.updateTableData)
               return
             }
@@ -239,7 +239,7 @@ export default {
         callApiToken('/role/save_role', this.form, function (res) {
           if (res.status >= 200 && res.status < 300) {
             if (res.data.success) {
-              this.$message({message: '修改成功', type: 'success'})
+              me.$message({message: '修改成功', type: 'success'})
               callApiToken('/role/query_role', {applicationId: 1, name: me.queryValue, page: me.currentPage, pageSize: 10}, me.updateTableData)
               return
             }
