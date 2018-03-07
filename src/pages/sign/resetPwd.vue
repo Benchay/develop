@@ -45,7 +45,7 @@ import {callApiToken} from '@/data/callApi'
         }
       };
       var validatePass1 = (rule, value, callback) => {
-        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
+        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*?,<>{}\[\]\.\\/\'\"`~\:;+=-\_\|\\\(\)]).*$/
         if (reg.test(value)) {
           callback(new Error('注册密码应为6-20位包含英文大小写、特殊字符、数字'));
         } else {
@@ -87,7 +87,7 @@ import {callApiToken} from '@/data/callApi'
     methods: {
       onSubmit () {
         let me = this
-        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
+        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*?,<>{}\[\]\.\\/\'\"`~\:;+=-\_\|\\\(\)]).*$/
         if (res.test(me.form.newPassword)){
           if (me.form.newPassword == me.form.reNewPassword) {
             if (me.form.newPassword != me.form.oldPassword) {

@@ -55,7 +55,7 @@
               <el-table-column prop="username" label="用户名"></el-table-column>
               <el-table-column prop="name" label="姓名"></el-table-column>
               <el-table-column prop="mobile" label="手机号"></el-table-column>
-              <el-table-column prop="roleName" label="角色"></el-table-column>
+              <el-table-column prop="roleNames" label="角色"></el-table-column>
               <el-table-column prop="registerTime" label="添加时间"></el-table-column>
               <!-- 状态显示 -->
               <el-table-column label="状态">
@@ -96,7 +96,6 @@
             </div>
           </el-col>
         </el-row>
-
 
         <!-- 编辑窗口 -->
         <el-dialog title="编辑" :visible.sync="addStaff" :before-close="closeDiolog">
@@ -196,7 +195,7 @@ export default {
 
       dateValue: '',
       optionsStatus: [
-        {label: '全部状态', value: ''},
+        {label: '全部状态', value: null},
         {label: '禁用', value: false},
         {label: '启用', value: true}
       ],
@@ -213,24 +212,21 @@ export default {
   methods: {
     // 用户名过滤
     querySearchName () {
-      console.log(this.queryNameValue)
-      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, username: this.queryNameValue, page: 1, pageSize: 10}, this.updateTableData)
+      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, applicationId: 1, page: 1, pageSize: 10},this.updateTableData)
     },
     // 电话号码过滤
     querySearchMobile () {
       console.log(this.queryMobileValue)
-      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, page: 1, pageSize: 10}, this.updateTableData)
+      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, applicationId: 1, page: 1, pageSize: 10}, this.updateTableData)
     },
     // 状态过滤
     selectStatus () {
-      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, page: 1, pageSize: 10}, function (res) {
-        console.log(res)
-      })
+      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, applicationId: 1, page: 1, pageSize: 10},this.updateTableData)
     },
     // 分页查询
     handleCurrentChange (value) {
       console.log(value)
-      callApiToken('/user/load_user_infos', {mobile: this.queryMobileValue, name: this.queryNameValue, page: value, pageSize: 10}, this.updateTableData)
+      callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: this.queryMobileValue, name: this.queryNameValue, applicationId: 1, page: value, pageSize: 10}, this.updateTableData)
     },
     handleAvatarSuccess () {
 
@@ -376,7 +372,7 @@ export default {
         if (res.status >= 200 && res.status < 300) {
           if (res.data.success) {
             me.$message({message: '删除成功', type: 'success'})
-            callApiToken('/user/load_user_infos', {mobile: me.queryMobileValue, name: me.queryNameValue, page: 1, pageSize: 10}, me.updateTableData)
+            callApiToken('/user/load_user_infos', {able: this.selectStatusValue, mobile: me.queryMobileValue, name: me.queryNameValue, applicationId: 1, page: 1, pageSize: 10}, me.updateTableData)
             return
           }
         }
@@ -408,7 +404,7 @@ export default {
           me.total = res.data.content.total
           me.currentPage = res.data.content.page
           for (var i = 0; i < me.tableData.length; i++) {
-            // callApiToken('/role/get_user_roles', {userId: })
+            me.tableData[i].roleNames = JSON.parse(me.tableData[i].roleNames).toString()
             me.tableData[i].registerTime = changeDateFormat(me.tableData[i].registerTime)
           }
         }
@@ -418,7 +414,7 @@ export default {
 // 初始化
   created: function () {
     let me = this
-    callApiToken('/user/load_user_infos',{page: 1, pageSize: 10}, this.updateTableData)
+    callApiToken('/user/load_user_infos',{applicationId: 1, page: 1, pageSize: 10}, this.updateTableData)
 
     callApiToken('/role/query_role', {applicationId: 1, page:1, pageSize: 100}, function (res) {
       me.roleItem = res.data.content.records
