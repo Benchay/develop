@@ -64,6 +64,7 @@ import {callJsonApi} from '@/data/callApi'
           password: '',
           verificationCode: '',
           dsitributorId: 1,
+          applicationId: 1,
       		type: 1
         },
         rules2: {
@@ -92,7 +93,7 @@ import {callJsonApi} from '@/data/callApi'
                   if (res.data.success) {
                     // 装在用户ID以及用户所在公司ID
                     console.log(res)
-                    me.$message({message: '登录成功', type: 'success'})
+                    // me.$message({message: '登录成功', type: 'success'})
                     localStorage.setItem('userId', res.data.content.userId)
                     localStorage.setItem('companyId', res.data.content.companyId)
                     localStorage.setItem('usertype', me.form.type)

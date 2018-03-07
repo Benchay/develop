@@ -65,7 +65,7 @@
               <!-- 授权 -->
               <el-tabs type="border-card" @tab-click="changeMenuItem">
                 <el-tab-pane v-for="item in authItem" :label="item.name" :name="item.id + ''">
-                    <el-checkbox-group v-model="checkedItem" @change="handleCheckedCitiesChange">
+                    <el-checkbox-group v-model="checkedItem">
                       <el-checkbox v-for="childItem in childAuthItem" :label="childItem.id" :key="childItem.id">{{childItem.name}}</el-checkbox>
                     </el-checkbox-group>
                 </el-tab-pane>
@@ -152,9 +152,9 @@ export default {
     handleCurrentChange (value) {
       callApiToken('/role/query_role', {applicationId: 1, name: this.queryValue, page: value, pageSize: 10}, this.updateTableData)
     },
-    handleCheckedCitiesChange(value) {
-        console.log(value)
-    },
+    // handleCheckedCitiesChange(value) {
+    //     console.log(value)
+    // },
     routerGo (url) {
       this.$router.push({path: url})
     },
@@ -187,7 +187,6 @@ export default {
         callApiToken('/role/get_role_info', {roleId: rowValue.id} ,function (res) {
           if (res.status >= 200 && res.status < 300) {
             if (res.data.success) {
-              console.log(res.data.success)
               me.form.name = res.data.content.role.name
               me.form.content = res.data.content.role.content
               me.checkedItem = []
@@ -197,7 +196,7 @@ export default {
               return
             }
           }
-          console.log(res)
+          me.$message.error(res)
         })
       } else {
         this.form.roleId = ''

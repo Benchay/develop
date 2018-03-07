@@ -11,8 +11,8 @@
             <span>test</span>
           </span>
           <span class="finance-info">
-            <span >当前余额:</span>
-            <span class="show-finance-data">123123</span>
+            <span >当前余额: ￥</span>
+            <span class="show-finance-data">{{amount}}</span>
           </span>
         </div>
       </el-col>
@@ -38,9 +38,9 @@
           <div class="other-input-area">
             <span>其他金额:</span>
             <span>
-              <el-input size="small"></el-input>
+              <el-input size="small" v-model="form.amount" placeholder="美金(USD$)"></el-input>
               　=　
-              <el-input size="small"></el-input>
+              <el-input size="small" v-model="6.37 * form.amount" placeholder="人民币(RMB￥)"></el-input>
             </span>
           </div>
           <div class="other-input-area">
@@ -55,8 +55,18 @@
     <el-row>
       <el-col :span="24">
         <div class="input-listbox">
-          <p><span>收款账号</span></p>
-          <p><span>付款账号</span><el-input size="small"></el-input></p>
+          <p><span>收款账号</span>
+            <el-select v-model="form.payeeAccount" placeholder="请选择" size="small">
+              <el-option
+                v-for="item in payeeOptions"
+                :key="item.cardNo"
+                :label="item.cardNo"
+                :value="item.cardNo">
+              </el-option>
+            </el-select>
+
+          </p>
+          <p><span>付款账号</span><el-input size="small" v-model="form.payerAccount"></el-input></p>
           <p><span>交易流水</span><el-input size="small"></el-input></p>
           <p><span>交易凭证</span></p>
         </div>
@@ -73,7 +83,7 @@
     <el-row>
       <el-col>
         <div class="button-box">
-          <el-button type="primary">确认充值</el-button>
+          <el-button type="primary" @click="onSubmit">确认充值</el-button>
           <router-link :to="{path: '/finance'}"><el-button>返回上级</el-button></router-link>
         </div>
       </el-col>
@@ -82,14 +92,50 @@
 </template>
 
 <script>
+import {callApiForMbs} from '@/data/callApi'
 export default {
   name: 'Onlinebank',
   data () {
     return {
+      amount: '',
+      payeeOptions: '',
       form: {
+        payerAccount: '',
+        payeeAccount: '',
+        financeItemCode: '',
+        tradingType: '',
         amount: '',
+        transactionNumber: '',
       }
     }
+  },
+  methods: {
+    onSubmit () {
+      let me = this
+      callApiForMbs('/finance/recharge_amount', this.form, function(res) {
+
+      })
+
+      me.$message({message: '支付成功，请等待审核', type: 'success'})
+    }
+  },
+  created: function () {
+    let me = this
+    callApiForMbs('/finance/get_finance_account', {}, function(res) {
+      if (res.status >= 200 && res.status < 300) {
+        if (res.data.success) {
+          me.amount = res.data.content.amount
+        }
+      }
+    })
+    callApiForMbs('/finance/query_receiver_config', {status: 1, pageNum: 1, pageSize: 10}, function(res) {
+      console.log(res)
+      if (res.status >= 200 && res.status < 300) {
+        if (res.data.success) {
+          me.payeeOptions = res.data.content.records
+        }
+      }
+    })
   }
 }
 </script>
@@ -145,6 +191,15 @@ export default {
         .el-input {
           margin-left: 20px;
           width: 200px;
+        }
+        .el-select {
+          margin-left: 15px;
+          .el-input {
+            margin-left: 0px;
+          }
+          .el-option {
+            width: 200px;
+          }
         }
       }
     }

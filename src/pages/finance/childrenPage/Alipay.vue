@@ -51,7 +51,7 @@
     <el-row>
       <el-col>
         <div class="button-box">
-          <el-button type="primary">确认充值</el-button>
+          <el-button type="primary" @click="onSubmit">确认充值</el-button>
           <router-link :to="{path: '/finance'}"><el-button>返回上级</el-button></router-link>
         </div>
       </el-col>
@@ -75,9 +75,14 @@ export default {
   data () {
     return {
       form: {
-        
         amount: '',
       }
+    }
+  },
+  methods: {
+    onSubmit () {
+      let me = this
+      me.$message({message: '支付成功，请等待审核', type: 'success'})
     }
   },
   created: function () {
@@ -125,7 +130,6 @@ export default {
         }
       }
     }
-
     .button-box {
       padding-top: 40px;
       .el-button {
