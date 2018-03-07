@@ -407,8 +407,13 @@ export default {
           me.tableData = res.data.content.records
           me.total = res.data.content.total
           me.currentPage = res.data.content.page
+
           for (var i = 0; i < me.tableData.length; i++) {
-            me.tableData[i].roleNames = JSON.parse(me.tableData[i].roleNames).toString()
+            if (me.tableData[i].roleNames){
+              me.tableData[i].roleNames = JSON.parse(me.tableData[i].roleNames).toString()
+            }
+            //
+
             me.tableData[i].registerTime = changeDateFormat(me.tableData[i].registerTime)
           }
         }
