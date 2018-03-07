@@ -415,7 +415,9 @@ export default {
   created: function () {
     let me = this
     callApiToken('/user/load_user_infos',{applicationId: 1, page: 1, pageSize: 10}, this.updateTableData)
-
+    callApiToken('/role/query_role', {page: 1}, function (res) {
+      console.log(res)
+    })
     callApiToken('/role/query_role', {applicationId: 1, page:1, pageSize: 100}, function (res) {
       me.roleItem = res.data.content.records
     })

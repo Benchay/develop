@@ -69,7 +69,7 @@ import {callJsonApi} from '@/data/callApi'
         if (reg.test(value)) {
           callback();
         } else {
-          callback(new Error('注册密码应为6-20位包含英文大小写、特殊字符、数字'));
+          callback(new Error('密码应为6-20位包含包含英文字母和数字'));
         }
       };
       var validatePass2 = (rule, value, callback) => {

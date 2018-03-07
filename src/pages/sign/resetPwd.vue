@@ -47,7 +47,7 @@ import {callApiToken} from '@/data/callApi'
       var validatePass1 = (rule, value, callback) => {
         var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%^&*?,<>{}\[\]\.\\/\'\"`~\:;+=-\_\|\\\(\)]).*$/
         if (reg.test(value)) {
-          callback(new Error('注册密码应为6-20位包含英文大小写、特殊字符、数字'));
+          callback(new Error('密码应为6-20位包含包含英文字母和数字'));
         } else {
           callback();
         }
