@@ -151,8 +151,9 @@ import {callJsonApi} from '@/data/callApi'
       onSubmit () {
         var reg = /^1\d{10}$/
         let me = this
+        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
         if (reg.test(this.form.mobile)) {
-            if (this.form.newPassword != '') {
+            if (res.test(this.form.newPassword)) {
               if (this.form.newPassword == this.form.reNewPassword) {
                 console.log(this.form)
                 callJsonApi('/pub/user/reset_user_password', this.form, function (res) {
@@ -172,7 +173,7 @@ import {callJsonApi} from '@/data/callApi'
                 this.$message('您输入的两次密码不一致，请重新输入')
               }
             }else{
-              this.$message('请输入密码，确保您的账号安全')
+              this.$message('为了确保您的账号安全，请遵循密码规则')
             }
         } else {
           this.$message('请输入手机号')

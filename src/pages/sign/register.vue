@@ -136,10 +136,10 @@ import {callJsonApi} from '@/data/callApi'
       onSubmit () {
         var reg = /^1\d{10}$/
         let me = this
-
+        var reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/
         if (reg.test(this.form.mobile)) {
           if (this.form.mobileCode != '') {
-            if (this.form.password != '') {
+            if (reg.test(this.form.password)) {
               if (this.form.verificationCode) {
                 callJsonApi('/pub/user/register_merchant', this.form, function (res) {
                   if (res.status >= 200 && res.status < 300) {
@@ -158,7 +158,7 @@ import {callJsonApi} from '@/data/callApi'
                 this.$message('请输入验证码')
               }
             }else{
-              this.$message('请输入密码，确保您的账号安全')
+              this.$message('为了确保您的账号安全，请遵循密码规则')
             }
           }else {
             this.$message('请输入手机验证码')
