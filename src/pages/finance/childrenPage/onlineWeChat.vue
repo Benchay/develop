@@ -1,5 +1,9 @@
 <template>
-  <div class="Alipay">
+  <div class="onlineAlipay">
+    <el-row class="to-examine">
+      *需要人工审核，审核时间为每天9:00~18:00
+    </el-row>
+
     <el-row>
       <el-col :span="24">
         <div class="title-info">
@@ -35,9 +39,13 @@
           <div class="other-input-area">
             <span>其他金额:</span>
             <span>
-              <el-input size="small"></el-input>
+              <el-input size="small" v-model="form.amount">
+                <template slot="append">$</template>
+              </el-input>
               　=　
-              <el-input size="small"></el-input>
+              <el-input size="small" v-model="form.amount * 6.37">
+                <template slot="append">￥</template>
+              </el-input>
             </span>
           </div>
           <div class="other-input-area">
@@ -45,6 +53,35 @@
               (美元兑换人民币汇率:　6.37)
             </span>
           </div>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="24">
+        <div class="input-listbox">
+          <p>
+            <span>收款账号</span>
+            <el-select v-model="form.payeeAccount" placeholder="请选择" size="small">
+              <el-option
+                v-for="item in payeeOptions"
+                :key="item.cardNo"
+                :label="item.cardNo"
+                :value="item.cardNo">
+              </el-option>
+            </el-select>
+          </p>
+          <p><span>付款账号</span><el-input size="small"></el-input></p>
+          <p><span>交易流水</span><el-input size="small"></el-input></p>
+          <p><span>交易凭证</span></p>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="24">
+        <div class="user-prompt-info">
+          重要提示：请填写真是有效的充值信息，连续超过3次错误将被定义为恶意充值，账号将被冻结
         </div>
       </el-col>
     </el-row>
@@ -56,26 +93,17 @@
         </div>
       </el-col>
     </el-row>
-
-    <el-row>
-      <el-col :span="24">
-        <div class="user-prompt-info">
-          <p>支付宝扫码说明：</p>
-          <p>1、您必须拥有支付宝账户；</p>
-          <p>2、首次使用需要在手机端下载支付宝钱包；</p>
-        </div>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
 <script>
 import {callApiForMbs} from '@/data/callApi'
 export default {
-  name: 'Alipay',
+  name: 'onlineAlipay',
   data () {
     return {
       userAmount: '',
+      payeeOptions: [],
       form: {
         payerAccount: '',
         payeeAccount: '',
@@ -89,8 +117,7 @@ export default {
   methods: {
     onSubmit () {
       let me = this
-      // me.$message({message: '支付成功，请等待审核', type: 'success'})
-
+      me.$message({message: '支付成功，请等待审核', type: 'success'})
     }
   },
   created: function () {
@@ -102,7 +129,7 @@ export default {
         }
       }
     })
-    callApiForMbs('/finance/query_receiver_config', {type: 1, payType: 2, status: 1, pageNum: 1, pageSize: 10}, function(res) {
+    callApiForMbs('/finance/query_receiver_config', {type: 2, payType: 1, status: 1, pageNum: 1, pageSize: 10}, function(res) {
       console.log(res)
       if (res.status >= 200 && res.status < 300) {
         if (res.data.success) {
@@ -115,8 +142,13 @@ export default {
 </script>
 
 <style lang="scss">
-  .Alipay {
+  .onlineAlipay {
+    .to-examine {
+      font-size: 10px;
+      color: red;
+    }
     .title-info {
+      padding-top: 20px;
       .user-info {
 
       }
@@ -153,17 +185,29 @@ export default {
         }
       }
     }
-    .button-box {
-      padding-top: 40px;
-      .el-button {
-        margin-right: 100px;
+    .input-listbox {
+      p {
+        margin-top: 20px;
+        .el-input {
+          margin-left: 20px;
+          width: 200px;
+        }
+        .el-select{
+          margin-left: 15px;
+          .el-input{
+            margin-left: 0px;
+          }
+        }
       }
     }
     .user-prompt-info {
       font-size: 10px;
       padding-top: 20px;
-      p {
-        margin-top: 8px;
+    }
+    .button-box {
+      padding-top: 20px;
+      .el-button {
+        margin-right: 100px;
       }
     }
   }

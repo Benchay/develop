@@ -412,8 +412,6 @@ export default {
             if (me.tableData[i].roleNames){
               me.tableData[i].roleNames = JSON.parse(me.tableData[i].roleNames).toString()
             }
-            //
-
             me.tableData[i].registerTime = changeDateFormat(me.tableData[i].registerTime)
           }
         }

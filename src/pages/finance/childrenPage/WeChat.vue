@@ -61,8 +61,8 @@
       <el-col :span="24">
         <div class="user-prompt-info">
           <p>支付宝扫码说明：</p>
-          <p>1、您必须拥有支付宝账户；</p>
-          <p>2、首次使用需要在手机端下载支付宝钱包；</p>
+          <p>1、您必须拥有微信账户；</p>
+          <p>2、首次使用需要在手机端下载微信；</p>
         </div>
       </el-col>
     </el-row>
@@ -89,8 +89,7 @@ export default {
   methods: {
     onSubmit () {
       let me = this
-      // me.$message({message: '支付成功，请等待审核', type: 'success'})
-
+      me.$message({message: '支付成功，请等待审核', type: 'success'})
     }
   },
   created: function () {
@@ -102,7 +101,7 @@ export default {
         }
       }
     })
-    callApiForMbs('/finance/query_receiver_config', {type: 1, payType: 2, status: 1, pageNum: 1, pageSize: 10}, function(res) {
+    callApiForMbs('/finance/query_receiver_config', {type: 2, payType: 2, status: 1, pageNum: 1, pageSize: 10}, function(res) {
       console.log(res)
       if (res.status >= 200 && res.status < 300) {
         if (res.data.success) {

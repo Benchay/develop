@@ -25,6 +25,8 @@ export function callFormApi(url, paramObj, fun) {
     params: paramObj
   }).then((res) => {
     fun(res)
+  }).catch(res=>{
+    me.$message.error(res)
   })
 }
 /*******************************************************************************
@@ -37,10 +39,13 @@ export function callJsonApi(url, jsonData, fun) {
     data: jsonData
   }).then((res) => {
     fun(res)
+  }).catch(res=>{
+    me.$message.error(res)
   })
 }
 
 export function callApiToken(url, jsonData, fun) {
+  let me = this
   var str = localStorage.getItem('access_token')
   axios({
     url: '/ums/api/' + url +'?access_token=' + str,
@@ -55,6 +60,8 @@ export function callApiToken(url, jsonData, fun) {
         fun(res)
       }
     }
+  }).catch(res=>{
+    me.$message.error(res)
   })
 }
 
@@ -73,6 +80,8 @@ export function callApiForMbs(url, jsonData, fun) {
       }
     }
     fun(res)
+  }).catch(res=>{
+    me.$message.error(res)
   })
 }
 export function callApiWithToken(url, jsonData, fun) {
@@ -91,6 +100,8 @@ export function callApiWithToken(url, jsonData, fun) {
         fun(res)
       }
     }
+  }).catch(res=>{
+    me.$message.error(res)
   })
 }
 

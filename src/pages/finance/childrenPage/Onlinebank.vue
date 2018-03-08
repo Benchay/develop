@@ -112,11 +112,11 @@ export default {
   methods: {
     onSubmit () {
       let me = this
+      // console.log('abc')
       callApiForMbs('/finance/recharge_amount', this.form, function(res) {
-
+        console.log(res)
+        me.$message({message: '支付成功，请等待审核1', type: 'success'})
       })
-
-      me.$message({message: '支付成功，请等待审核', type: 'success'})
     }
   },
   created: function () {
@@ -128,7 +128,7 @@ export default {
         }
       }
     })
-    callApiForMbs('/finance/query_receiver_config', {status: 1, pageNum: 1, pageSize: 10}, function(res) {
+    callApiForMbs('/finance/query_receiver_config', {type: 3, payType: 1, status: 1, pageNum: 1, pageSize: 10}, function(res) {
       console.log(res)
       if (res.status >= 200 && res.status < 300) {
         if (res.data.success) {

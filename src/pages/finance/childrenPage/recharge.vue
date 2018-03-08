@@ -18,12 +18,18 @@
             <el-menu-item index="4">
               <span slot="title">微信充值</span>
             </el-menu-item>
+            <el-menu-item index="5">
+              <span slot="title">微信充值</span>
+            </el-menu-item>
           </el-menu>
         </el-aside>
         <el-main>
           <onlineAlipay v-if="page == '1'"/>
           <alipay v-if="page == '2'"/>
           <Onlinebank v-if="page == 3"/>
+          <WeChat v-if="page == 4"/>
+          <onlineWeChat v-if="page == 5"/>
+
         </el-main>
       </el-container>
   </div>
@@ -33,9 +39,11 @@ import alipay from '@/pages/finance/childrenPage/Alipay'
 import Onlinebank from '@/pages/finance/childrenPage/Onlinebank'
 import WeChatPay from '@/pages/finance/children/WeChatPay'
 import onlineAlipay from '@/pages/finance/childrenPage/onlineAlipay'
+import WeChat from '@/pages/finance/childrenPage/WeChat'
+import onlineWeChat from '@/pages/finance/childrenPage/onlineWeChat'
 export default {
   components: {
-    alipay,Onlinebank,WeChatPay,onlineAlipay
+    alipay,Onlinebank,WeChatPay,onlineAlipay,onlineWeChat,WeChat
   },
   data(){
       return{

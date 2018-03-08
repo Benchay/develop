@@ -101,11 +101,14 @@ import {callJsonApi} from '@/data/callApi'
                     localStorage.setItem('access_token', res.data.content.access_token)
                     me.$router.push({path: '/'})
                     localStorage.setItem('username', res.data.content.username)
+                    return
                   } else {
                     me.$message.error(res.data.errmsg)
-                    console.log(res)
+                    // console.log(res)
+                    return
                   }
                 }
+                me.$message.error(res)
               })
             } else {
               this.$message('请输入验证码')
