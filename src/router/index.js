@@ -164,23 +164,23 @@ var route =  new Router({
 })
 
 
-// route.beforeEach(function (to, from, next) {
-//     var token =localStorage.getItem("access_token");
-//     //已登录的情况再去登录页，跳转至首页
-//     // console.log(token);
-//     if (to.name != "signin" && to.name != "register" && to.name != "forgetPwd") {
-//         if (token) {
-//             next ();
-//         }else{
-//           next({name:"signin"});
-//         }
-//     }else{
-//       if(token){
-//         next({name:"Home"})
-//       }else{
-//         next();
-//       }
-//     }
-// });
+route.beforeEach(function (to, from, next) {
+    var token =localStorage.getItem("access_token");
+    //已登录的情况再去登录页，跳转至首页
+    // console.log(token);
+    if (to.name != "signin" && to.name != "register" && to.name != "forgetPwd") {
+        if (token) {
+            next ();
+        }else{
+          next({name:"signin"});
+        }
+    }else{
+      if(token){
+        next({name:"Home"})
+      }else{
+        next();
+      }
+    }
+});
 
 export default route
